@@ -1,0 +1,76 @@
+# Makefile for Car Controller
+# 用法:
+#   make          - 编译程序
+#   make clean    - 清理编译文件
+#   make run      - 编译并运行
+#   make release  - 编译优化版本
+
+# 编译器设置
+CXX = g++
+CXXFLAGS = -std=c++17 -Wall
+TARGET = car_controller
+
+# Windows特定设置
+ifeq ($(OS),Windows_NT)
+    TARGET := $(TARGET).exe
+    RM = del /Q
+    LDFLAGS =
+else
+    # Linux设置
+    UNAME_S := $(shell uname -s)
+    ifeq ($(UNAME_S),Linux)
+        RM = rm -f
+        LDFLAGS =
+    endif
+endif
+
+# 源文件
+SOURCES = car_controller.cpp
+
+# 默认目标
+all: $(TARGET)
+
+# 编译规则
+$(TARGET): $(SOURCES)
+	@echo "正在编译 $(TARGET)..."
+	$(CXX) $(CXXFLAGS) $(SOURCES) -o $(TARGET) $(LDFLAGS)
+	@echo "编译完成！"
+
+# 优化编译
+release: CXXFLAGS += -O2
+release: $(TARGET)
+	@echo "优化版本编译完成！"
+
+# 调试编译
+debug: CXXFLAGS += -g -DDEBUG
+debug: $(TARGET)
+	@echo "调试版本编译完成！"
+
+# 静态链接（Windows）
+static: LDFLAGS += -static
+static: $(TARGET)
+	@echo "静态链接版本编译完成！"
+
+# 运行程序
+run: $(TARGET)
+	@echo "运行程序..."
+	./$(TARGET)
+
+# 清理
+clean:
+	@echo "清理编译文件..."
+	$(RM) $(TARGET)
+	@echo "清理完成！"
+
+# 显示帮助
+help:
+	@echo "可用的make目标:"
+	@echo "  make          - 编译程序"
+	@echo "  make release  - 编译优化版本"
+	@echo "  make debug    - 编译调试版本"
+	@echo "  make static   - 编译静态链接版本(Windows)"
+	@echo "  make run      - 编译并运行"
+	@echo "  make clean    - 清理编译文件"
+	@echo "  make help     - 显示此帮助信息"
+
+.PHONY: all release debug static run clean help

@@ -1,0 +1,32 @@
+[
+  {
+    "directory": "c:/Users/Haoran laptop/Desktop/PS2_Hybird",
+    "command": "arm-none-eabi-gcc -c -mcpu=cortex-m3 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F103xB -ICore/Inc -IDrivers/STM32F1xx_HAL_Driver/Inc -IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy -IDrivers/CMSIS/Device/ST/STM32F1xx/Include -IDrivers/CMSIS/Include -Og -Wall -fdata-sections -ffunction-sections -g -gdwarf-2 -MMD -MP -MF\"build/main.d\" -std=gnu11 Core/Src/main.c -o build/main.o",
+    "file": "Core/Src/main.c"
+  },
+  {
+    "directory": "c:/Users/Haoran laptop/Desktop/PS2_Hybird",
+    "command": "arm-none-eabi-gcc -c -mcpu=cortex-m3 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F103xB -ICore/Inc -IDrivers/STM32F1xx_HAL_Driver/Inc -IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy -IDrivers/CMSIS/Device/ST/STM32F1xx/Include -IDrivers/CMSIS/Include -Og -Wall -fdata-sections -ffunction-sections -g -gdwarf-2 -MMD -MP -MF\"build/motor_control.d\" -std=gnu11 Core/Src/motor_control.c -o build/motor_control.o",
+    "file": "Core/Src/motor_control.c"
+  },
+  {
+    "directory": "c:/Users/Haoran laptop/Desktop/PS2_Hybird",
+    "command": "arm-none-eabi-gcc -c -mcpu=cortex-m3 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F103xB -ICore/Inc -IDrivers/STM32F1xx_HAL_Driver/Inc -IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy -IDrivers/CMSIS/Device/ST/STM32F1xx/Include -IDrivers/CMSIS/Include -Og -Wall -fdata-sections -ffunction-sections -g -gdwarf-2 -MMD -MP -MF\"build/usart.d\" -std=gnu11 Core/Src/usart.c -o build/usart.o",
+    "file": "Core/Src/usart.c"
+  },
+  {
+    "directory": "c:/Users/Haoran laptop/Desktop/PS2_Hybird",
+    "command": "arm-none-eabi-gcc -c -mcpu=cortex-m3 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F103xB -ICore/Inc -IDrivers/STM32F1xx_HAL_Driver/Inc -IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy -IDrivers/CMSIS/Device/ST/STM32F1xx/Include -IDrivers/CMSIS/Include -Og -Wall -fdata-sections -ffunction-sections -g -gdwarf-2 -MMD -MP -MF\"build/ax_ps2.d\" -std=gnu11 Core/Src/ax_ps2.c -o build/ax_ps2.o",
+    "file": "Core/Src/ax_ps2.c"
+  },
+  {
+    "directory": "c:/Users/Haoran laptop/Desktop/PS2_Hybird",
+    "command": "arm-none-eabi-gcc -c -mcpu=cortex-m3 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F103xB -ICore/Inc -IDrivers/STM32F1xx_HAL_Driver/Inc -IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy -IDrivers/CMSIS/Device/ST/STM32F1xx/Include -IDrivers/CMSIS/Include -Og -Wall -fdata-sections -ffunction-sections -g -gdwarf-2 -MMD -MP -MF\"build/gpio.d\" -std=gnu11 Core/Src/gpio.c -o build/gpio.o",
+    "file": "Core/Src/gpio.c"
+  },
+  {
+    "directory": "c:/Users/Haoran laptop/Desktop/PS2_Hybird",
+    "command": "arm-none-eabi-gcc -c -mcpu=cortex-m3 -mthumb -mfloat-abi=soft -DUSE_HAL_DRIVER -DSTM32F103xB -ICore/Inc -IDrivers/STM32F1xx_HAL_Driver/Inc -IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy -IDrivers/CMSIS/Device/ST/STM32F1xx/Include -IDrivers/CMSIS/Include -Og -Wall -fdata-sections -ffunction-sections -g -gdwarf-2 -MMD -MP -MF\"build/tim.d\" -std=gnu11 Core/Src/tim.c -o build/tim.o",
+    "file": "Core/Src/tim.c"
+  }
+]

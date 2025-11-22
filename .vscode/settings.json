@@ -1,0 +1,29 @@
+{
+    "clangd.arguments": [
+        "--compile-commands-dir=${workspaceFolder}/build",
+        "--background-index",
+        "--clang-tidy",
+        "--header-insertion=iwyu",
+        "--completion-style=detailed",
+        "--fallback-style=LLVM",
+        "--query-driver=C:\\Users\\Haoran laptop\\.eide\\tools\\gcc_arm\\bin\\arm-none-eabi-gcc.exe"
+    ],
+    "files.associations": {
+        "*.h": "c",
+        "*.c": "c"
+    },
+    "C_Cpp.default.includePath": [
+        "${workspaceFolder}/Core/Inc",
+        "${workspaceFolder}/Drivers/STM32F1xx_HAL_Driver/Inc",
+        "${workspaceFolder}/Drivers/STM32F1xx_HAL_Driver/Inc/Legacy",
+        "${workspaceFolder}/Drivers/CMSIS/Device/ST/STM32F1xx/Include",
+        "${workspaceFolder}/Drivers/CMSIS/Include"
+    ],
+    "C_Cpp.default.defines": [
+        "USE_HAL_DRIVER",
+        "STM32F103xB"
+    ],
+    "C_Cpp.default.compilerPath": "C:\\Users\\Haoran laptop\\.eide\\tools\\gcc_arm\\bin\\arm-none-eabi-gcc.exe",
+    "C_Cpp.default.intelliSenseMode": "gcc-arm",
+    "C_Cpp.errorSquiggles": "enabled"
+}

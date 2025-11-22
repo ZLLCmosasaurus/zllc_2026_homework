@@ -1,0 +1,25 @@
+CompileFlags:
+  Add:
+    - --target=arm-none-eabi
+    - -mcpu=cortex-m3
+    - -mthumb
+    - -mfloat-abi=soft
+    - -DUSE_HAL_DRIVER
+    - -DSTM32F103xB
+    - -IC:\Users\Haoran
+      laptop\.eide\tools\gcc_arm\arm-none-eabi\include\c++\14.3.1
+    - -IC:\Users\Haoran
+      laptop\.eide\tools\gcc_arm\arm-none-eabi\include\c++\14.3.1\arm-none-eabi\thumb\v7-m\nofp
+    - -IC:\Users\Haoran
+      laptop\.eide\tools\gcc_arm\arm-none-eabi\include\c++\14.3.1\backward
+    - -IC:\Users\Haoran
+      laptop\.eide\tools\gcc_arm\lib\gcc\arm-none-eabi\14.3.1\include
+    - -IC:\Users\Haoran
+      laptop\.eide\tools\gcc_arm\lib\gcc\arm-none-eabi\14.3.1\include-fixed
+    - -IC:\Users\Haoran laptop\.eide\tools\gcc_arm\arm-none-eabi\include
+  CompilationDatabase: ./build/Debug
+  Remove: []
+  Compiler: C:\Users\Haoran laptop\.eide\tools\gcc_arm\bin\arm-none-eabi-gcc.exe
+Diagnostics:
+  UnusedIncludes: None
+  MissingIncludes: None
