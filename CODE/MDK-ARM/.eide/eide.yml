@@ -20,6 +20,8 @@ virtualFolder:
           folders:
             - name: Core
               files:
+                - path: ../Core/Src/servo_tim3.c
+                - path: ../Core/Inc/servo_tim3.h
                 - path: ../Core/Src/main.c
                 - path: ../Core/Src/gpio.c
                 - path: ../Core/Src/dma.c
@@ -27,6 +29,8 @@ virtualFolder:
                 - path: ../Core/Src/usart.c
                 - path: ../Core/Src/stm32f1xx_it.c
                 - path: ../Core/Src/stm32f1xx_hal_msp.c
+                - path: ../Core/Src/MotorDriver.c
+                - path: ../Core/Inc/MotorDriver.h
               folders: []
     - name: Drivers
       files: []

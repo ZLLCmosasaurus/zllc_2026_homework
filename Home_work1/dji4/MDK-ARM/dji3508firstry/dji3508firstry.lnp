@@ -1,0 +1,26 @@
+--cpu Cortex-M3
+".\dji3508firstry\startup_stm32f103xb.o"
+".\dji3508firstry\bsp_can.o"
+".\dji3508firstry\can_receive.o"
+".\dji3508firstry\main.o"
+".\dji3508firstry\gpio.o"
+".\dji3508firstry\can.o"
+".\dji3508firstry\stm32f1xx_it.o"
+".\dji3508firstry\stm32f1xx_hal_msp.o"
+".\dji3508firstry\stm32f1xx_hal_gpio_ex.o"
+".\dji3508firstry\stm32f1xx_hal_can.o"
+".\dji3508firstry\stm32f1xx_hal.o"
+".\dji3508firstry\stm32f1xx_hal_rcc.o"
+".\dji3508firstry\stm32f1xx_hal_rcc_ex.o"
+".\dji3508firstry\stm32f1xx_hal_gpio.o"
+".\dji3508firstry\stm32f1xx_hal_dma.o"
+".\dji3508firstry\stm32f1xx_hal_cortex.o"
+".\dji3508firstry\stm32f1xx_hal_pwr.o"
+".\dji3508firstry\stm32f1xx_hal_flash.o"
+".\dji3508firstry\stm32f1xx_hal_flash_ex.o"
+".\dji3508firstry\stm32f1xx_hal_exti.o"
+".\dji3508firstry\system_stm32f1xx.o"
+--strict --scatter ".\dji3508firstry\dji3508firstry.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "dji3508firstry.map" -o .\dji3508firstry\dji3508firstry.axf

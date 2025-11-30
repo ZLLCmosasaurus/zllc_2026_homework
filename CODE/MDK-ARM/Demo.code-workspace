@@ -4,11 +4,6 @@
             "path": "."
         }
     ],
-    "settings": {
-        "files.associations": {
-            "bluetooth.h": "c",
-            "string.h": "c"
-        }
-    },
+    "settings": {},
     "extensions": {}
 }

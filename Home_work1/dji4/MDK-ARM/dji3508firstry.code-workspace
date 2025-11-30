@@ -1,0 +1,15 @@
+{
+    "folders": [
+        {
+            "path": "."
+        }
+    ],
+    "settings": {
+        "files.associations": {
+            "bsp_can.h": "c",
+            "can_receive.h": "c",
+            "struct_typedef.h": "c"
+        }
+    },
+    "extensions": {}
+}

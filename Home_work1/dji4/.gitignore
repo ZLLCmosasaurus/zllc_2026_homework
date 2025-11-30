@@ -1,0 +1,15 @@
+# 忽略MDK-ARM下的冗余文件夹
+MDK-ARM/.cmsis/
+MDK-ARM/.eide/
+MDK-ARM/.vscode/
+MDK-ARM/build/
+MDK-ARM/DebugConfig/
+MDK-ARM/RTE/
+
+# 忽略MDK-ARM下的冗余文件
+MDK-ARM/Demo.code-workspace
+MDK-ARM/Demo.uvguix.* 
+MDK-ARM/Demo.uvoptx
+MDK-ARM/EventRecorderStub.svd
+MDK-ARM/JLinkLog.txt
+MDK-ARM/JLinkSettings.ini
