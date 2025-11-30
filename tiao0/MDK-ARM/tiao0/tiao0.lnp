@@ -1,0 +1,25 @@
+--cpu Cortex-M3
+"tiao0\startup_stm32f103xb.o"
+"tiao0\main.o"
+"tiao0\gpio.o"
+"tiao0\tim.o"
+"tiao0\stm32f1xx_it.o"
+"tiao0\stm32f1xx_hal_msp.o"
+"tiao0\stm32f1xx_hal_gpio_ex.o"
+"tiao0\stm32f1xx_hal_tim.o"
+"tiao0\stm32f1xx_hal_tim_ex.o"
+"tiao0\stm32f1xx_hal.o"
+"tiao0\stm32f1xx_hal_rcc.o"
+"tiao0\stm32f1xx_hal_rcc_ex.o"
+"tiao0\stm32f1xx_hal_gpio.o"
+"tiao0\stm32f1xx_hal_dma.o"
+"tiao0\stm32f1xx_hal_cortex.o"
+"tiao0\stm32f1xx_hal_pwr.o"
+"tiao0\stm32f1xx_hal_flash.o"
+"tiao0\stm32f1xx_hal_flash_ex.o"
+"tiao0\stm32f1xx_hal_exti.o"
+"tiao0\system_stm32f1xx.o"
+--strict --scatter "tiao0\tiao0.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "tiao0.map" -o tiao0\tiao0.axf

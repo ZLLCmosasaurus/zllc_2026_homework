@@ -1,0 +1,27 @@
+--cpu Cortex-M3
+"can_pid\startup_stm32f103xb.o"
+"can_pid\main.o"
+"can_pid\gpio.o"
+"can_pid\can.o"
+"can_pid\tim.o"
+"can_pid\stm32f1xx_it.o"
+"can_pid\stm32f1xx_hal_msp.o"
+"can_pid\stm32f1xx_hal_gpio_ex.o"
+"can_pid\stm32f1xx_hal_can.o"
+"can_pid\stm32f1xx_hal.o"
+"can_pid\stm32f1xx_hal_rcc.o"
+"can_pid\stm32f1xx_hal_rcc_ex.o"
+"can_pid\stm32f1xx_hal_gpio.o"
+"can_pid\stm32f1xx_hal_dma.o"
+"can_pid\stm32f1xx_hal_cortex.o"
+"can_pid\stm32f1xx_hal_pwr.o"
+"can_pid\stm32f1xx_hal_flash.o"
+"can_pid\stm32f1xx_hal_flash_ex.o"
+"can_pid\stm32f1xx_hal_exti.o"
+"can_pid\stm32f1xx_hal_tim.o"
+"can_pid\stm32f1xx_hal_tim_ex.o"
+"can_pid\system_stm32f1xx.o"
+--strict --scatter "can_pid\can_pid.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "can_pid.map" -o can_pid\can_pid.axf
