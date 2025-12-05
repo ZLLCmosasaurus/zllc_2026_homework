@@ -1,0 +1,12 @@
+# 忽略Keil编译文件
+*.uvgui.*
+*.uvoptx
+*.uvprojx.bak
+*.axf
+*.crf
+*.d
+*.o
+*.lst
+
+# 忽略VSCode设置
+.vscode/
