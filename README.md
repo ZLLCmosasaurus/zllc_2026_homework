@@ -53,13 +53,54 @@ float pid_calculate(pid_controller_t *pid, float target, float current);
 
 ### 1. 初始化
 
-在[main.c](file:///c%3A/RM/can_pid/Core/Src/main.c)的初始化部分，已经完成了以下初始化：
-- CAN总线初始化
-- PID控制器初始化
+```c
+  hcan.Instance = CAN1;
+  hcan.Init.Prescaler = 4;
+  hcan.Init.Mode = CAN_MODE_NORMAL;
+  hcan.Init.SyncJumpWidth = CAN_SJW_2TQ;
+  hcan.Init.TimeSeg1 = CAN_BS1_3TQ;
+  hcan.Init.TimeSeg2 = CAN_BS2_5TQ;
+  hcan.Init.TimeTriggeredMode = DISABLE;
+  hcan.Init.AutoBusOff = DISABLE;
+  hcan.Init.AutoWakeUp = DISABLE;
+  hcan.Init.AutoRetransmission = DISABLE;
+  hcan.Init.ReceiveFifoLocked = DISABLE;
+  hcan.Init.TransmitFifoPriority = DISABLE;
+
+  if (HAL_CAN_Init(&hcan) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+      CAN_FilterTypeDef can_filter;
+    can_filter.FilterBank           = 0;
+    can_filter.FilterMode           = CAN_FILTERMODE_IDMASK;
+    can_filter.FilterScale          = CAN_FILTERSCALE_32BIT;
+    can_filter.FilterIdHigh         = 0x0000;
+    can_filter.FilterIdLow          = 0x0000;
+    can_filter.FilterMaskIdHigh     = 0x0000;
+    can_filter.FilterMaskIdLow      = 0x0000;
+    can_filter.FilterFIFOAssignment = CAN_RX_FIFO0;
+    can_filter.FilterActivation     = ENABLE;
+    can_filter.SlaveStartFilterBank = 14;
+
+    if (HAL_CAN_ConfigFilter(&hcan, &can_filter) != HAL_OK) 
+    {
+        Error_Handler();
+    }
+
+    if (HAL_CAN_Start(&hcan) != HAL_OK) 
+    {
+        Error_Handler();
+    }
+
+    if (HAL_CAN_ActivateNotification(&hcan, CAN_IT_RX_FIFO0_MSG_PENDING) != HAL_OK)
+    {
+        Error_Handler();
+    }
+```
 
 ### 2. 参数配置
-
-在[main.c](file:///c%3A/RM/can_pid/Core/Src/main.c)中可以调整以下参数：
 
 ```c
 // PID参数设置
@@ -98,6 +139,25 @@ motor_pid.target = 1000.0f;  // 目标速度为1000 RPM
   - 字节4-5：电机电流（高字节在前）
   - 字节6-7：电机温度（高字节在前）
 
+### 1. PID控制算法理解
+
+#### 1.1 PID基本概念
+PID控制器由三个部分组成：
+- **比例项(P)**：根据当前误差大小进行调整
+- **积分项(I)**：根据误差累积进行调整，消除稳态误差
+- **微分项(D)**：根据误差变化率进行调整，预测未来趋势
+
+#### 1.2 PID数学表达式
+```
+输出 = Kp * 误差 + Ki * ∫误差dt + Kd * d(误差)/dt
+```
+
+#### 1.3 PID参数调节经验
+- 先调Kp，再调Kd，最后调Ki
+- Kp过大容易引起振荡，过小响应慢
+- Ki过大容易引起积分饱和和振荡
+- Kd有助于减少超调和提高稳定性
+
 ## PID参数调节建议
 
 1. **比例系数(Kp)**：决定系统响应速度，值越大响应越快但可能产生振荡
@@ -113,18 +173,28 @@ motor_pid.target = 1000.0f;  // 目标速度为1000 RPM
 3. 实际应用中应从电机反馈数据中获取真实的速度值
 4. 根据具体应用场景调整PID参数
 
-## 故障排除
+### 3. 代码分析与优化
 
-1. **电机不转动**：
-   - 检查CAN总线连接
-   - 确认电机电源正常
-   - 检查控制电流值是否正确发送
+#### 3.1 发现的问题
+1. **积分饱和问题**：积分项没有适当限制，导致电机持续加速
+2. **微分项计算不准确**：未考虑采样时间间隔
+3. **参数设置不合理**：初始PID参数不适合实际控制场景
+4. **角度控制逻辑缺陷**：使用单圈角度而非连续角度
 
-2. **速度控制不准确**：
-   - 检查PID参数设置
-   - 确认反馈数据正确解析
-   - 检查机械负载是否发生变化
+#### 3.2 解决方案
+1. **修复积分饱和**：
+   - 添加积分限幅机制
+   - 积分项乘以采样时间间隔
 
-3. **电机抖动或振荡**：
-   - 降低PID参数，特别是Kp和Ki
-   - 检查CAN通信是否稳定
+2. **改进微分项计算**：
+   - 微分项除以采样时间间隔
+   - 在主循环中计算实际时间间隔
+
+3. **优化PID参数**：
+   - 调整为更适合实际控制的参数
+   - 角度环：Kp=2.0, Ki=0.01, Kd=0.1
+   - 速度环：Kp=2.0, Ki=0.01, Kd=0.1
+
+4. **改善角度控制**：
+   - 使用连续角度进行计算
+   - 实现更平滑的比例控制策略

@@ -1,7 +1,3 @@
-#include "usart.h"
-
-/* reference to busy flag used by CAN module when sending from IRQ */
-extern volatile uint8_t uart_tx_busy;
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
@@ -25,7 +21,7 @@ extern volatile uint8_t uart_tx_busy;
 #include "usart.h"
 
 /* USER CODE BEGIN 0 */
-
+volatile uint8_t uart_tx_busy = 0;  // UART发送忙标志，在UART发送完成回调中清零
 /* USER CODE END 0 */
 
 UART_HandleTypeDef huart1;

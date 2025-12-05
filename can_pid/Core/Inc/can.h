@@ -35,8 +35,7 @@ extern "C" {
 extern CAN_HandleTypeDef hcan;
 
 /* USER CODE BEGIN Private defines */
-#define DJI_3508_CAN_ID 0x200  // DJI 3508电机的CAN ID
-#define DJI_3508_FEEDBACK_ID_START 0x201  // DJI 3508电机反馈ID起始地址
+// 电机减速比 3591/187 ≈ 19.2037
 
 // 电机反馈数据结构
 typedef struct {
@@ -44,9 +43,8 @@ typedef struct {
     int16_t speed;      // 电机转速
     int16_t current;    // 电机电流
     int16_t temp;       // 电机温度
-} motor_feedback_t;
+} motor_feedback_t;  // 统一命名为 motor_feedback_t
 
-// PID控制器结构体
 typedef struct {
     float kp;           // 比例系数
     float ki;           // 积分系数
@@ -59,7 +57,6 @@ typedef struct {
     float output;       // 输出值
 } pid_controller_t;
 
-// 串级PID控制器结构体
 typedef struct {
     pid_controller_t angle_pid;   // 角度环PID控制器
     pid_controller_t speed_pid;   // 速度环PID控制器
@@ -69,14 +66,11 @@ typedef struct {
     float current_speed;          // 当前速度
 } cascade_pid_controller_t;
 
-// 电机连续角度跟踪变量（用于多圈角度计算）
-extern uint8_t  motor_angle_inited[4];
-extern uint16_t motor_last_angle_raw[4];
-extern float    motor_continuous_angle[4];
-
-// UART发送状态标志
+extern uint8_t  motor_angle_inited;         // 标记是否已初始化连续角度
+extern uint16_t motor_last_angle_raw;       // 上一次原始角度（0..8191）用于计算跨越
+extern float    motor_continuous_angle;     // 连续角度跟踪（多圈），单位：度
 extern volatile uint8_t uart_tx_busy;
-
+extern motor_feedback_t motor_feedback[4];  // 为4个电机维护反馈数据
 /* USER CODE END Private defines */
 
 void MX_CAN_Init(void);
@@ -84,15 +78,12 @@ void MX_CAN_Init(void);
 /* USER CODE BEGIN Prototypes */
 void can_dji_motor_control(uint8_t motor_id, int16_t current);
 void can_dji_motor_control_multi(int16_t current1, int16_t current2, int16_t current3, int16_t current4);
-void can_receive_callback(CAN_RxHeaderTypeDef *rx_header, uint8_t rx_data[]);
 void pid_init(pid_controller_t *pid, float kp, float ki, float kd);
 float pid_calculate(pid_controller_t *pid, float target, float current, float dt);
 void cascade_pid_init(cascade_pid_controller_t *cascade_pid, float angle_kp, float angle_ki, float angle_kd, float speed_kp, float speed_ki, float speed_kd);
 float cascade_pid_calculate(cascade_pid_controller_t *cascade_pid, float target_angle, float current_angle, float current_speed, float dt);
 void motor_rotate_to_angle(uint8_t motor_id, float target_angle, float speed_limit);
-
-// 电机反馈数据外部声明
-extern motor_feedback_t motor_feedback[4];
+void can_feedcallback(CAN_RxHeaderTypeDef *rx_header, uint8_t rx_data[]);
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus

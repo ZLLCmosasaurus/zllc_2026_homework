@@ -53,6 +53,57 @@ float pid_calculate(pid_controller_t *pid, float target, float current);
 
 ### 1. 初始化
 
+<<<<<<< HEAD
+```c
+  hcan.Instance = CAN1;
+  hcan.Init.Prescaler = 4;
+  hcan.Init.Mode = CAN_MODE_NORMAL;
+  hcan.Init.SyncJumpWidth = CAN_SJW_2TQ;
+  hcan.Init.TimeSeg1 = CAN_BS1_3TQ;
+  hcan.Init.TimeSeg2 = CAN_BS2_5TQ;
+  hcan.Init.TimeTriggeredMode = DISABLE;
+  hcan.Init.AutoBusOff = DISABLE;
+  hcan.Init.AutoWakeUp = DISABLE;
+  hcan.Init.AutoRetransmission = DISABLE;
+  hcan.Init.ReceiveFifoLocked = DISABLE;
+  hcan.Init.TransmitFifoPriority = DISABLE;
+
+  if (HAL_CAN_Init(&hcan) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+      CAN_FilterTypeDef can_filter;
+    can_filter.FilterBank           = 0;
+    can_filter.FilterMode           = CAN_FILTERMODE_IDMASK;
+    can_filter.FilterScale          = CAN_FILTERSCALE_32BIT;
+    can_filter.FilterIdHigh         = 0x0000;
+    can_filter.FilterIdLow          = 0x0000;
+    can_filter.FilterMaskIdHigh     = 0x0000;
+    can_filter.FilterMaskIdLow      = 0x0000;
+    can_filter.FilterFIFOAssignment = CAN_RX_FIFO0;
+    can_filter.FilterActivation     = ENABLE;
+    can_filter.SlaveStartFilterBank = 14;
+
+    if (HAL_CAN_ConfigFilter(&hcan, &can_filter) != HAL_OK) 
+    {
+        Error_Handler();
+    }
+
+    if (HAL_CAN_Start(&hcan) != HAL_OK) 
+    {
+        Error_Handler();
+    }
+
+    if (HAL_CAN_ActivateNotification(&hcan, CAN_IT_RX_FIFO0_MSG_PENDING) != HAL_OK)
+    {
+        Error_Handler();
+    }
+```
+
+### 2. 参数配置
+
+=======
 在[main.c](file:///c%3A/RM/can_pid/Core/Src/main.c)的初始化部分，已经完成了以下初始化：
 - CAN总线初始化
 - PID控制器初始化
@@ -61,6 +112,7 @@ float pid_calculate(pid_controller_t *pid, float target, float current);
 
 在[main.c](file:///c%3A/RM/can_pid/Core/Src/main.c)中可以调整以下参数：
 
+>>>>>>> 98233368689caa5d58bb922562b1bd609c89d360
 ```c
 // PID参数设置
 pid_init(&motor_pid, 10.0f, 0.1f, 1.0f);  
