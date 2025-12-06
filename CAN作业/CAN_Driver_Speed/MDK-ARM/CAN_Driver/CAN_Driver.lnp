@@ -1,0 +1,24 @@
+--cpu Cortex-M3
+"can_driver\startup_stm32f103xb.o"
+"can_driver\main.o"
+"can_driver\gpio.o"
+"can_driver\can.o"
+"can_driver\stm32f1xx_it.o"
+"can_driver\stm32f1xx_hal_msp.o"
+"can_driver\stm32f1xx_hal_gpio_ex.o"
+"can_driver\stm32f1xx_hal_can.o"
+"can_driver\stm32f1xx_hal.o"
+"can_driver\stm32f1xx_hal_rcc.o"
+"can_driver\stm32f1xx_hal_rcc_ex.o"
+"can_driver\stm32f1xx_hal_gpio.o"
+"can_driver\stm32f1xx_hal_dma.o"
+"can_driver\stm32f1xx_hal_cortex.o"
+"can_driver\stm32f1xx_hal_pwr.o"
+"can_driver\stm32f1xx_hal_flash.o"
+"can_driver\stm32f1xx_hal_flash_ex.o"
+"can_driver\stm32f1xx_hal_exti.o"
+"can_driver\system_stm32f1xx.o"
+--strict --scatter "CAN_Driver\CAN_Driver.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "CAN_Driver.map" -o CAN_Driver\CAN_Driver.axf
