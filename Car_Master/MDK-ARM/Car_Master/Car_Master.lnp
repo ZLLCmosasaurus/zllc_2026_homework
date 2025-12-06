@@ -1,0 +1,28 @@
+--cpu Cortex-M3
+"car_master\startup_stm32f103xb.o"
+"car_master\serialcom.o"
+"car_master\main.o"
+"car_master\gpio.o"
+"car_master\tim.o"
+"car_master\usart.o"
+"car_master\stm32f1xx_it.o"
+"car_master\stm32f1xx_hal_msp.o"
+"car_master\stm32f1xx_hal_gpio_ex.o"
+"car_master\stm32f1xx_hal_tim.o"
+"car_master\stm32f1xx_hal_tim_ex.o"
+"car_master\stm32f1xx_hal.o"
+"car_master\stm32f1xx_hal_rcc.o"
+"car_master\stm32f1xx_hal_rcc_ex.o"
+"car_master\stm32f1xx_hal_gpio.o"
+"car_master\stm32f1xx_hal_dma.o"
+"car_master\stm32f1xx_hal_cortex.o"
+"car_master\stm32f1xx_hal_pwr.o"
+"car_master\stm32f1xx_hal_flash.o"
+"car_master\stm32f1xx_hal_flash_ex.o"
+"car_master\stm32f1xx_hal_exti.o"
+"car_master\stm32f1xx_hal_uart.o"
+"car_master\system_stm32f1xx.o"
+--library_type=microlib --strict --scatter "Car_Master\Car_Master.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "Car_Master.map" -o Car_Master\Car_Master.axf
