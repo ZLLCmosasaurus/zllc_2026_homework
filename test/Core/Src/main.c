@@ -47,27 +47,8 @@
 
 /* USER CODE BEGIN PV */
 static ControlFrame_t g_rx_frame;
-static uint8_t g_rx_buf[18];
+static uint8_t g_rx_buf[36];
 
-/* 调试用数组：解码前的原始数据（18字节） */
-uint8_t debug_raw_data[18];
-
-/* 调试用数组：解码后的数据
- * [0]: ch0 (uint16_t)
- * [1]: ch1 (uint16_t)
- * [2]: ch2 (uint16_t)
- * [3]: ch3 (uint16_t)
- * [4]: s1 (uint8_t, 存储在uint16_t的低8位)
- * [5]: s2 (uint8_t, 存储在uint16_t的低8位)
- * [6]: mouse_x (int16_t, 以uint16_t形式存储)
- * [7]: mouse_y (int16_t, 以uint16_t形式存储)
- * [8]: mouse_z (int16_t, 以uint16_t形式存储)
- * [9]: mouse_left (uint8_t, 存储在uint16_t的低8位)
- * [10]: mouse_right (uint8_t, 存储在uint16_t的低8位)
- * [11]: key (uint16_t)
- * [12]: reserve (uint16_t)
- */
-uint16_t debug_decoded_data[13];
 
 /* USER CODE END PV */
 
@@ -129,32 +110,10 @@ int main(void)
     
     if (rx_status == HAL_OK)
     {
-      /* 复制解码前的原始数据到调试数组 */
-      for (uint8_t i = 0; i < 18; i++)
-      {
-        debug_raw_data[i] = g_rx_buf[i];
-      }
-      
-      /* 解码数据 */
-      ControlFrame_Decode(g_rx_buf, &g_rx_frame);
-      
-      /* 将解码后的结构体数据复制到调试数组 */
-      debug_decoded_data[0] = g_rx_frame.ch0;           /* ch0 */
-      debug_decoded_data[1] = g_rx_frame.ch1;           /* ch1 */
-      debug_decoded_data[2] = g_rx_frame.ch2;           /* ch2 */
-      debug_decoded_data[3] = g_rx_frame.ch3;           /* ch3 */
-      debug_decoded_data[4] = (uint16_t)g_rx_frame.s1;  /* s1 */
-      debug_decoded_data[5] = (uint16_t)g_rx_frame.s2;  /* s2 */
-      debug_decoded_data[6] = (uint16_t)g_rx_frame.mouse_x;   /* mouse_x */
-      debug_decoded_data[7] = (uint16_t)g_rx_frame.mouse_y;   /* mouse_y */
-      debug_decoded_data[8] = (uint16_t)g_rx_frame.mouse_z;   /* mouse_z */
-      debug_decoded_data[9] = (uint16_t)g_rx_frame.mouse_left; /* mouse_left */
-      debug_decoded_data[10] = (uint16_t)g_rx_frame.mouse_right; /* mouse_right */
-      debug_decoded_data[11] = g_rx_frame.key;           /* key */
-      debug_decoded_data[12] = g_rx_frame.reserve;      /* reserve */
-    }
+     ControlFrame_Decode(g_rx_buf, &g_rx_frame);
     
-    HAL_Delay(1);
+     HAL_Delay(1);
+    }
   }
   /* USER CODE END 3 */
 }
