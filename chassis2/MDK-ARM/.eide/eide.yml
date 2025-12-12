@@ -109,6 +109,7 @@ virtualFolder:
           files:
             - path: ../User/Middleware/Algorithm/alg_pid.cpp
             - path: ../User/Middleware/Algorithm/alg_slope.cpp
+            - path: ../User/Middleware/Algorithm/alg_fsm.cpp
           folders: []
         - name: drv
           files:
@@ -118,7 +119,8 @@ virtualFolder:
             - path: ../User/Middleware/Driver/drv_math.cpp
           folders: []
     - name: Interaction
-      files: []
+      files:
+        - path: ../User/Interaction/ita_chariot.cpp
       folders: []
     - name: Task
       files:
@@ -141,6 +143,8 @@ targets:
       defineList:
         - USE_HAL_DRIVER
         - STM32F407xx
+        - GIMBAL
+        - USE_DR16
       incList:
         - ../Core/Inc
         - ../USB_DEVICE/App

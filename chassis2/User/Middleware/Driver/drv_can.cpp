@@ -214,7 +214,7 @@ void TIM_CAN_PeriodElapsedCallback()
     {
         mod10 = 0;
         // CAN2超级电容
-        CAN_Send_Data(&hcan2, 0x66, CAN1_Supercap_Tx_Data, 8);
+//        CAN_Send_Data(&hcan2, 0x66, CAN1_Supercap_Tx_Data, 8);
     }
 
     // CAN1总线  四个底盘电机  

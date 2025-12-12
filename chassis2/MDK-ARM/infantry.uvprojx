@@ -338,7 +338,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls> </MiscControls>
-              <Define>USE_HAL_DRIVER,STM32F407xx</Define>
+              <Define>USE_HAL_DRIVER,STM32F407xx,GIMBAL,USE_DR16</Define>
               <Undefine></Undefine>
               <IncludePath>../Core/Inc;../USB_DEVICE/App;../USB_DEVICE/Target;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Middlewares/ST/STM32_USB_Device_Library/Core/Inc;../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;../Middlewares/ST/ARM/DSP/Inc;..\User\Device;..\User\Interaction;..\User\Middleware\Algorithm;..\User\Middleware\Driver;..\User\Task;..\User\chariot</IncludePath>
             </VariousControls>
@@ -669,6 +669,11 @@
               <FileType>8</FileType>
               <FilePath>..\User\Middleware\Algorithm\alg_slope.cpp</FilePath>
             </File>
+            <File>
+              <FileName>alg_fsm.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\User\Middleware\Algorithm\alg_fsm.cpp</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -698,6 +703,13 @@
         </Group>
         <Group>
           <GroupName>Interaction</GroupName>
+          <Files>
+            <File>
+              <FileName>ita_chariot.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\User\Interaction\ita_chariot.cpp</FilePath>
+            </File>
+          </Files>
         </Group>
         <Group>
           <GroupName>Task</GroupName>

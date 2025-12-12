@@ -57,7 +57,7 @@ void Class_Tricycle_Chassis::Init(float __Velocity_X_Max, float __Velocity_Y_Max
     //电机PID批量初始化
     for (int i = 0; i < 4; i++)
     {
-        Motor_Wheel[i].PID_Omega.Init(150.0f, 2.7f, 1.0f, 0.0f, Motor_Wheel[i].Get_Output_Max(), Motor_Wheel[i].Get_Output_Max());
+        Motor_Wheel[i].PID_Omega.Init(155.0f, 2.7f, 1.0f, 0.0f, Motor_Wheel[i].Get_Output_Max(), Motor_Wheel[i].Get_Output_Max());
     }
 
     //轮向电机ID初始化
@@ -86,6 +86,7 @@ void Class_Tricycle_Chassis::Speed_Resolution(){
                 Motor_Wheel[i].PID_Angle.Set_Integral_Error(0.0f);
                 Motor_Wheel[i].Set_Target_Omega_Radian(0.0f);
                 Motor_Wheel[i].Set_Out(0.0f);
+							//Motor_Wheel[i].PID_Omega.Set_Out(0.0f);
             }            
         }
         break;

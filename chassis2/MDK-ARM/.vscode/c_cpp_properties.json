@@ -31,6 +31,8 @@
             "defines": [
                 "USE_HAL_DRIVER",
                 "STM32F407xx",
+                "GIMBAL",
+                "USE_DR16",
                 "RTE_COMPONENTS_H",
                 "__alignof__(x)=",
                 "__asm(x)=",

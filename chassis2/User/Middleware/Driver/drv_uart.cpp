@@ -139,9 +139,9 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
     {
         UART3_Manage_Object.Rx_Length = Size;
         UART3_Manage_Object.Callback_Function(UART3_Manage_Object.Rx_Buffer, Size);
-        //memset(UART3_Manage_Object.Rx_Buffer, 0, UART3_Manage_Object.Rx_Buffer_Length);
+        memset(UART3_Manage_Object.Rx_Buffer, 0, UART3_Manage_Object.Rx_Buffer_Length);
         HAL_UARTEx_ReceiveToIdle_DMA(huart, UART3_Manage_Object.Rx_Buffer, UART3_Manage_Object.Rx_Buffer_Length);
-//        __HAL_DMA_DISABLE_IT(&hdma_usart3_rx, DMA_IT_HT);
+        __HAL_DMA_DISABLE_IT(&hdma_usart3_rx, DMA_IT_HT);
     }
     else if (huart->Instance == UART4)
     {

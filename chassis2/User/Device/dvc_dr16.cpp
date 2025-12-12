@@ -447,7 +447,7 @@ void Class_DR16::DR16_UART_RxCpltCallback(uint8_t *Rx_Data)
 void Class_DR16::TIM1msMod50_Alive_PeriodElapsedCallback()
 {
     //判断该时间段内是否接收过遥控器数据
-    if (DR16_Flag == Pre_DR16_Flag && Image_Flag == Pre_Image_Flag)
+    if (DR16_Flag == Pre_DR16_Flag)
     {
         //遥控器断开连接
         DR16_Status = DR16_Status_DISABLE;
