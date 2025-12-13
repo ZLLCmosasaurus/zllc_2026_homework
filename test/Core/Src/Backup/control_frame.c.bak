@@ -70,6 +70,8 @@ void ControlFrame_Pack(uint8_t buf[18], const ControlFrame_t *f)
   buf[17] = (uint8_t)((f->reserve >> 8) & 0xFFU);
 }
 
+/* control_frame.c */
+
 void ControlFrame_Decode(const uint8_t buf[18], ControlFrame_t *f)
 {
   if ((buf == NULL) || (f == NULL))
@@ -79,16 +81,14 @@ void ControlFrame_Decode(const uint8_t buf[18], ControlFrame_t *f)
 
   const uint8_t *pData = buf;
 
+  // 11 bits channel decoding - 正确
   f->ch0 = (uint16_t)(((int16_t)pData[0] | ((int16_t)pData[1] << 8)) & 0x07FF);
-
   f->ch1 = (uint16_t)((((int16_t)pData[1] >> 3) | ((int16_t)pData[2] << 5)) & 0x07FF);
-
   f->ch2 = (uint16_t)((((int16_t)pData[2] >> 6) | ((int16_t)pData[3] << 2) | ((int16_t)pData[4] << 10)) & 0x07FF);
-
   f->ch3 = (uint16_t)((((int16_t)pData[4] >> 1) | ((int16_t)pData[5] << 7)) & 0x07FF);
 
-  f->s1 = (uint8_t)((pData[5] >> 4 & 0x000C) >> 2);
-  f->s2 = (uint8_t)(pData[5] >> 4 & 0x0003);
+  f->s1 = (uint8_t)((pData[5] >> 4) & 0x03);
+  f->s2 = (uint8_t)((pData[5] >> 6) & 0x03);
 
   f->mouse_x = (int16_t)((int16_t)pData[6]  | ((int16_t)pData[7]  << 8));
   f->mouse_y = (int16_t)((int16_t)pData[8]  | ((int16_t)pData[9]  << 8));
