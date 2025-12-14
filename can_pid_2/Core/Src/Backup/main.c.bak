@@ -1,0 +1,349 @@
+/* USER CODE BEGIN Header */
+/**
+  ******************************************************************************
+  * @file           : main.c
+  * @brief          : Main program body
+  ******************************************************************************
+  * @attention
+  *
+  * Copyright (c) 2025 STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
+  */
+/* USER CODE END Header */
+/* Includes ------------------------------------------------------------------*/
+#include "main.h"
+#include "can.h"
+#include "dma.h"
+#include "usart.h"
+#include "gpio.h"
+
+/* Private includes ----------------------------------------------------------*/
+/* USER CODE BEGIN Includes */
+#include "motor_control.h"
+#include <stdio.h>
+#include <string.h>
+/* USER CODE END Includes */
+
+/* Private typedef -----------------------------------------------------------*/
+/* USER CODE BEGIN PTD */
+
+/* USER CODE END PTD */
+
+/* Private define ------------------------------------------------------------*/
+/* USER CODE BEGIN PD */
+
+/* USER CODE END PD */
+
+/* Private macro -------------------------------------------------------------*/
+/* USER CODE BEGIN PM */
+
+/* USER CODE END PM */
+
+/* Private variables ---------------------------------------------------------*/
+
+/* USER CODE BEGIN PV */
+// 电机控制结构体
+MotorControl_t motor1;
+
+// 控制周期计时（用于1KHz控制频率）
+uint32_t last_control_time = 0;
+#define CONTROL_PERIOD_MS  1  // 1ms周期，对应1KHz
+
+// 串口发送相关
+static uint32_t uart_send_counter = 0;  // 串口发送计数器（用于降低发送频率）
+#define UART_SEND_INTERVAL  10  // 每10次CAN接收发送一次串口数据
+
+// 串口发送数据缓冲区（用于在主循环中发送，避免在中断中阻塞）
+typedef struct {
+  uint8_t motor_id;
+  uint16_t rotor_angle;
+  int16_t rotor_speed;
+  int16_t torque_current;
+  int8_t temperature;
+  uint8_t data_ready;  // 数据就绪标志
+} UART_SendData_t;
+
+static UART_SendData_t uart_send_data = {0};
+
+// 电机反馈回调函数
+void MotorFeedbackCallback(uint8_t motor_id, uint16_t rotor_angle, 
+                           int16_t rotor_speed, int16_t torque_current, 
+                           int8_t temperature);
+// 串口发送CAN反馈数据函数
+void UART_SendMotorFeedback(uint8_t motor_id, uint16_t rotor_angle, 
+                            int16_t rotor_speed, int16_t torque_current, 
+                            int8_t temperature);
+/* USER CODE END PV */
+
+/* Private function prototypes -----------------------------------------------*/
+void SystemClock_Config(void);
+/* USER CODE BEGIN PFP */
+
+/* USER CODE END PFP */
+
+/* Private user code ---------------------------------------------------------*/
+/* USER CODE BEGIN 0 */
+
+/* USER CODE END 0 */
+
+/**
+  * @brief  The application entry point.
+  * @retval int
+  */
+int main(void)
+{
+
+  /* USER CODE BEGIN 1 */
+
+  /* USER CODE END 1 */
+
+  /* MCU Configuration--------------------------------------------------------*/
+
+  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
+  HAL_Init();
+
+  /* USER CODE BEGIN Init */
+
+  /* USER CODE END Init */
+
+  /* Configure the system clock */
+  SystemClock_Config();
+
+  /* USER CODE BEGIN SysInit */
+
+  /* USER CODE END SysInit */
+
+  /* Initialize all configured peripherals */
+  MX_GPIO_Init();
+  MX_DMA_Init();
+  MX_CAN_Init();
+  MX_USART1_UART_Init();
+  /* USER CODE BEGIN 2 */
+  // 初始化电机控制（电机ID为1）
+  MotorControl_Init(&motor1, 1);
+  
+  // 配置CAN过滤器，接收电机ID为1的反馈（0x201）
+  CAN_InitFilter(1);
+  
+  // 设置CAN接收回调函数
+  CAN_SetRxCallback(MotorFeedbackCallback);
+  
+  // 启动CAN接收
+  CAN_StartReceive();
+  
+  // 使能电机控制
+  MotorControl_SetEnable(&motor1, 1);
+  
+  // 设置初始目标角度为当前位置
+  motor1.target_output_angle = motor1.total_output_angle;
+  
+  // 初始化控制时间
+  last_control_time = HAL_GetTick();
+  
+  /* USER CODE END 2 */
+
+  /* Infinite loop */
+  /* USER CODE BEGIN WHILE */
+  while (1)
+  {
+    /* USER CODE END WHILE */
+
+    /* USER CODE BEGIN 3 */
+    // 1KHz控制周期（1ms）
+    uint32_t current_time = HAL_GetTick();
+    if (current_time - last_control_time >= CONTROL_PERIOD_MS)
+    {
+      // 计算PID输出（角度外环 + 速度内环）
+      int16_t current_command = MotorControl_Calculate(&motor1);
+      
+      // 发送控制命令给电机
+      CAN_SendMotorCommand(motor1.motor_id, current_command);
+      
+      // 更新控制时间
+      last_control_time = current_time;
+    }
+    
+    // 检查是否有串口数据需要发送（在主循环中发送，避免在中断中阻塞）
+    if (uart_send_data.data_ready)
+    {
+      uart_send_data.data_ready = 0;  // 清除标志
+      UART_SendMotorFeedback(uart_send_data.motor_id,
+                             uart_send_data.rotor_angle,
+                             uart_send_data.rotor_speed,
+                             uart_send_data.torque_current,
+                             uart_send_data.temperature);
+    }
+    
+    // 可以在这里添加其他逻辑，例如：
+    // - 按键检测，触发正转/反转两圈
+    //   示例：MotorControl_RotateTwoRoundsForward(&motor1);  // 正转两圈
+    //   示例：MotorControl_RotateTwoRoundsReverse(&motor1);  // 反转两圈
+    // - 状态监控
+    // - 错误处理等
+    
+    HAL_Delay(1);  // 避免CPU占用过高
+  }
+  /* USER CODE END 3 */
+}
+
+/**
+  * @brief System Clock Configuration
+  * @retval None
+  */
+void SystemClock_Config(void)
+{
+  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+
+  /** Initializes the RCC Oscillators according to the specified parameters
+  * in the RCC_OscInitTypeDef structure.
+  */
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
+  RCC_OscInitStruct.HSEState = RCC_HSE_ON;
+  RCC_OscInitStruct.HSEPredivValue = RCC_HSE_PREDIV_DIV1;
+  RCC_OscInitStruct.HSIState = RCC_HSI_ON;
+  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
+  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
+  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL9;
+  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  /** Initializes the CPU, AHB and APB buses clocks
+  */
+  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
+                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
+  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
+  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
+  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
+
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+}
+
+/* USER CODE BEGIN 4 */
+/**
+  * @brief  电机反馈回调函数（在CAN接收中断中调用）
+  * @param  motor_id: 电机ID
+  * @param  rotor_angle: 转子角度 (0-8191)
+  * @param  rotor_speed: 转子转速 (rpm)
+  * @param  torque_current: 转矩电流
+  * @param  temperature: 温度
+  * @retval None
+  */
+void MotorFeedbackCallback(uint8_t motor_id, uint16_t rotor_angle, 
+                           int16_t rotor_speed, int16_t torque_current, 
+                           int8_t temperature)
+{
+  // 更新对应电机的反馈数据
+  if (motor_id == motor1.motor_id)
+  {
+    MotorControl_UpdateFeedback(&motor1, rotor_angle, rotor_speed, 
+                                torque_current, temperature);
+  }
+  
+  // 降低发送频率，每10次才更新一次串口发送数据（避免阻塞中断）
+  uart_send_counter++;
+  if (uart_send_counter >= UART_SEND_INTERVAL)
+  {
+    uart_send_counter = 0;
+    // 更新串口发送数据缓冲区（在主循环中发送）
+    uart_send_data.motor_id = motor_id;
+    uart_send_data.rotor_angle = rotor_angle;
+    uart_send_data.rotor_speed = rotor_speed;
+    uart_send_data.torque_current = torque_current;
+    uart_send_data.temperature = temperature;
+    uart_send_data.data_ready = 1;  // 标记数据就绪
+  }
+}
+
+/**
+  * @brief  通过串口发送电机反馈数据
+  * @param  motor_id: 电机ID
+  * @param  rotor_angle: 转子角度 (0-8191)
+  * @param  rotor_speed: 转子转速 (rpm)
+  * @param  torque_current: 转矩电流
+  * @param  temperature: 温度
+  * @retval None
+  */
+void UART_SendMotorFeedback(uint8_t motor_id, uint16_t rotor_angle, 
+                            int16_t rotor_speed, int16_t torque_current, 
+                            int8_t temperature)
+{
+  char uart_buffer[200];
+  float rotor_angle_deg;
+  float output_angle_deg;
+  int len;
+  
+  // 计算转子角度（度）
+  rotor_angle_deg = (float)rotor_angle * 360.0f / 8191.0f;
+  
+  // 计算输出轴角度（度，考虑减速比19）
+  output_angle_deg = rotor_angle_deg / 19.0f;
+  
+  // 获取当前输出轴累计角度（如果有电机控制结构体）
+  float total_output_angle = 0.0f;
+  if (motor_id == motor1.motor_id)
+  {
+    total_output_angle = motor1.total_output_angle;
+  }
+  
+  // 格式化输出数据
+  len = snprintf(uart_buffer, sizeof(uart_buffer),
+                 "Motor[%d]: Angle=%u(%.1f°), Speed=%d rpm, Current=%d, Temp=%d°C, Output=%.2f°\r\n",
+                 motor_id,
+                 rotor_angle, rotor_angle_deg,
+                 (int)rotor_speed,
+                 (int)torque_current,
+                 (int)temperature,
+                 total_output_angle);
+  
+  // 通过串口发送（使用阻塞式发送，但频率已降低，超时时间设置为100ms）
+  if (len > 0 && len < sizeof(uart_buffer))
+  {
+    HAL_UART_Transmit(&huart1, (uint8_t*)uart_buffer, len, 100);
+  }
+}
+
+/* USER CODE END 4 */
+
+/**
+  * @brief  This function is executed in case of error occurrence.
+  * @retval None
+  */
+void Error_Handler(void)
+{
+  /* USER CODE BEGIN Error_Handler_Debug */
+  /* User can add his own implementation to report the HAL error return state */
+  __disable_irq();
+  while (1)
+  {
+  }
+  /* USER CODE END Error_Handler_Debug */
+}
+#ifdef USE_FULL_ASSERT
+/**
+  * @brief  Reports the name of the source file and the source line number
+  *         where the assert_param error has occurred.
+  * @param  file: pointer to the source file name
+  * @param  line: assert_param error line source number
+  * @retval None
+  */
+void assert_failed(uint8_t *file, uint32_t line)
+{
+  /* USER CODE BEGIN 6 */
+  /* User can add his own implementation to report the file name and line number,
+     ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+  /* USER CODE END 6 */
+}
+#endif /* USE_FULL_ASSERT */
