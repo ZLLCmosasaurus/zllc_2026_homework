@@ -1,0 +1,27 @@
+--cpu=Cortex-M4.fp
+"dbus4\startup_stm32f407xx.o"
+"dbus4\main.o"
+"dbus4\gpio.o"
+"dbus4\dma.o"
+"dbus4\usart.o"
+"dbus4\stm32f4xx_it.o"
+"dbus4\stm32f4xx_hal_msp.o"
+"dbus4\stm32f4xx_hal_uart.o"
+"dbus4\stm32f4xx_hal_rcc.o"
+"dbus4\stm32f4xx_hal_rcc_ex.o"
+"dbus4\stm32f4xx_hal_flash.o"
+"dbus4\stm32f4xx_hal_flash_ex.o"
+"dbus4\stm32f4xx_hal_flash_ramfunc.o"
+"dbus4\stm32f4xx_hal_gpio.o"
+"dbus4\stm32f4xx_hal_dma_ex.o"
+"dbus4\stm32f4xx_hal_dma.o"
+"dbus4\stm32f4xx_hal_pwr.o"
+"dbus4\stm32f4xx_hal_pwr_ex.o"
+"dbus4\stm32f4xx_hal_cortex.o"
+"dbus4\stm32f4xx_hal.o"
+"dbus4\stm32f4xx_hal_exti.o"
+"dbus4\system_stm32f4xx.o"
+--strict --scatter "dbus4\dbus4.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "dbus4.map" -o dbus4\dbus4.axf
