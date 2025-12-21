@@ -1,0 +1,6 @@
+r
+halt
+loadfile "c:\RM\RM_Temp\ZLLC_2026\MDK-ARM\Sentry\ZLLC_2026.hex"
+r
+go
+exit

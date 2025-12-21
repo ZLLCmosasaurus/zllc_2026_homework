@@ -1,0 +1,9 @@
+>>> cc
+
+
+
+>>> ld
+
+Warning: L6776W: The debug frame in .debug_frame(QuaternionEKF.o) does not describe an executable section.
+Program Size: Code=110510 RO-data=1138 RW-data=432 ZI-data=72232  
+Finished: 0 information, 1 warning and 0 error messages.
