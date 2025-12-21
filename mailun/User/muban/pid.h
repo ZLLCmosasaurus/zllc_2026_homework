@@ -1,0 +1,37 @@
+#ifndef __PID_H__
+#define __PID_H__
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#include "main.h"
+
+typedef struct {
+    float kp;              // 比例系数
+    float ki;              // 积分系数
+    float kd;              // 微分系数
+    float target;          // 目标值
+    float current;         // 当前值
+    float error;           // 当前误差
+    float last_error;      // 上一次误差
+    float integral;        // 积分累积
+    float output;          // 输出值
+    float output_max;      // 输出最大值限制
+    float output_min;      // 输出最小值限制
+    float integral_max;    // 积分限幅
+    float integral_min;    // 积分限幅
+} PID_Controller_t;
+
+void PID_Init(PID_Controller_t *pid, float kp, float ki, float kd, 
+              float output_max, float output_min);
+void PID_SetTarget(PID_Controller_t *pid, float target);
+float PID_Calculate(PID_Controller_t *pid, float current);
+void PID_Reset(PID_Controller_t *pid);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* __PID_H__ */
+
