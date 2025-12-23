@@ -1,8 +1,0 @@
-si 1
-speed 4000
-device STM32H723VG
-r 
-h
-erase
-loadfile ./build/Sentry.hex
-q
