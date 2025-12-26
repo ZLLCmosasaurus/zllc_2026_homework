@@ -26,11 +26,10 @@
 #include "usart.h"
 #include "usb_device.h"
 #include "gpio.h"
-#include "tsk_config_and_callback.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "tsk_config_and_callback.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -117,7 +116,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-    Task_Loop();
+
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

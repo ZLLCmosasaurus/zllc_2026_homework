@@ -3,10 +3,16 @@ name: imu
 type: ARM
 deviceName: null
 packDir: null
-srcDirs: []
+srcDirs:
+  - Core
+  - Drivers
+  - Middlewares
+  - USB_DEVICE
+  - User
 virtualFolder:
   name: <virtual_root>
-  files: []
+  files:
+    - path: startup_stm32f407xx.s
   folders: []
 dependenceList: []
 outDir: build

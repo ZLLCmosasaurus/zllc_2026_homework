@@ -5,24 +5,16 @@
 #include "drv_uart.h"
 #include "math.h"
 #include "drv_dwt.h"
-#include "dvc_imu.h"
 #include "dvc_referee.h"
 
 /* Private variables ---------------------------------------------------------*/
 
 uint32_t init_finished = 0;
 bool start_flag = 0;
+static uint8_t referee_alive_counter = 0;
 
-Class_IMU imu;
 Class_Referee referee;
 
-float test_imu_roll = 0;
-float test_imu_pitch = 0;
-float test_imu_yaw = 0;
-
-/** 
- * 核心控制逻辑：遥控器保活 -> 运动解算 -> PID计算 -> 发送电流
- */
 void Task1ms_TIM5_Callback()
 {
     init_finished++;
@@ -31,14 +23,12 @@ void Task1ms_TIM5_Callback()
 
     if(start_flag==1)
     {
-        imu.TIM_Calculate_PeriodElapsedCallback();
-
-        test_imu_roll = imu.Get_Angle_Roll();
-        test_imu_pitch = imu.Get_Angle_Pitch();
-        test_imu_yaw = imu.Get_Angle_Yaw();
-
-        referee.TIM1msMod50_Alive_PeriodElapsedCallback();
-        
+        referee_alive_counter++;
+        if (referee_alive_counter >= 100) // 每 100ms 检查一次保活
+        {
+            referee_alive_counter = 0;
+            referee.TIM1msMod50_Alive_PeriodElapsedCallback();
+        }
     }
 }
 
@@ -54,11 +44,10 @@ void Referee_Data_Callback(uint8_t *Rx_Buffer, uint16_t Rx_Length)
 extern "C" void Task_Init()
 {  
     DWT_Init(168);
-
-    imu.Init();
+    
     referee.Init(&huart6, 0xA5);
 
-    UART_Init(&huart6, Referee_Data_Callback, 200);
+    UART_Init(&huart6, Referee_Data_Callback, 128);
     
     TIM_Init(&htim5, Task1ms_TIM5_Callback);
 
