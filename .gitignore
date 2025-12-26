@@ -1,0 +1,41 @@
+﻿# 编译产物
+build/
+dist/
+*.exe
+*.dll
+*.so
+*.o
+*.obj
+*.class
+
+# 依赖包
+node_modules/
+vendor/
+packages/
+
+# 日志文件
+*.log
+logs/
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# IDE 文件
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 大文件
+*.zip
+*.rar
+*.7z
+*.tar.gz
+*.mp4
+*.avi
+*.mov
+*.mp3
+*.wav
+*.pdf
+*.psd
