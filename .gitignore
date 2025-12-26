@@ -39,3 +39,36 @@ Thumbs.db
 *.wav
 *.pdf
 *.psd
+# Keil MDK 编译输出
+*.axf
+*.crf
+*.d
+*.dep
+*.htm
+*.lnp
+*.map
+*.o
+*.lst
+*.sct
+*.crc
+
+# MDK-ARM 临时文件
+MDK-ARM/*.uvguix.*
+MDK-ARM/*.uvoptx
+MDK-ARM/*.uvprojx
+
+# IAR 项目文件
+*.ewp
+*.eww
+*.ewd
+
+# 编译目录
+build/
+Debug/
+Release/
+*.log
+
+# IDE 配置
+.vscode/
+.cmsis/
+.eide/
