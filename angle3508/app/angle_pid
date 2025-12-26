@@ -1,0 +1,19 @@
+   
+
+	if (motor1_data->ecd - motor1_data->last_ecd > 4095)
+    {
+        ecd_count--;
+    }
+    else if (motor1_data->ecd - motor1_data->last_ecd < -4095)
+    {
+        ecd_count++;
+    }
+
+    if (ecd_count == 8191)
+    {
+        ecd_count = -(8191 - 1);
+    }
+    else if (ecd_count == -8191)
+    {
+        ecd_count = 8191 - 1;
+    }
