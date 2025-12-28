@@ -125,6 +125,11 @@ virtualFolder:
         - path: ../User/Task/task.cpp
         - path: ../User/Task/task.h
       folders: []
+    - name: Chariot
+      files:
+        - path: ../User/Chariot/crt_chassis.cpp
+        - path: ../User/Chariot/crt_chassis.h
+      folders: []
 dependenceList: []
 outDir: build
 miscInfo:
@@ -151,6 +156,7 @@ targets:
         - ../User/Middleware/Algorithm
         - ../User/Middleware/Driver
         - ../User/Task
+        - ../User/Chariot
         - .cmsis/include
         - RTE/_infantry
       libList: []

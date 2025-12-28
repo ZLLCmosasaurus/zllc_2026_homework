@@ -40,21 +40,24 @@ infantry/task.o: ../User/Task/task.cpp ../User/Task/task.h \
   ../Drivers/STM32F4xx_HAL_Driver/Inc\stm32f4xx_hal_pcd.h \
   ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb.h \
   ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h \
-  ../User/Middleware/Driver\drv_can.h \
-  E:\KEIL5\ARM\ARMCLANG\Bin\..\include\libcxx\stdlib.h \
-  E:\KEIL5\ARM\ARMCLANG\Bin\..\include\stdlib.h \
-  E:\KEIL5\ARM\ARMCLANG\Bin\..\include\libcxx\string.h \
-  E:\KEIL5\ARM\ARMCLANG\Bin\..\include\string.h \
-  ../User/Middleware/Driver\drv_tim.h ../User/Device\dvc_djimotor.h \
-  ../User/Middleware/Algorithm\alg_pid.h \
+  ../User/Chariot\crt_chassis.h ../User/Middleware/Algorithm\alg_slope.h \
   ../User/Middleware/Driver\drv_math.h \
   E:\KEIL5\ARM\ARMCLANG\Bin\..\include\libcxx\limits.h \
   E:\KEIL5\ARM\ARMCLANG\Bin\..\include\limits.h \
   ../Middlewares/ST/ARM/DSP/Inc\arm_math.h \
+  E:\KEIL5\ARM\ARMCLANG\Bin\..\include\libcxx\string.h \
+  E:\KEIL5\ARM\ARMCLANG\Bin\..\include\string.h \
   E:\KEIL5\ARM\ARMCLANG\Bin\..\include\libcxx\math.h \
   E:\KEIL5\ARM\ARMCLANG\Bin\..\include\math.h \
   E:\KEIL5\ARM\ARMCLANG\Bin\..\include\libcxx\type_traits \
   E:\KEIL5\ARM\ARMCLANG\Bin\..\include\libcxx\cstddef \
   E:\KEIL5\ARM\ARMCLANG\Bin\..\include\libcxx\float.h \
   E:\KEIL5\ARM\ARMCLANG\Bin\..\include\float.h \
-  ../User/Middleware/Algorithm\alg_power_limit.h ../Core/Inc\main.h
+  ../User/Device\dvc_djimotor.h ../User/Middleware/Algorithm\alg_pid.h \
+  ../User/Middleware/Driver\drv_can.h \
+  E:\KEIL5\ARM\ARMCLANG\Bin\..\include\libcxx\stdlib.h \
+  E:\KEIL5\ARM\ARMCLANG\Bin\..\include\stdlib.h \
+  ../User/Middleware/Algorithm\alg_power_limit.h ../Core/Inc\main.h \
+  ../User/Middleware/Driver\drv_tim.h \
+  ../User/Middleware/Driver\drv_uart.h ../Core/Inc\usart.h \
+  ../User/Device\dvc_dr16.h ../User/Middleware/Algorithm\alg_fsm.h

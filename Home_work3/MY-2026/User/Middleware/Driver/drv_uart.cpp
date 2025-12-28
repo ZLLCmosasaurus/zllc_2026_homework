@@ -47,7 +47,7 @@ void UART_Init(UART_HandleTypeDef *huart, UART_Call_Back Callback_Function, uint
         UART1_Manage_Object.Callback_Function = Callback_Function;
         UART1_Manage_Object.Rx_Buffer_Length = Rx_Buffer_Length;
         HAL_UARTEx_ReceiveToIdle_DMA(huart, UART1_Manage_Object.Rx_Buffer, UART1_Manage_Object.Rx_Buffer_Length);
-			//__HAL_DMA_DISABLE_IT(&hdma_usart1_rx, DMA_IT_HT);
+		__HAL_DMA_DISABLE_IT(&hdma_usart1_rx, DMA_IT_HT);
     }
     else if (huart->Instance == USART2)
     {
@@ -55,7 +55,7 @@ void UART_Init(UART_HandleTypeDef *huart, UART_Call_Back Callback_Function, uint
         UART2_Manage_Object.Callback_Function = Callback_Function;
         UART2_Manage_Object.Rx_Buffer_Length = Rx_Buffer_Length;
         HAL_UARTEx_ReceiveToIdle_DMA(huart, UART2_Manage_Object.Rx_Buffer, UART2_Manage_Object.Rx_Buffer_Length);
-//			__HAL_DMA_DISABLE_IT(&hdma_usart2_rx, DMA_IT_HT);
+		//__HAL_DMA_DISABLE_IT(&hdma_usart2_rx, DMA_IT_HT);
     }
     else if (huart->Instance == USART3)
     {
@@ -63,7 +63,7 @@ void UART_Init(UART_HandleTypeDef *huart, UART_Call_Back Callback_Function, uint
         UART3_Manage_Object.Callback_Function = Callback_Function;
         UART3_Manage_Object.Rx_Buffer_Length = Rx_Buffer_Length;  
         HAL_UARTEx_ReceiveToIdle_DMA(huart, UART3_Manage_Object.Rx_Buffer, UART3_Manage_Object.Rx_Buffer_Length);
-//			__HAL_DMA_DISABLE_IT(&hdma_usart3_rx, DMA_IT_HT);
+		__HAL_DMA_DISABLE_IT(&hdma_usart3_rx, DMA_IT_HT);
 
     }
     else if (huart->Instance == UART4)
@@ -72,7 +72,7 @@ void UART_Init(UART_HandleTypeDef *huart, UART_Call_Back Callback_Function, uint
         UART4_Manage_Object.Callback_Function = Callback_Function;
         UART4_Manage_Object.Rx_Buffer_Length = Rx_Buffer_Length;
         HAL_UARTEx_ReceiveToIdle_DMA(huart, UART4_Manage_Object.Rx_Buffer, UART4_Manage_Object.Rx_Buffer_Length);
-//			__HAL_DMA_DISABLE_IT(&hdma_usart4_rx, DMA_IT_HT);
+        //__HAL_DMA_DISABLE_IT(&hdma_usart4_rx, DMA_IT_HT);
     }
     else if (huart->Instance == UART5)
     {
@@ -80,7 +80,7 @@ void UART_Init(UART_HandleTypeDef *huart, UART_Call_Back Callback_Function, uint
         UART5_Manage_Object.Callback_Function = Callback_Function;
         UART5_Manage_Object.Rx_Buffer_Length = Rx_Buffer_Length;
         HAL_UARTEx_ReceiveToIdle_DMA(huart, UART5_Manage_Object.Rx_Buffer, UART5_Manage_Object.Rx_Buffer_Length);
-//			__HAL_DMA_DISABLE_IT(&hdma_usart5_rx, DMA_IT_HT);
+       // __HAL_DMA_DISABLE_IT(&hdma_usart5_rx, DMA_IT_HT);
     }
     else if (huart->Instance == USART6)
     {
@@ -88,7 +88,7 @@ void UART_Init(UART_HandleTypeDef *huart, UART_Call_Back Callback_Function, uint
         UART6_Manage_Object.Callback_Function = Callback_Function;
         UART6_Manage_Object.Rx_Buffer_Length = Rx_Buffer_Length;
         HAL_UARTEx_ReceiveToIdle_DMA(huart, UART6_Manage_Object.Rx_Buffer, UART6_Manage_Object.Rx_Buffer_Length);
-//				__HAL_DMA_DISABLE_IT(&hdma_usart6_rx, DMA_IT_HT);
+    	__HAL_DMA_DISABLE_IT(&hdma_usart6_rx, DMA_IT_HT);
                 memset(UART6_Manage_Object.Rx_Buffer,0,UART6_Manage_Object.Rx_Buffer_Length);
     }
 }
@@ -113,7 +113,7 @@ uint8_t UART_Send_Data(UART_HandleTypeDef *huart, uint8_t *Data, uint16_t Length
 void TIM_UART_PeriodElapsedCallback()
 {
     // UART1超电通讯
-    UART_Send_Data(&huart1, UART1_Manage_Object.Tx_Buffer, 10);
+    UART_Send_Data(&huart3, UART3_Manage_Object.Tx_Buffer, 18);
 }
 
 /**

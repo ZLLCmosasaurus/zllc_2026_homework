@@ -336,7 +336,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F407xx</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../USB_DEVICE/App;../USB_DEVICE/Target;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Middlewares/ST/STM32_USB_Device_Library/Core/Inc;../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;../Middlewares/ST/ARM/DSP/Inc;..\User\Device;..\User\Interaction;..\User\Middleware\Algorithm;..\User\Middleware\Driver;..\User\Task</IncludePath>
+              <IncludePath>../Core/Inc;../USB_DEVICE/App;../USB_DEVICE/Target;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Middlewares/ST/STM32_USB_Device_Library/Core/Inc;../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;../Middlewares/ST/ARM/DSP/Inc;..\User\Device;..\User\Interaction;..\User\Middleware\Algorithm;..\User\Middleware\Driver;..\User\Task;..\User\Chariot</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -707,6 +707,21 @@
               <FileName>task.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\User\Task\task.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Chariot</GroupName>
+          <Files>
+            <File>
+              <FileName>crt_chassis.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\User\Chariot\crt_chassis.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>crt_chassis.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Chariot\crt_chassis.h</FilePath>
             </File>
           </Files>
         </Group>
