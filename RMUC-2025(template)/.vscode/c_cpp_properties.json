@@ -1,0 +1,35 @@
+{
+    "configurations": [
+        {
+            "name": "MDK-ARM",
+            "includePath": [
+                // 工作区根目录（最重要）
+                "${workspaceFolder}",
+                
+                // drv_can.h 的精确路径
+                "${workspaceFolder}/user/Middleware/Driver",
+                
+                // 其他必要路径
+                "${workspaceFolder}/MDK-ARM",
+                "${workspaceFolder}/user",
+                "${workspaceFolder}/Core/Inc",
+                "${workspaceFolder}/Drivers/STM32F4xx_HAL_Driver/Inc",
+                "${workspaceFolder}/Drivers/CMSIS/Device/ST/STM32F4xx/Include",
+                "${workspaceFolder}/Drivers/CMSIS/Include",
+                
+                // Keil路径
+                "C:/Keil_v5/ARM/ARMCC/include"
+            ],
+            "defines": [
+                "USE_HAL_DRIVER",
+                "STM32F427xx",
+                "__CC_ARM"
+            ],
+            "compilerPath": "C:/Keil_v5/ARM/ARMCC/bin/armcc.exe",
+            "cStandard": "c99",
+            "cppStandard": "c++11",
+            "intelliSenseMode": "clang-arm"
+        }
+    ],
+    "version": 4
+}
