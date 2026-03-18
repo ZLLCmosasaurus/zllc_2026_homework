@@ -1,0 +1,61 @@
+#ifndef __SERVO_CONTROL_H
+#define __SERVO_CONTROL_H
+
+#include "main.h"
+#include "tim.h"
+#include <stdint.h>
+
+/**
+ * @brief 舵机控制模块
+ * 
+ * 硬件配置:
+ * - 3个舵机 (MG996R)
+ * - 使用TIM1的3个PWM通道
+ * - PWM频率: 50Hz (周期20ms)
+ * - 脉宽范围: 0.5ms~2.5ms 对应 0~180度
+ * 
+ * 引脚分配:
+ * - PA8: TIM1_CH1 -> 舵机1
+ * - PA9: TIM1_CH2 -> 舵机2
+ * - PA10: TIM1_CH3 -> 舵机3
+ * 
+ * PS2手柄控制映射 (每组2个键控制1个舵机的正反转):
+ * - 舵机1: UP键(正转) + DOWN键(反转)
+ * - 舵机2: LEFT键(正转) + RIGHT键(反转)
+ * - 舵机3: △键(正转) + ×键(反转)
+ */
+
+// 舵机编号定义
+typedef enum {
+    SERVO_1 = 0,  // PA8 - TIM1_CH1 - UP/DOWN键控制
+    SERVO_2 = 1,  // PA9 - TIM1_CH2 - LEFT/RIGHT键控制
+    SERVO_3 = 2,  // PA10 - TIM1_CH3 - △/×键控制
+    SERVO_4 = 3   // 保留，当前3舵机方案不使用
+} Servo_ID_t;
+
+// 舵机角度范围 (0-180度)
+#define SERVO_ANGLE_MIN  0
+#define SERVO_ANGLE_MAX  180
+#define SERVO_ANGLE_MID  90
+
+// 舵机PWM参数 (50Hz, 0.5ms~2.5ms对应0~180度)
+#define SERVO_PWM_FREQ   50      // 50Hz
+#define SERVO_PERIOD     20000   // 20ms (微秒)
+#define SERVO_PULSE_MIN  500     // 0.5ms  -> 0度
+#define SERVO_PULSE_MAX  2500    // 2.5ms  -> 180度
+
+// 舵机速度控制
+#define SERVO_STEP_ANGLE  2      // 每次按键移动角度
+#define SERVO_UPDATE_MS   20     // 更新间隔(毫秒)
+
+// 函数声明
+void Servo_Init(void);
+void Servo_SetAngle(Servo_ID_t servo_id, uint8_t angle);
+void Servo_SetPulse(Servo_ID_t servo_id, uint16_t pulse_us);
+uint8_t Servo_GetAngle(Servo_ID_t servo_id);
+void Servo_ResetAll(void);
+
+// PS2手柄控制接口
+void PS2_Control_Servo(uint8_t btn1, uint8_t btn2);
+
+#endif

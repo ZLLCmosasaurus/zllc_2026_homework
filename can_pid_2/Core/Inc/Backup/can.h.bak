@@ -1,0 +1,56 @@
+/* USER CODE BEGIN Header */
+/**
+  ******************************************************************************
+  * @file    can.h
+  * @brief   This file contains all the function prototypes for
+  *          the can.c file
+  ******************************************************************************
+  * @attention
+  *
+  * Copyright (c) 2025 STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
+  */
+/* USER CODE END Header */
+/* Define to prevent recursive inclusion -------------------------------------*/
+#ifndef __CAN_H__
+#define __CAN_H__
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/* Includes ------------------------------------------------------------------*/
+#include "main.h"
+
+/* USER CODE BEGIN Includes */
+#include "motor_control.h"
+/* USER CODE END Includes */
+
+extern CAN_HandleTypeDef hcan;
+
+/* USER CODE BEGIN Private defines */
+
+/* USER CODE END Private defines */
+
+void MX_CAN_Init(void);
+
+/* USER CODE BEGIN Prototypes */
+HAL_StatusTypeDef CAN_SendMotorCommand(uint8_t motor_id, int16_t current);
+HAL_StatusTypeDef CAN_InitFilter(uint8_t motor_id);
+void CAN_StartReceive(void);
+void CAN_RxCallback(void);
+void CAN_SetRxCallback(void (*callback)(uint8_t, uint16_t, int16_t, int16_t, int8_t));
+/* USER CODE END Prototypes */
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* __CAN_H__ */
+

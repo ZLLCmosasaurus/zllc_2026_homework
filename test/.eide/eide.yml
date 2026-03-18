@@ -1,0 +1,96 @@
+version: "4.1"
+name: test
+type: ARM
+deviceName: null
+packDir: null
+srcDirs:
+  - Core
+  - Drivers
+virtualFolder:
+  name: <virtual_root>
+  files:
+    - path: startup_stm32f407xx.s
+  folders: []
+dependenceList: []
+outDir: build
+miscInfo:
+  uid: b1bb2a0f6790f470f8fddf31a597d07b
+targets:
+  Debug:
+    cppPreprocessAttrs:
+      defineList:
+        - USE_HAL_DRIVER
+        - STM32F407xx
+      incList:
+        - Core/Inc
+        - Drivers/STM32F4xx_HAL_Driver/Inc
+        - Drivers/STM32F4xx_HAL_Driver/Inc/Legacy
+        - Drivers/CMSIS/Device/ST/STM32F4xx/Include
+        - Drivers/CMSIS/Include
+      libList: []
+    excludeList: []
+    toolchain: GCC
+    toolchainConfigMap:
+      GCC:
+        archExtensions: ""
+        cpuType: Cortex-M3
+        floatingPointHardware: none
+        options:
+          version: 5
+          afterBuildTasks: []
+          asm-compiler:
+            ASM_FLAGS: ""
+          beforeBuildTasks: []
+          c/cpp-compiler:
+            CXX_FLAGS: ""
+            C_FLAGS: ""
+            language-c: c11
+            language-cpp: c++11
+            one-elf-section-per-data: true
+            one-elf-section-per-function: true
+            optimization: level-debug
+            warnings: all-warnings
+          global:
+            $float-abi-type: hard
+            misc-control: ""
+            not-use-syscalls: true
+            output-debug-info: enable
+            use-newlib-nano: true
+          linker:
+            $outputTaskExcludes:
+              - .bin
+            LD_FLAGS: ""
+            LIB_FLAGS: -lm
+            output-format: elf
+            remove-unused-input-sections: true
+        scatterFilePath: STM32F407XX_FLASH.ld
+        storageLayout:
+          RAM: []
+          ROM: []
+        useCustomScatterFile: true
+    uploadConfigMap:
+      JLink:
+        baseAddr: ""
+        bin: ""
+        cpuInfo:
+          cpuName: "null"
+          vendor: "null"
+        otherCmds: ""
+        proType: 1
+        speed: 8000
+      OpenOCD:
+        baseAddr: "0x08000000"
+        bin: ""
+        interface: cmsis-dap
+        target: stm32f4x
+      STLink:
+        address: "0x08000000"
+        bin: ""
+        elFile: None
+        optionBytes: .eide/debug.st.option.bytes.ini
+        otherCmds: ""
+        proType: SWD
+        resetMode: default
+        runAfterProgram: true
+        speed: 4000
+    uploader: OpenOCD

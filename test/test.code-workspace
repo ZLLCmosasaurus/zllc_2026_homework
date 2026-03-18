@@ -1,0 +1,72 @@
+{
+    "folders": [
+        {
+            "path": "."
+        }
+    ],
+    "settings": {
+        "terminal.integrated.shellIntegration.enabled": false,
+        "clangd.arguments": [
+            "--header-insertion=never"
+        ],
+        "files.autoGuessEncoding": true,
+        "C_Cpp.default.configurationProvider": "cl.eide",
+        "C_Cpp.errorSquiggles": "disabled",
+        "files.associations": {
+            ".eideignore": "ignore",
+            "*.a51": "a51",
+            "*.h": "c",
+            "*.c": "c",
+            "*.hxx": "cpp",
+            "*.hpp": "cpp",
+            "*.c++": "cpp",
+            "*.cpp": "cpp",
+            "*.cxx": "cpp",
+            "*.cc": "cpp"
+        },
+        "[yaml]": {
+            "editor.insertSpaces": true,
+            "editor.tabSize": 4,
+            "editor.autoIndent": "advanced"
+        }
+    },
+    "extensions": {
+        "recommendations": [
+            "cl.eide",
+            "keroc.hex-fmt",
+            "xiaoyongdong.srecord",
+            "hars.cppsnippets",
+            "zixuanwang.linkerscript",
+            "redhat.vscode-yaml",
+            "IBM.output-colorizer",
+            "cschlosser.doxdocgen",
+            "ms-vscode.vscode-serial-monitor",
+            "dan-c-underwood.arm",
+            "marus25.cortex-debug"
+        ]
+    },
+    "launch": {
+        "version": "0.2.0",
+        "configurations": [
+            {
+                "type": "cortex-debug",
+                "name": "Debug: OpenOCD(attach)",
+                "request": "attach",
+                "toolchainPrefix": "arm-none-eabi",
+                "armToolchainPath": "C:\\Users\\Haoran laptop\\.eide\\tools\\gcc_arm\\bin",
+                "cwd": "c:\\RM\\test",
+                "executable": ".\\build\\Debug\\test.elf",
+                "liveWatch": {
+                    "enabled": true,
+                    "samplesPerSecond": 4
+                },
+                "servertype": "openocd",
+                "configFiles": [
+                    "interface/stlink.cfg",
+                    "target/stm32f1x.cfg"
+                ],
+                "serverpath": "C:\\Users\\Haoran laptop\\.eide\\tools\\openocd_7a1adfbec_mingw32\\bin\\openocd.exe"
+            }
+        ]
+    }
+}

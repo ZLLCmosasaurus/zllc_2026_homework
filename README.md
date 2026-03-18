@@ -1,94 +1,200 @@
-- [嵌入式学习任务](#嵌入式学习任务)
-  - [任务目标](#任务目标)
-  - [任务点](#任务点)
-    - [1. 学习git使用，学会使用git进行版本管理，学会使用github进行远程仓库管理，学会使用git进行团队协作。](#1-学习git使用学会使用git进行版本管理学会使用github进行远程仓库管理学会使用git进行团队协作)
-    - [2.1 学习实验室仓库代码框架的基本使用](#21-学习实验室仓库代码框架的基本使用)
-      - [2.1.1 学习 `CAN` 协议和大疆电机使用方法以及 `pid` 控制算法](#211-学习-can-协议和大疆电机使用方法以及-pid-控制算法)
-      - [2.1.2 学习 `SPI` 通讯和 `BMI088` 陀螺仪的使用](#212-学习-spi-通讯和-bmi088-陀螺仪的使用)
-      - [2.1.3 学习`裁判系统`通信协议的内容](#213-学习裁判系统通信协议的内容)
-      - [2.1.4 学习 `UART` 通讯和 `Dbus` 接收机的使用](#214-学习-uart-通讯和-dbus-接收机的使用)
-    - [2.2 学习实验室嵌入式开发的基本流程](#22-学习实验室嵌入式开发的基本流程)
-      - [2.2.1 学习`Keil5` ，`vscode` 开发调试工具](#221-学习keil5-vscode-开发调试工具)
-      - [2.2.2 学习调试软件`ozone`，`Vofa+`的使用](#222-学习调试软件ozonevofa的使用)
-      - [2.2.3 学习`arm_none_eabi`的使用 （暂时与实验室无关，不要求掌握，有余力就去了解）](#223-学习arm_none_eabi的使用-暂时与实验室无关不要求掌握有余力就去了解)
-  - [作业要求](#作业要求)
+# DJI-3508电机CAN通信与PID速度控制使用说明
 
-# 嵌入式学习任务
+## 概述
 
-## 任务目标 
-> 学习git使用，学习[实验室仓库](https://github.com/ZLLCmosasaurus/ZLLC_2026)代码框架的基本使用，学习实验室嵌入式开发的基本流程，学习vscode，ozone等现代化开发调试工具的使用。  
+本项目实现了通过CAN总线控制DJI-3508电机，并使用PID算法进行速度闭环控制的功能。该实现基于STM32F1系列微控制器和HAL库。
 
-## 任务点
-### 1. 学习git使用，学会使用git进行版本管理，学会使用github进行远程仓库管理，学会使用git进行团队协作。 
-> - [作业要求点这里](Home_Work/Home_work_1.md)    
+## 功能特性
 
-### 2.1 学习[实验室仓库](https://github.com/ZLLCmosasaurus/ZLLC_2026)代码框架的基本使用
+1. **CAN通信控制**：通过CAN总线发送控制指令给DJI-3508电机
+2. **PID速度控制**：实现速度闭环控制，精确控制电机转速
+3. **多电机支持**：可同时控制多达4个DJI-3508电机
+4. **反馈数据处理**：接收并解析电机反馈数据
 
-  #### 2.1.1 学习 `CAN` 协议和大疆电机使用方法以及 `pid` 控制算法
-  > 学习 `drv_can.cpp` 的使用方法，了解 `can` 总线的协议和使用方法。  
-  > 学习 `dvc_djimotor.cpp` 的使用方法，了解大疆电机的通信协议和控制方法。  
-  > 学习 `alg_pid.cpp` 的使用方法，了解 `pid` 调参的方法。  
-  - 学习目标：完成对大疆电机pid速度和角度闭环的控制。
-  - 学习记录：提交不少于一篇的学习记录，记录学习过程中遇到的问题和解决方法（md文档）。
+## 硬件连接
 
-  #### 2.1.2 学习 `SPI` 通讯和 `BMI088` 陀螺仪的使用
-  > 学习 `drv_spi.cpp` 的使用方法，了解 `SPI` 的协议和 `DMA` 使用方法。  
-  > 学习 `dvc_imu.cpp` 及其相关文件的使用方法，了解 `BMI088` 陀螺仪的通信协议和使用方法。  
-  > 学习 `QuaternionEKF.c` 拓展卡尔曼滤波的使用方法，了解 `四元数` 和 `卡尔曼滤波` 的原理。（选做，不做要求，会用即可）   
-  - 学习目标：完成对 `BMI088` 陀螺仪的数据接收和处理，结合 ` 2.1.1` 的内容，采用 `imu`  作为数据源，对大疆电机的 `速度`  和 `角度`  闭环控制。
-  - 学习记录：提交不少于一篇的学习记录，记录学习过程中遇到的问题和解决方法（md文档）。
+- **CAN总线连接**：
+  - PA11 (CAN_RX)
+  - PA12 (CAN_TX)
   
-  #### 2.1.3 学习`裁判系统`通信协议的内容
-  > 学习 `dvc_referee.cpp` 的使用方法，了解裁判系统的通信协议和解包的方法。  
-  > 学习 `crc校验` 的原理和C语言实现，以及实验室仓库代码的使用。
-  - 学习目标：完成对裁判系统的数据接收和处理。
-  - 学习记录：提交不少于一篇的学习记录，记录学习过程中遇到的问题和解决方法（md文档）。
+- **终端电阻**：确保CAN总线上有120欧姆终端电阻
 
-  #### 2.1.4 学习 `UART` 通讯和 `Dbus` 接收机的使用
-  > 学习 `drv_uart.cpp` 的使用方法，了解串口的协议和DMA空闲中断使用方法。
-  > 学习 `dvc_dr16.cpp` 的使用方法，了解dbus接收机的通信协议和控制方法。
-  - 学习目标：完成对dbus接收机的数据接收和处理，了解 `Dbus` 串口的硬件原理。
-  - 学习记录：提交不少于一篇的学习记录，记录学习过程中遇到的问题和解决方法（md文档）。
+## 软件架构
 
-### 2.2 学习实验室嵌入式开发的基本流程
+### 主要文件
 
-  #### 2.2.1 学习`Keil5` ，`vscode` 开发调试工具
-  > 学习使用 `Keil5` 代码编写、编译、调试等流程。   
-  > 学习 `vscode` 的使用，下载配置 `EIDE` 插件，完成 `vscode` 端的代码编写、编译、调试、上传等流程。[EIDE教程可以点这里](https://blog.csdn.net/m0_74858601/article/details/139050698)  
-  - 学习目标：对实验室仓库代码的修改、编译、调试。
-  - 学习记录：提交不少于一篇的学习记录，记录学习过程中遇到的问题和解决方法（md文档）。  
-  #### 2.2.2 学习调试软件`ozone`，`Vofa+`的使用
-  > 学习 `ozone` 的使用，使用 `ozone` 调试 `vscode` 端的代码，曲线的观测，数据的导出等等。 [ozone教程可以点这里](https://blog.csdn.net/NeoZng/article/details/127980949?spm=1001.2014.3001.5501)      
-  > 学习 `Vofa+` 的使用，使用 `Vofa+` 串口调试 `vscode` 端的代码，曲线的观测，数据的导出等等。[vofa+下载可以点这里](https://www.vofa.plus/)   
-  - 学习目标：对实验室仓库代码进行调试和曲线绘制。
-  - 学习记录：提交不少于一篇的学习记录，记录学习过程中遇到的问题和解决方法（md文档）。 
-  #### 2.2.3 学习`arm_none_eabi`的使用 （暂时与实验室无关，不要求掌握，有余力就去了解）
-  > 学习 `arm_none_eabi` 编译环境的使用，使用 `gcc` 编译 `arm` 架构的代码,使用 `arm_none_eabi_gdb` 调试代码。（选做，不做要求）    
-  > 学习使用 `cubmx` 配置 `Makefile` 工程，使用 `make` 编译代码。（选做，不做要求）   
-  > 感兴趣可以去实验室仓库下看最新的[M58-Dart](https://github.com/ZLLCmosasaurus/RMUC-2025/tree/M58-Dart)分支的代码
-  
+1. **can.h/can.c**：CAN通信相关函数实现
+2. **main.c**：主程序，包含PID控制逻辑
+3. **stm32f1xx_it.c**：中断处理程序
 
+### 核心函数
 
-## 作业要求
-> 提交方式：学习记录所提交的文件就按照第一次[作业的提交方式](sources/git.md)进行提交即可（本地修改，提交pr）。  
-> 命名方式：在你自己名字命名的分支下创建名为Home_Work_2.1.x.md的文件(x对应不同的学习任务点)，将学习记录的内容写入该文件中。    
-> 文件结构如下：
-  ```
-  分支名/
-  ├── Keil 工程文件夹/
-  │   ├── Core/
-  │   ├── Drivers/
-  │   ├── MDK-ARM/
-  │   ├── ...
-  |   |── ...
-  ├── 图片等资源（小车的照片等）/
-  ├── 其他文件（自己的学习日志等）/
-  ├── Home_Work_2.1.1.md  <-- 新增的学习记录
-  ├── Home_Work_2.1.2.md  <-- 新增的学习记录
-  ├── Home_Work_2.1.x.md  <-- 新增的学习记录
-  ├── .gitignore
-  └── README.md
-  ```
-> 验收时间：每周组会进行验收。  
-> 补充部分：所用的代码基于实验室仓库的main分支代码进行本地学习和修改，然后提交学习记录和完成学习要求，不要求大家从零开始写代码，只需要在实验室仓库的基础上进行学习和修改即可。（当然有能力的同学可以自己重写底层框架）
- 
+#### 1. 电机控制函数
+
+```c
+// 控制单个电机
+void can_dji_motor_control(uint8_t motor_id, int16_t current);
+
+// 同时控制四个电机
+void can_dji_motor_control_multi(int16_t current1, int16_t current2, int16_t current3, int16_t current4);
+```
+
+#### 2. PID控制函数
+
+```c
+// 初始化PID控制器
+void pid_init(pid_controller_t *pid, float kp, float ki, float kd);
+
+// PID计算
+float pid_calculate(pid_controller_t *pid, float target, float current);
+```
+
+## 使用方法
+
+### 1. 初始化
+
+```c
+  hcan.Instance = CAN1;
+  hcan.Init.Prescaler = 4;
+  hcan.Init.Mode = CAN_MODE_NORMAL;
+  hcan.Init.SyncJumpWidth = CAN_SJW_2TQ;
+  hcan.Init.TimeSeg1 = CAN_BS1_3TQ;
+  hcan.Init.TimeSeg2 = CAN_BS2_5TQ;
+  hcan.Init.TimeTriggeredMode = DISABLE;
+  hcan.Init.AutoBusOff = DISABLE;
+  hcan.Init.AutoWakeUp = DISABLE;
+  hcan.Init.AutoRetransmission = DISABLE;
+  hcan.Init.ReceiveFifoLocked = DISABLE;
+  hcan.Init.TransmitFifoPriority = DISABLE;
+
+  if (HAL_CAN_Init(&hcan) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+      CAN_FilterTypeDef can_filter;
+    can_filter.FilterBank           = 0;
+    can_filter.FilterMode           = CAN_FILTERMODE_IDMASK;
+    can_filter.FilterScale          = CAN_FILTERSCALE_32BIT;
+    can_filter.FilterIdHigh         = 0x0000;
+    can_filter.FilterIdLow          = 0x0000;
+    can_filter.FilterMaskIdHigh     = 0x0000;
+    can_filter.FilterMaskIdLow      = 0x0000;
+    can_filter.FilterFIFOAssignment = CAN_RX_FIFO0;
+    can_filter.FilterActivation     = ENABLE;
+    can_filter.SlaveStartFilterBank = 14;
+
+    if (HAL_CAN_ConfigFilter(&hcan, &can_filter) != HAL_OK) 
+    {
+        Error_Handler();
+    }
+
+    if (HAL_CAN_Start(&hcan) != HAL_OK) 
+    {
+        Error_Handler();
+    }
+
+    if (HAL_CAN_ActivateNotification(&hcan, CAN_IT_RX_FIFO0_MSG_PENDING) != HAL_OK)
+    {
+        Error_Handler();
+    }
+```
+
+### 2. 参数配置
+
+```c
+// PID参数设置
+pid_init(&motor_pid, 10.0f, 0.1f, 1.0f);  
+
+// 目标速度设置
+motor_pid.target = 1000.0f;  // 目标速度为1000 RPM
+```
+
+### 3. 控制流程
+
+1. 系统每10ms执行一次PID计算
+2. 获取电机实际速度（在实际应用中应从电机反馈数据中获取）
+3. 使用PID算法计算输出电流
+4. 通过CAN总线发送控制指令给电机
+
+## CAN通信协议
+
+### 控制指令帧
+
+- **CAN ID**：0x200
+- **数据长度**：8字节
+- **数据格式**：
+  - 字节0-1：电机1电流值（高字节在前）
+  - 字节2-3：电机2电流值（高字节在前）
+  - 字节4-5：电机3电流值（高字节在前）
+  - 字节6-7：电机4电流值（高字节在前）
+
+### 反馈数据帧
+
+- **CAN ID**：0x201 ~ 0x204（对应电机1~4）
+- **数据长度**：8字节
+- **数据格式**：
+  - 字节0-1：电机角度（高字节在前）
+  - 字节2-3：电机转速（高字节在前）
+  - 字节4-5：电机电流（高字节在前）
+  - 字节6-7：电机温度（高字节在前）
+
+### 1. PID控制算法理解
+
+#### 1.1 PID基本概念
+PID控制器由三个部分组成：
+- **比例项(P)**：根据当前误差大小进行调整
+- **积分项(I)**：根据误差累积进行调整，消除稳态误差
+- **微分项(D)**：根据误差变化率进行调整，预测未来趋势
+
+#### 1.2 PID数学表达式
+```
+输出 = Kp * 误差 + Ki * ∫误差dt + Kd * d(误差)/dt
+```
+
+#### 1.3 PID参数调节经验
+- 先调Kp，再调Kd，最后调Ki
+- Kp过大容易引起振荡，过小响应慢
+- Ki过大容易引起积分饱和和振荡
+- Kd有助于减少超调和提高稳定性
+
+## PID参数调节建议
+
+1. **比例系数(Kp)**：决定系统响应速度，值越大响应越快但可能产生振荡
+2. **积分系数(Ki)**：消除稳态误差，值过大会导致系统不稳定
+3. **微分系数(Kd)**：抑制超调，提高系统稳定性
+
+建议调节顺序：Kp → Kd → Ki
+
+## 注意事项
+
+1. 确保CAN总线物理连接正确且有终端电阻
+2. 电机电流限制在±16384范围内
+3. 实际应用中应从电机反馈数据中获取真实的速度值
+4. 根据具体应用场景调整PID参数
+
+### 3. 代码分析与优化
+
+#### 3.1 发现的问题
+1. **积分饱和问题**：积分项没有适当限制，导致电机持续加速
+2. **微分项计算不准确**：未考虑采样时间间隔
+3. **参数设置不合理**：初始PID参数不适合实际控制场景
+4. **角度控制逻辑缺陷**：使用单圈角度而非连续角度
+
+#### 3.2 解决方案
+1. **修复积分饱和**：
+   - 添加积分限幅机制
+   - 积分项乘以采样时间间隔
+
+2. **改进微分项计算**：
+   - 微分项除以采样时间间隔
+   - 在主循环中计算实际时间间隔
+
+3. **优化PID参数**：
+   - 调整为更适合实际控制的参数
+   - 角度环：Kp=2.0, Ki=0.01, Kd=0.1
+   - 速度环：Kp=2.0, Ki=0.01, Kd=0.1
+
+4. **改善角度控制**：
+   - 使用连续角度进行计算
+   - 实现更平滑的比例控制策略

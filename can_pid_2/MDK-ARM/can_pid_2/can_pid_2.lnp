@@ -1,0 +1,28 @@
+--cpu Cortex-M3
+"can_pid_2\startup_stm32f103xb.o"
+"can_pid_2\main.o"
+"can_pid_2\gpio.o"
+"can_pid_2\can.o"
+"can_pid_2\dma.o"
+"can_pid_2\usart.o"
+"can_pid_2\stm32f1xx_it.o"
+"can_pid_2\stm32f1xx_hal_msp.o"
+"can_pid_2\motor_control.o"
+"can_pid_2\stm32f1xx_hal_gpio_ex.o"
+"can_pid_2\stm32f1xx_hal_can.o"
+"can_pid_2\stm32f1xx_hal.o"
+"can_pid_2\stm32f1xx_hal_rcc.o"
+"can_pid_2\stm32f1xx_hal_rcc_ex.o"
+"can_pid_2\stm32f1xx_hal_gpio.o"
+"can_pid_2\stm32f1xx_hal_dma.o"
+"can_pid_2\stm32f1xx_hal_cortex.o"
+"can_pid_2\stm32f1xx_hal_pwr.o"
+"can_pid_2\stm32f1xx_hal_flash.o"
+"can_pid_2\stm32f1xx_hal_flash_ex.o"
+"can_pid_2\stm32f1xx_hal_exti.o"
+"can_pid_2\stm32f1xx_hal_uart.o"
+"can_pid_2\system_stm32f1xx.o"
+--strict --scatter "can_pid_2\can_pid_2.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "can_pid_2.map" -o can_pid_2\can_pid_2.axf
