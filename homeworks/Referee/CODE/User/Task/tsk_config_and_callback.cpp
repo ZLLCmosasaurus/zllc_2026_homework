@@ -69,6 +69,7 @@ void Task1ms_TIM5_Callback()
         /****************************** 驱动层回调函数 1ms *****************************************/
         // 统一打包发送
         TIM_UART_PeriodElapsedCallback();
+        Referee.UART_Tx_Referee_UI();
     }
 }
 

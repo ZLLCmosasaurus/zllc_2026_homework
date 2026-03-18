@@ -22,83 +22,322 @@
 
 class Class_Chariot;
 
-//设定当前车车
+// 设定当前车车
 
-#define HERO_1            1
-#define ENGINEER_2        2
-#define INFANTRY_3        3
-#define INFANTRY_4        4
-#define INFANTRY_5        5
-#define AERIAL_6          6
-#define SENTRY_7          7
-#define DART_8            8
-#define RADAR_9           9
-#define BASE_10           10
-#define OUTPOST_11        11
+#define HERO_1 1
+#define ENGINEER_2 2
+#define INFANTRY_3 3
+#define INFANTRY_4 4
+#define INFANTRY_5 5
+#define AERIAL_6 6
+#define SENTRY_7 7
+#define DART_8 8
+#define RADAR_9 9
+#define BASE_10 10
+#define OUTPOST_11 11
 
 #define RED 0
 #define BLUE 100
 
-//只需修改这里 UI发送者ID
-#define ROBOT_ID    (INFANTRY_3 + BLUE)
+// 只需修改这里 UI发送者ID
+#define ROBOT_ID (INFANTRY_3 + BLUE)
 
 const unsigned char CRC8_INIT = 0xff;
 const unsigned char CRC8_TAB[256] =
-{
-	0x00, 0x5e, 0xbc, 0xe2, 0x61, 0x3f, 0xdd, 0x83, 0xc2, 0x9c, 0x7e, 0x20, 0xa3, 0xfd, 0x1f, 0x41, 0x9d, 
-	0xc3, 0x21, 0x7f, 0xfc, 0xa2, 0x40, 0x1e, 0x5f, 0x01, 0xe3, 0xbd, 0x3e, 0x60, 0x82, 0xdc, 0x23, 0x7d, 
-	0x9f, 0xc1, 0x42, 0x1c, 0xfe, 0xa0, 0xe1, 0xbf, 0x5d, 0x03, 0x80, 0xde, 0x3c, 0x62, 0xbe, 0xe0, 0x02, 
-	0x5c, 0xdf, 0x81, 0x63, 0x3d, 0x7c, 0x22, 0xc0, 0x9e, 0x1d, 0x43, 0xa1, 0xff, 0x46, 0x18, 0xfa, 0xa4, 
-	0x27, 0x79, 0x9b, 0xc5, 0x84, 0xda, 0x38, 0x66, 0xe5, 0xbb, 0x59, 0x07, 0xdb, 0x85, 0x67, 0x39, 0xba, 
-	0xe4, 0x06, 0x58, 0x19, 0x47, 0xa5, 0xfb, 0x78, 0x26, 0xc4, 0x9a, 0x65, 0x3b, 0xd9, 0x87, 0x04, 0x5a, 
-	0xb8, 0xe6, 0xa7, 0xf9, 0x1b, 0x45, 0xc6, 0x98, 0x7a, 0x24, 0xf8, 0xa6, 0x44, 0x1a, 0x99, 0xc7, 0x25, 
-	0x7b, 0x3a, 0x64, 0x86, 0xd8, 0x5b, 0x05, 0xe7, 0xb9,
-	0x8c, 0xd2, 0x30, 0x6e, 0xed, 0xb3, 0x51, 0x0f, 0x4e, 0x10, 0xf2, 0xac, 0x2f, 0x71, 0x93, 0xcd, 0x11,
-	0x4f, 0xad, 0xf3, 0x70, 0x2e, 0xcc, 0x92, 0xd3, 0x8d, 0x6f, 0x31, 0xb2, 0xec, 0x0e, 0x50, 0xaf, 0xf1,
-	0x13, 0x4d, 0xce, 0x90, 0x72, 0x2c, 0x6d, 0x33, 0xd1, 0x8f, 0x0c, 0x52, 0xb0, 0xee, 0x32, 0x6c, 0x8e,
-	0xd0, 0x53, 0x0d, 0xef, 0xb1, 0xf0, 0xae, 0x4c, 0x12, 0x91, 0xcf, 0x2d, 0x73, 0xca, 0x94, 0x76, 0x28,
-	0xab, 0xf5, 0x17, 0x49, 0x08, 0x56, 0xb4, 0xea, 0x69, 0x37, 0xd5, 0x8b, 0x57, 0x09, 0xeb, 0xb5,
-	0x36, 0x68, 0x8a, 0xd4, 0x95, 0xcb, 0x29, 0x77, 0xf4, 0xaa, 0x48, 0x16, 0xe9, 0xb7, 0x55, 0x0b, 0x88,
-	0xd6, 0x34, 0x6a, 0x2b, 0x75, 0x97, 0xc9, 0x4a, 0x14, 0xf6, 0xa8, 
-	0x74, 0x2a, 0xc8, 0x96, 0x15, 0x4b, 0xa9, 0xf7, 0xb6, 0xe8, 0x0a, 0x54, 0xd7, 0x89, 0x6b, 0x35,
+    {
+        0x00,
+        0x5e,
+        0xbc,
+        0xe2,
+        0x61,
+        0x3f,
+        0xdd,
+        0x83,
+        0xc2,
+        0x9c,
+        0x7e,
+        0x20,
+        0xa3,
+        0xfd,
+        0x1f,
+        0x41,
+        0x9d,
+        0xc3,
+        0x21,
+        0x7f,
+        0xfc,
+        0xa2,
+        0x40,
+        0x1e,
+        0x5f,
+        0x01,
+        0xe3,
+        0xbd,
+        0x3e,
+        0x60,
+        0x82,
+        0xdc,
+        0x23,
+        0x7d,
+        0x9f,
+        0xc1,
+        0x42,
+        0x1c,
+        0xfe,
+        0xa0,
+        0xe1,
+        0xbf,
+        0x5d,
+        0x03,
+        0x80,
+        0xde,
+        0x3c,
+        0x62,
+        0xbe,
+        0xe0,
+        0x02,
+        0x5c,
+        0xdf,
+        0x81,
+        0x63,
+        0x3d,
+        0x7c,
+        0x22,
+        0xc0,
+        0x9e,
+        0x1d,
+        0x43,
+        0xa1,
+        0xff,
+        0x46,
+        0x18,
+        0xfa,
+        0xa4,
+        0x27,
+        0x79,
+        0x9b,
+        0xc5,
+        0x84,
+        0xda,
+        0x38,
+        0x66,
+        0xe5,
+        0xbb,
+        0x59,
+        0x07,
+        0xdb,
+        0x85,
+        0x67,
+        0x39,
+        0xba,
+        0xe4,
+        0x06,
+        0x58,
+        0x19,
+        0x47,
+        0xa5,
+        0xfb,
+        0x78,
+        0x26,
+        0xc4,
+        0x9a,
+        0x65,
+        0x3b,
+        0xd9,
+        0x87,
+        0x04,
+        0x5a,
+        0xb8,
+        0xe6,
+        0xa7,
+        0xf9,
+        0x1b,
+        0x45,
+        0xc6,
+        0x98,
+        0x7a,
+        0x24,
+        0xf8,
+        0xa6,
+        0x44,
+        0x1a,
+        0x99,
+        0xc7,
+        0x25,
+        0x7b,
+        0x3a,
+        0x64,
+        0x86,
+        0xd8,
+        0x5b,
+        0x05,
+        0xe7,
+        0xb9,
+        0x8c,
+        0xd2,
+        0x30,
+        0x6e,
+        0xed,
+        0xb3,
+        0x51,
+        0x0f,
+        0x4e,
+        0x10,
+        0xf2,
+        0xac,
+        0x2f,
+        0x71,
+        0x93,
+        0xcd,
+        0x11,
+        0x4f,
+        0xad,
+        0xf3,
+        0x70,
+        0x2e,
+        0xcc,
+        0x92,
+        0xd3,
+        0x8d,
+        0x6f,
+        0x31,
+        0xb2,
+        0xec,
+        0x0e,
+        0x50,
+        0xaf,
+        0xf1,
+        0x13,
+        0x4d,
+        0xce,
+        0x90,
+        0x72,
+        0x2c,
+        0x6d,
+        0x33,
+        0xd1,
+        0x8f,
+        0x0c,
+        0x52,
+        0xb0,
+        0xee,
+        0x32,
+        0x6c,
+        0x8e,
+        0xd0,
+        0x53,
+        0x0d,
+        0xef,
+        0xb1,
+        0xf0,
+        0xae,
+        0x4c,
+        0x12,
+        0x91,
+        0xcf,
+        0x2d,
+        0x73,
+        0xca,
+        0x94,
+        0x76,
+        0x28,
+        0xab,
+        0xf5,
+        0x17,
+        0x49,
+        0x08,
+        0x56,
+        0xb4,
+        0xea,
+        0x69,
+        0x37,
+        0xd5,
+        0x8b,
+        0x57,
+        0x09,
+        0xeb,
+        0xb5,
+        0x36,
+        0x68,
+        0x8a,
+        0xd4,
+        0x95,
+        0xcb,
+        0x29,
+        0x77,
+        0xf4,
+        0xaa,
+        0x48,
+        0x16,
+        0xe9,
+        0xb7,
+        0x55,
+        0x0b,
+        0x88,
+        0xd6,
+        0x34,
+        0x6a,
+        0x2b,
+        0x75,
+        0x97,
+        0xc9,
+        0x4a,
+        0x14,
+        0xf6,
+        0xa8,
+        0x74,
+        0x2a,
+        0xc8,
+        0x96,
+        0x15,
+        0x4b,
+        0xa9,
+        0xf7,
+        0xb6,
+        0xe8,
+        0x0a,
+        0x54,
+        0xd7,
+        0x89,
+        0x6b,
+        0x35,
 };
 
 const uint16_t CRC16_INIT = 0xffff;
 const uint16_t CRC16_Table[256] =
-{
-	0x0000, 0x1189, 0x2312, 0x329b, 0x4624, 0x57ad, 0x6536, 0x74bf,	
-	0x8c48, 0x9dc1, 0xaf5a, 0xbed3, 0xca6c, 0xdbe5, 0xe97e, 0xf8f7,
-	0x1081, 0x0108, 0x3393, 0x221a, 0x56a5, 0x472c, 0x75b7, 0x643e,
-	0x9cc9, 0x8d40, 0xbfdb, 0xae52, 0xdaed, 0xcb64, 0xf9ff, 0xe876,
-	0x2102, 0x308b, 0x0210, 0x1399, 0x6726, 0x76af, 0x4434, 0x55bd,
-	0xad4a, 0xbcc3, 0x8e58, 0x9fd1, 0xeb6e, 0xfae7, 0xc87c, 0xd9f5,
-	0x3183, 0x200a, 0x1291, 0x0318, 0x77a7, 0x662e, 0x54b5, 0x453c,
-	0xbdcb, 0xac42, 0x9ed9, 0x8f50, 0xfbef, 0xea66, 0xd8fd, 0xc974,
-	0x4204, 0x538d, 0x6116, 0x709f, 0x0420, 0x15a9, 0x2732, 0x36bb,
-	0xce4c, 0xdfc5, 0xed5e, 0xfcd7, 0x8868, 0x99e1, 0xab7a, 0xbaf3,
-	0x5285, 0x430c, 0x7197, 0x601e, 0x14a1, 0x0528, 0x37b3, 0x263a,
-	0xdecd, 0xcf44, 0xfddf, 0xec56, 0x98e9, 0x8960, 0xbbfb, 0xaa72,
-	0x6306, 0x728f, 0x4014, 0x519d, 0x2522, 0x34ab, 0x0630, 0x17b9,
-	0xef4e, 0xfec7, 0xcc5c, 0xddd5, 0xa96a, 0xb8e3, 0x8a78, 0x9bf1,
-	0x7387, 0x620e, 0x5095, 0x411c, 0x35a3, 0x242a, 0x16b1, 0x0738,
-	0xffcf, 0xee46, 0xdcdd, 0xcd54, 0xb9eb, 0xa862, 0x9af9, 0x8b70,
-	0x8408, 0x9581, 0xa71a, 0xb693, 0xc22c, 0xd3a5, 0xe13e, 0xf0b7,
-	0x0840, 0x19c9, 0x2b52, 0x3adb, 0x4e64, 0x5fed, 0x6d76, 0x7cff,
-	0x9489, 0x8500, 0xb79b, 0xa612, 0xd2ad, 0xc324, 0xf1bf, 0xe036,
-	0x18c1, 0x0948, 0x3bd3, 0x2a5a, 0x5ee5, 0x4f6c, 0x7df7, 0x6c7e,
-	0xa50a, 0xb483, 0x8618, 0x9791, 0xe32e, 0xf2a7, 0xc03c, 0xd1b5,
-	0x2942, 0x38cb, 0x0a50, 0x1bd9, 0x6f66, 0x7eef, 0x4c74, 0x5dfd,
-	0xb58b, 0xa402, 0x9699, 0x8710, 0xf3af, 0xe226, 0xd0bd, 0xc134,
-	0x39c3, 0x284a, 0x1ad1, 0x0b58, 0x7fe7, 0x6e6e, 0x5cf5, 0x4d7c,
-	0xc60c, 0xd785, 0xe51e, 0xf497, 0x8028, 0x91a1, 0xa33a, 0xb2b3,
-	0x4a44, 0x5bcd, 0x6956, 0x78df, 0x0c60, 0x1de9, 0x2f72, 0x3efb,
-	0xd68d, 0xc704, 0xf59f, 0xe416, 0x90a9, 0x8120, 0xb3bb, 0xa232,
-	0x5ac5, 0x4b4c, 0x79d7, 0x685e, 0x1ce1, 0x0d68, 0x3ff3, 0x2e7a,
-	0xe70e, 0xf687, 0xc41c, 0xd595, 0xa12a, 0xb0a3, 0x8238, 0x93b1,
-	0x6b46, 0x7acf, 0x4854, 0x59dd, 0x2d62, 0x3ceb, 0x0e70, 0x1ff9,
-	0xf78f, 0xe606, 0xd49d, 0xc514, 0xb1ab, 0xa022, 0x92b9, 0x8330,
-	0x7bc7, 0x6a4e, 0x58d5, 0x495c, 0x3de3, 0x2c6a, 0x1ef1, 0x0f78
-};
+    {
+        0x0000, 0x1189, 0x2312, 0x329b, 0x4624, 0x57ad, 0x6536, 0x74bf,
+        0x8c48, 0x9dc1, 0xaf5a, 0xbed3, 0xca6c, 0xdbe5, 0xe97e, 0xf8f7,
+        0x1081, 0x0108, 0x3393, 0x221a, 0x56a5, 0x472c, 0x75b7, 0x643e,
+        0x9cc9, 0x8d40, 0xbfdb, 0xae52, 0xdaed, 0xcb64, 0xf9ff, 0xe876,
+        0x2102, 0x308b, 0x0210, 0x1399, 0x6726, 0x76af, 0x4434, 0x55bd,
+        0xad4a, 0xbcc3, 0x8e58, 0x9fd1, 0xeb6e, 0xfae7, 0xc87c, 0xd9f5,
+        0x3183, 0x200a, 0x1291, 0x0318, 0x77a7, 0x662e, 0x54b5, 0x453c,
+        0xbdcb, 0xac42, 0x9ed9, 0x8f50, 0xfbef, 0xea66, 0xd8fd, 0xc974,
+        0x4204, 0x538d, 0x6116, 0x709f, 0x0420, 0x15a9, 0x2732, 0x36bb,
+        0xce4c, 0xdfc5, 0xed5e, 0xfcd7, 0x8868, 0x99e1, 0xab7a, 0xbaf3,
+        0x5285, 0x430c, 0x7197, 0x601e, 0x14a1, 0x0528, 0x37b3, 0x263a,
+        0xdecd, 0xcf44, 0xfddf, 0xec56, 0x98e9, 0x8960, 0xbbfb, 0xaa72,
+        0x6306, 0x728f, 0x4014, 0x519d, 0x2522, 0x34ab, 0x0630, 0x17b9,
+        0xef4e, 0xfec7, 0xcc5c, 0xddd5, 0xa96a, 0xb8e3, 0x8a78, 0x9bf1,
+        0x7387, 0x620e, 0x5095, 0x411c, 0x35a3, 0x242a, 0x16b1, 0x0738,
+        0xffcf, 0xee46, 0xdcdd, 0xcd54, 0xb9eb, 0xa862, 0x9af9, 0x8b70,
+        0x8408, 0x9581, 0xa71a, 0xb693, 0xc22c, 0xd3a5, 0xe13e, 0xf0b7,
+        0x0840, 0x19c9, 0x2b52, 0x3adb, 0x4e64, 0x5fed, 0x6d76, 0x7cff,
+        0x9489, 0x8500, 0xb79b, 0xa612, 0xd2ad, 0xc324, 0xf1bf, 0xe036,
+        0x18c1, 0x0948, 0x3bd3, 0x2a5a, 0x5ee5, 0x4f6c, 0x7df7, 0x6c7e,
+        0xa50a, 0xb483, 0x8618, 0x9791, 0xe32e, 0xf2a7, 0xc03c, 0xd1b5,
+        0x2942, 0x38cb, 0x0a50, 0x1bd9, 0x6f66, 0x7eef, 0x4c74, 0x5dfd,
+        0xb58b, 0xa402, 0x9699, 0x8710, 0xf3af, 0xe226, 0xd0bd, 0xc134,
+        0x39c3, 0x284a, 0x1ad1, 0x0b58, 0x7fe7, 0x6e6e, 0x5cf5, 0x4d7c,
+        0xc60c, 0xd785, 0xe51e, 0xf497, 0x8028, 0x91a1, 0xa33a, 0xb2b3,
+        0x4a44, 0x5bcd, 0x6956, 0x78df, 0x0c60, 0x1de9, 0x2f72, 0x3efb,
+        0xd68d, 0xc704, 0xf59f, 0xe416, 0x90a9, 0x8120, 0xb3bb, 0xa232,
+        0x5ac5, 0x4b4c, 0x79d7, 0x685e, 0x1ce1, 0x0d68, 0x3ff3, 0x2e7a,
+        0xe70e, 0xf687, 0xc41c, 0xd595, 0xa12a, 0xb0a3, 0x8238, 0x93b1,
+        0x6b46, 0x7acf, 0x4854, 0x59dd, 0x2d62, 0x3ceb, 0x0e70, 0x1ff9,
+        0xf78f, 0xe606, 0xd49d, 0xc514, 0xb1ab, 0xa022, 0x92b9, 0x8330,
+        0x7bc7, 0x6a4e, 0x58d5, 0x495c, 0x3de3, 0x2c6a, 0x1ef1, 0x0f78};
 /* Exported types ------------------------------------------------------------*/
 
 /**
@@ -129,9 +368,9 @@ enum Enum_Referee_UI_Color
     Referee_UI_Color_Yellow,
     Referee_UI_Color_Green,
     Referee_UI_Color_Orange,
-    Referee_UI_Color_Purple, //紫色
-    Referee_UI_Color_Pink,  //粉色
-    Referee_UI_Color_Cyan,  //青色
+    Referee_UI_Color_Purple, // 紫色
+    Referee_UI_Color_Pink,   // 粉色
+    Referee_UI_Color_Cyan,   // 青色
     Referee_UI_Color_Black,
     Referee_UI_Color_White,
 };
@@ -369,7 +608,7 @@ enum Enum_Referee_Data_Event_Supply_Ammo_Number : uint8_t
  */
 enum Enum_Referee_Data_Event_Referee_Warning_Level : uint8_t
 {
-    Referee_Data_Referee_Warning_Level_Both_YELLOW= 1,//双方黄牌
+    Referee_Data_Referee_Warning_Level_Both_YELLOW = 1, // 双方黄牌
     Referee_Data_Referee_Warning_Level_YELLOW,
     Referee_Data_Referee_Warning_Level_RED,
     Referee_Data_Referee_Warning_Level_FAIL,
@@ -746,10 +985,10 @@ struct Struct_Referee_Rx_Data_Event_Data
     uint32_t Highland_2_Status_Enum : 2;
     uint32_t Highland_3_Status_Enum : 2;
     uint32_t Highland_4_Status_Enum : 2;
-    uint32_t Base_Shield_Remain_HP : 7; //己方基地虚拟护盾的剩余值百分比（四舍五入，保留整数）
-    uint32_t Dart_Outpost_Base_Time : 9; //飞镖最后一次击中己方前哨站或基地的时间（0-420，开局默认为0)
-    uint32_t Dart_Outpost_Base_Obeject :2; //飞镖最后一次击中己方前哨站或基地的具体目标，开局默认为 0，1 为击中前哨站，2 为击中基地固定目标，3 为击中基地随机目标
-    uint32_t Centre_Enable_Status : 2; //中心增益是否占领 0 为未被占领，1 为被己方占领，2 为被对方占领，3 为被双方占领。
+    uint32_t Base_Shield_Remain_HP : 7;     // 己方基地虚拟护盾的剩余值百分比（四舍五入，保留整数）
+    uint32_t Dart_Outpost_Base_Time : 9;    // 飞镖最后一次击中己方前哨站或基地的时间（0-420，开局默认为0)
+    uint32_t Dart_Outpost_Base_Obeject : 2; // 飞镖最后一次击中己方前哨站或基地的具体目标，开局默认为 0，1 为击中前哨站，2 为击中基地固定目标，3 为击中基地随机目标
+    uint32_t Centre_Enable_Status : 2;      // 中心增益是否占领 0 为未被占领，1 为被己方占领，2 为被对方占领，3 为被双方占领。
     uint16_t CRC_16;
 } __attribute__((packed));
 
@@ -803,7 +1042,7 @@ struct Struct_Referee_Rx_Data_Robot_Status
     uint16_t HP_Max;
     uint16_t Shooter_Barrel_Cooling_Value;
     uint16_t Shooter_Barrel_Heat_Limit;
-    uint16_t Chassis_Power_Limit; 
+    uint16_t Chassis_Power_Limit;
     uint8_t PM01_Gimbal_Status_Enum : 1;
     uint8_t PM01_Chassis_Status_Enum : 1;
     uint8_t PM01_Booster_Status_Enum : 1;
@@ -836,7 +1075,7 @@ struct Struct_Referee_Rx_Data_Robot_Position
 {
     float Location_X;
     float Location_Y;
-    float Location_Yaw;  //本机器人测速模块的朝向，单位：度。正北为 0 度
+    float Location_Yaw; // 本机器人测速模块的朝向，单位：度。正北为 0 度
     uint16_t CRC_16;
 } __attribute__((packed));
 
@@ -846,11 +1085,11 @@ struct Struct_Referee_Rx_Data_Robot_Position
  */
 struct Struct_Referee_Rx_Data_Robot_Buff
 {
-    uint8_t HP_Recovery_Buff_Rate ;
-    uint8_t Booster_Cooling_Buff_Rate ;
-    uint8_t Defend_Buff_Rate ; //机器人防御增益（百分比，值为 50 表示 50%防御增益）
-    uint8_t Vulnerability_Buff_Rate; //机器人负防御增益（百分比，值为 30 表示-30%防御增益）
-    uint8_t Damage_Buff_Rate ; //机器人攻击增益（百分比，值为 50 表示 50%攻击增益）
+    uint8_t HP_Recovery_Buff_Rate;
+    uint8_t Booster_Cooling_Buff_Rate;
+    uint8_t Defend_Buff_Rate;        // 机器人防御增益（百分比，值为 50 表示 50%防御增益）
+    uint8_t Vulnerability_Buff_Rate; // 机器人负防御增益（百分比，值为 30 表示-30%防御增益）
+    uint8_t Damage_Buff_Rate;        // 机器人攻击增益（百分比，值为 50 表示 50%攻击增益）
     uint16_t CRC_16;
 } __attribute__((packed));
 
@@ -860,7 +1099,7 @@ struct Struct_Referee_Rx_Data_Robot_Buff
  */
 struct Struct_Referee_Rx_Data_Robot_Aerial_Energy
 {
-    uint8_t Airforce_status;  //空中机器人状态（0 为正在冷却，1 为冷却完毕，2 为正在空中支援）
+    uint8_t Airforce_status; // 空中机器人状态（0 为正在冷却，1 为冷却完毕，2 为正在空中支援）
     uint8_t Remaining_Time;
     uint16_t CRC_16;
 } __attribute__((packed));
@@ -971,7 +1210,7 @@ struct Struct_Referee_Tx_Data_Interaction_Layer_Delete
 {
     uint16_t Header = 0x0100;
     Enum_Referee_Data_Robots_ID Sender;
-    uint8_t Reserved;   
+    uint8_t Reserved;
     Enum_Referee_Data_Robots_Client_ID Receiver;
     Enum_Referee_Data_Interaction_Layer_Delete_Operation Operation;
     uint8_t Delete_Serial;
@@ -1096,7 +1335,7 @@ struct Struct_Referee_Tx_Data_Interaction_Remote_Control
     uint16_t Keyboard_Key_F : 1;
     uint16_t Keyboard_Key_G : 1;
     uint16_t Keyboard_Key_Z : 1;
-    uint16_t Keyboard_Key_X : 1;    
+    uint16_t Keyboard_Key_X : 1;
     uint16_t Keyboard_Key_C : 1;
     uint16_t Keyboard_Key_V : 1;
     uint16_t Keyboard_Key_B : 1;
@@ -1125,7 +1364,7 @@ class Class_Referee
 public:
     void Init(UART_HandleTypeDef *huart, uint8_t __Frame_Header = 0xa5);
 
-    inline uint16_t Get_Circle_Index(uint16_t index){return (index%UART_Manage_Object->Rx_Buffer_Length);}
+    inline uint16_t Get_Circle_Index(uint16_t index) { return (index % UART_Manage_Object->Rx_Buffer_Length); }
     inline Enum_Referee_Status Get_Referee_Status();
     inline Enum_Referee_Game_Status_Type Get_Game_Type();
     inline Enum_Referee_Game_Status_Stage Get_Game_Stage();
@@ -1200,25 +1439,25 @@ public:
     inline float Get_Radar_Send_Coordinate_X();
     inline float Get_Radar_Send_Coordinate_Y();
 
-    #ifdef GIMBAL
+#ifdef GIMBAL
     inline void Set_Robot_ID(Enum_Referee_Data_Robots_ID __Robot_ID);
-    inline void Set_Game_Stage(Enum_Referee_Game_Status_Stage __Game_Stage);  
+    inline void Set_Game_Stage(Enum_Referee_Game_Status_Stage __Game_Stage);
     inline void Set_Booster_17mm_1_Heat_CD(uint16_t __Booster_17mm_1_Heat_CD);
     inline void Set_Booster_17mm_1_Heat_Max(uint16_t __Booster_17mm_1_Heat_Max);
-    #endif
+#endif
 
-    void Referee_UI_Draw_Line(uint8_t __Robot_ID, Enum_Referee_UI_Group_Index __Group_Index, uint8_t __Serial, uint8_t __Index, uint32_t __Color,uint32_t __Line_Width, uint32_t __Start_X, uint32_t __Start_Y,  uint32_t __End_X, uint32_t __End_Y,Enum_Referee_UI_Operate_Type __Operate_Type);
-    void Referee_UI_Draw_Rectangle(uint8_t __Robot_ID, Enum_Referee_UI_Group_Index __Group_Index, uint8_t __Serial, uint8_t __Index, uint32_t __Color,uint32_t __Line_Width, uint32_t __Start_X, uint32_t __Start_Y,  uint32_t __End_X, uint32_t __End_Y,Enum_Referee_UI_Operate_Type __Operate_Type);
+    void Referee_UI_Draw_Line(uint8_t __Robot_ID, Enum_Referee_UI_Group_Index __Group_Index, uint8_t __Serial, uint8_t __Index, uint32_t __Color, uint32_t __Line_Width, uint32_t __Start_X, uint32_t __Start_Y, uint32_t __End_X, uint32_t __End_Y, Enum_Referee_UI_Operate_Type __Operate_Type);
+    void Referee_UI_Draw_Rectangle(uint8_t __Robot_ID, Enum_Referee_UI_Group_Index __Group_Index, uint8_t __Serial, uint8_t __Index, uint32_t __Color, uint32_t __Line_Width, uint32_t __Start_X, uint32_t __Start_Y, uint32_t __End_X, uint32_t __End_Y, Enum_Referee_UI_Operate_Type __Operate_Type);
     void Referee_UI_Draw_Oval(uint8_t __Robot_ID, Enum_Referee_UI_Group_Index __Group_Index, uint8_t __Serial, uint8_t __Index, uint32_t __Color, uint32_t __Line_Width, uint32_t __Center_X, uint32_t __Center_Y, uint32_t __X_Length, uint32_t __Y_Length, Enum_Referee_UI_Operate_Type __Operate_Type);
     void Referee_UI_Draw_Circle(uint8_t __Robot_ID, Enum_Referee_UI_Group_Index __Group_Index, uint8_t __Serial, uint8_t __Index, uint32_t __Color, uint32_t __Line_Width, uint32_t __Center_X, uint32_t __Center_Y, uint32_t __Radius, Enum_Referee_UI_Operate_Type __Operate_Type);
-    void Referee_UI_Draw_Float(uint8_t __Robot_ID, Enum_Referee_UI_Group_Index __Group_Index, uint8_t __Serial, uint8_t __Index, uint32_t __Color, uint32_t __Font_Size,uint32_t __Line_Width, uint32_t __Start_X, uint32_t __Start_Y, float __Number, Enum_Referee_UI_Operate_Type __Operate_Type);
-    void Referee_UI_Draw_Integer(uint8_t __Robot_ID, Enum_Referee_UI_Group_Index __Group_Index, uint8_t __Serial, uint8_t __Index, uint32_t __Color, uint32_t __Font_Size,uint32_t __Line_Width, uint32_t __Start_X, uint32_t __Start_Y, int32_t __Number, Enum_Referee_UI_Operate_Type __Operate_Type);
-    void Referee_UI_Draw_String(uint8_t __Robot_ID, Enum_Referee_UI_Group_Index __Group_Index, uint32_t __Serial, uint8_t __Index, uint32_t __Color, uint32_t __Font_Size,uint32_t __Line_Width, uint32_t __Start_X, uint32_t __Start_Y, char *__String ,uint32_t __String_Length, Enum_Referee_UI_Operate_Type __Operate_Type);
+    void Referee_UI_Draw_Float(uint8_t __Robot_ID, Enum_Referee_UI_Group_Index __Group_Index, uint8_t __Serial, uint8_t __Index, uint32_t __Color, uint32_t __Font_Size, uint32_t __Line_Width, uint32_t __Start_X, uint32_t __Start_Y, float __Number, Enum_Referee_UI_Operate_Type __Operate_Type);
+    void Referee_UI_Draw_Integer(uint8_t __Robot_ID, Enum_Referee_UI_Group_Index __Group_Index, uint8_t __Serial, uint8_t __Index, uint32_t __Color, uint32_t __Font_Size, uint32_t __Line_Width, uint32_t __Start_X, uint32_t __Start_Y, int32_t __Number, Enum_Referee_UI_Operate_Type __Operate_Type);
+    void Referee_UI_Draw_String(uint8_t __Robot_ID, Enum_Referee_UI_Group_Index __Group_Index, uint32_t __Serial, uint8_t __Index, uint32_t __Color, uint32_t __Font_Size, uint32_t __Line_Width, uint32_t __Start_X, uint32_t __Start_Y, char *__String, uint32_t __String_Length, Enum_Referee_UI_Operate_Type __Operate_Type);
 
     void Referee_UI_Packed_String();
 
     template <typename T>
-    void Referee_UI_Packed_Data(T* __data);
+    void Referee_UI_Packed_Data(T *__data);
 
     void UART_Tx_Referee_UI();
 
@@ -1226,131 +1465,129 @@ public:
     void TIM1msMod50_Alive_PeriodElapsedCallback();
 
 protected:
-    //初始化相关常量
+    // 初始化相关常量
 
-    //绑定的UART
+    // 绑定的UART
     Struct_UART_Manage_Object *UART_Manage_Object;
-    //数据包头标
+    // 数据包头标
     uint8_t Frame_Header;
 
-    //常量
-    uint8_t seq = 0;  //包序号
+    // 常量
+    uint8_t seq = 0;                   // 包序号
     const uint8_t frameheader_len = 5; // 帧头长度
     const uint8_t cmd_len = 2;         // 命令码长度
     const uint8_t crc_len = 2;         // CRC16校验
     // 内部变量
 
-    //当前时刻的裁判系统接收flag
+    // 当前时刻的裁判系统接收flag
     uint32_t Flag = 0;
-    //前一时刻的裁判系统接收flag
+    // 前一时刻的裁判系统接收flag
     uint32_t Pre_Flag = 0;
 
-    //读变量
+    // 读变量
 
-    //裁判系统状态
+    // 裁判系统状态
     Enum_Referee_Status Referee_Status = Referee_Status_DISABLE;
-    //比赛状态
+    // 比赛状态
     Struct_Referee_Rx_Data_Game_Status Game_Status;
-    //比赛结果
+    // 比赛结果
     Struct_Referee_Rx_Data_Game_Result Game_Result;
-    //机器人血量
+    // 机器人血量
     Struct_Referee_Rx_Data_Game_Robot_HP Game_Robot_HP;
-    //场地事件
+    // 场地事件
     Struct_Referee_Rx_Data_Event_Data Event_Data;
-    //补给站状态
+    // 补给站状态
     Struct_Referee_Rx_Data_Event_Supply Event_Supply;
-    //裁判警告信息
+    // 裁判警告信息
     Struct_Referee_Rx_Data_Event_Referee_Warning Event_Referee_Warning;
-    //飞镖15s倒计时
+    // 飞镖15s倒计时
     Struct_Referee_Rx_Data_Event_Dart_Remaining_Time Event_Dart_Remaining_Time;
-    //机器人状态
+    // 机器人状态
     Struct_Referee_Rx_Data_Robot_Status Robot_Status;
-    //当前机器人实时功率热量
+    // 当前机器人实时功率热量
     Struct_Referee_Rx_Data_Robot_Power_Heat Robot_Power_Heat;
-    //当前机器人实时位置
+    // 当前机器人实时位置
     Struct_Referee_Rx_Data_Robot_Position Robot_Position;
-    //当前机器人增益
+    // 当前机器人增益
     Struct_Referee_Rx_Data_Robot_Buff Robot_Buff;
-    //无人机可攻击时间
+    // 无人机可攻击时间
     Struct_Referee_Rx_Data_Robot_Aerial_Energy Robot_Aerial_Energy;
-    //伤害情况
+    // 伤害情况
     Struct_Referee_Rx_Data_Robot_Damage Robot_Damage;
-    //子弹信息
+    // 子弹信息
     Struct_Referee_Rx_Data_Robot_Booster Robot_Booster;
-    //子弹剩余信息
+    // 子弹剩余信息
     Struct_Referee_Rx_Data_Robot_Remaining_Ammo Robot_Remaining_Ammo;
     // RFID状态信息
     Struct_Referee_Rx_Data_Robot_RFID Robot_RFID;
-    //飞镖状态
+    // 飞镖状态
     Struct_Referee_Rx_Data_Robot_Dart_Command Robot_Dart_Command;
-    //客户端接收小地图交互信息
+    // 客户端接收小地图交互信息
     Struct_Referee_Tx_Data_Interaction_Client_Receive Interaction_Client_Receive;
 
-    //写变量
+    // 写变量
 
-    //图形删除交互信息
+    // 图形删除交互信息
     Struct_Referee_Tx_Data_Interaction_Layer_Delete Interaction_Layer_Delete;
-    //画一个图形交互信息
+    // 画一个图形交互信息
     Struct_Referee_Tx_Data_Interaction_Graphic_1 Interaction_Graphic_1;
-    //画两个图形交互信息
+    // 画两个图形交互信息
     Struct_Referee_Tx_Data_Interaction_Graphic_2 Interaction_Graphic_2;
-    //画五个图形交互信息
+    // 画五个图形交互信息
     Struct_Referee_Tx_Data_Interaction_Graphic_5 Interaction_Graphic_5;
-    //画七个图形交互信息
+    // 画七个图形交互信息
     Struct_Referee_Tx_Data_Interaction_Graphic_7 Interaction_Graphic_7;
-    //画字符图形交互信息
+    // 画字符图形交互信息
     Struct_Referee_Tx_Data_Interaction_Graphic_String Interaction_Graphic_String;
-    //雷达发送小地图交互信息
+    // 雷达发送小地图交互信息
     Struct_Referee_Tx_Data_Interaction_Radar_Send Interaction_Radar_Send;
 
-    //读写变量
+    // 读写变量
 
-    //内部函数 
+    // 内部函数
 
     void Data_Process();
-    
 };
 
 /* Exported variables --------------------------------------------------------*/
 
 /* Exported function declarations --------------------------------------------*/
 
-unsigned char Get_CRC8_Check_Sum(unsigned  char  *pchMessage,unsigned  int dwLength,unsigned char ucCRC8);
+unsigned char Get_CRC8_Check_Sum(unsigned char *pchMessage, unsigned int dwLength, unsigned char ucCRC8);
 unsigned int Verify_CRC8_Check_Sum(unsigned char *pchMessage, unsigned int dwLength);
 void Append_CRC8_Check_Sum(unsigned char *pchMessage, unsigned int dwLength);
 
-uint16_t Get_CRC16_Check_Sum(uint8_t *pchMessage,uint32_t dwLength,uint16_t wCRC);
+uint16_t Get_CRC16_Check_Sum(uint8_t *pchMessage, uint32_t dwLength, uint16_t wCRC);
 uint32_t Verify_CRC16_Check_Sum(uint8_t *pchMessage, uint32_t dwLength);
-void Append_CRC16_Check_Sum(uint8_t * pchMessage,uint32_t dwLength);
-
+void Append_CRC16_Check_Sum(uint8_t *pchMessage, uint32_t dwLength);
 
 /**
  * @brief 裁判系统数据打包
  *
  */
 template <typename T>
-void Class_Referee::Referee_UI_Packed_Data(T* __data)
+void Class_Referee::Referee_UI_Packed_Data(T *__data)
 {
-    uint16_t frame_length,data_len,cmd_id;
-    
-    cmd_id = 0x0301;    //子内容ID
-    data_len = sizeof(T);      //字符操作数据长度
-	frame_length = frameheader_len + cmd_len + data_len + crc_len;   //数据帧长度	
+    uint16_t frame_length, data_len, cmd_id;
 
-	memset(UART_Manage_Object->Tx_Buffer,0,frame_length);  //存储数据的数组清零
-	
-	/*****帧头打包*****/
-	UART_Manage_Object->Tx_Buffer[0] = Frame_Header;//数据帧起始字节
-	memcpy(&UART_Manage_Object->Tx_Buffer[1],(uint8_t*)&data_len, 2);//数据帧中data的长度
-	UART_Manage_Object->Tx_Buffer[3] = seq;//包序号
-	Append_CRC8_Check_Sum(UART_Manage_Object->Tx_Buffer,frameheader_len);  //帧头校验CRC8
+    cmd_id = 0x0301;                                               // 子内容ID
+    data_len = sizeof(T);                                          // 字符操作数据长度
+    frame_length = frameheader_len + cmd_len + data_len + crc_len; // 数据帧长度
 
-	/*****命令码打包*****/
-	memcpy(&UART_Manage_Object->Tx_Buffer[frameheader_len],(uint8_t*)&cmd_id, cmd_len);
-	
-	/*****数据打包*****/
-	memcpy(&UART_Manage_Object->Tx_Buffer[frameheader_len+cmd_len], __data, sizeof(T));
-	Append_CRC16_Check_Sum(UART_Manage_Object->Tx_Buffer,frame_length);  //一帧数据校验CRC16
+    memset(UART_Manage_Object->Tx_Buffer, 0, frame_length); // 存储数据的数组清零
+
+    /*****帧头打包*****/
+    UART_Manage_Object->Tx_Buffer[0] = Frame_Header;                       // 数据帧起始字节
+    memcpy(&UART_Manage_Object->Tx_Buffer[1], (uint8_t *)&data_len, 2);    // 数据帧中data的长度
+    UART_Manage_Object->Tx_Buffer[3] = seq;                                // 包序号
+    Append_CRC8_Check_Sum(UART_Manage_Object->Tx_Buffer, frameheader_len); // 帧头校验CRC8
+
+    /*****命令码打包*****/
+    memcpy(&UART_Manage_Object->Tx_Buffer[frameheader_len], (uint8_t *)&cmd_id, cmd_len);
+
+    /*****数据打包*****/
+    memcpy(&UART_Manage_Object->Tx_Buffer[frameheader_len + cmd_len], __data, sizeof(T));
+    Append_CRC16_Check_Sum(UART_Manage_Object->Tx_Buffer, frame_length); // 一帧数据校验CRC16
 
     UART_Manage_Object->Tx_Length = frame_length;
 
@@ -1481,7 +1718,7 @@ Enum_Referee_Data_Status Class_Referee::Get_Event_Supply_Status(uint8_t Supply_I
     case (3):
         return static_cast<Enum_Referee_Data_Status>(Event_Data.Supply_3_Status_Enum);
     default:
-        return static_cast<Enum_Referee_Data_Status>(Event_Data.Supply_1_Status_Enum); // 
+        return static_cast<Enum_Referee_Data_Status>(Event_Data.Supply_1_Status_Enum); //
     }
 }
 
@@ -1540,8 +1777,8 @@ Enum_Referee_Data_Status Class_Referee::Get_Event_Highland_Status(uint8_t Highla
         return (static_cast<Enum_Referee_Data_Status>(Event_Data.Highland_4_Status_Enum));
     }
     break;
-    default :
-	    return (static_cast<Enum_Referee_Data_Status>(Event_Data.Highland_4_Status_Enum));
+    default:
+        return (static_cast<Enum_Referee_Data_Status>(Event_Data.Highland_4_Status_Enum));
     }
 }
 
@@ -1554,7 +1791,6 @@ uint32_t Class_Referee::Get_Event_Base_Shield_Remain_HP()
 {
     return ((uint32_t)Event_Data.Base_Shield_Remain_HP);
 }
-
 
 /**
  * @brief 获取补给点ID
@@ -1698,7 +1934,6 @@ uint16_t Class_Referee::Get_Booster_17mm_1_Heat_Max()
     return (Robot_Status.Shooter_Barrel_Heat_Limit);
 }
 
-
 /**
  * @brief 获取17mm2枪口冷却速度
  *
@@ -1731,7 +1966,6 @@ uint16_t Class_Referee::Get_Booster_17mm_2_Heat_Max()
     return (Robot_Status.Shooter_Barrel_Heat_Limit);
 }
 
-
 /**
  * @brief 获取42mm枪口冷却速度
  *
@@ -1752,7 +1986,6 @@ uint16_t Class_Referee::Get_Booster_42mm_Heat_Max()
     return (Robot_Status.Shooter_Barrel_Heat_Limit);
 }
 
-
 /**
  * @brief 获取底盘功率上限
  *
@@ -1763,7 +1996,7 @@ uint16_t Class_Referee::Get_Chassis_Power_Max()
 #ifdef Robot_SENTRY_7
     if (Robot_Status.Chassis_Power_Max == 0)
     {
-        //裁判系统如果寄了
+        // 裁判系统如果寄了
         return (80);
         // //高校联盟赛
         // return (100);
@@ -1883,7 +2116,6 @@ float Class_Referee::Get_Location_Y()
 {
     return (Robot_Position.Location_Y);
 }
-
 
 /**
  * @brief 获取自身方向yaw
@@ -2132,7 +2364,7 @@ Enum_Referee_Data_Robot_Dart_Command_Status Class_Referee::Get_Dart_Command_Stat
  */
 Enum_Referee_Data_Robot_Dart_Command_Target Class_Referee::Get_Dart_Command_Target()
 {
-    return  (static_cast<Enum_Referee_Data_Robot_Dart_Command_Target>(Event_Dart_Remaining_Time.Dart_Target_Enum));
+    return (static_cast<Enum_Referee_Data_Robot_Dart_Command_Target>(Event_Dart_Remaining_Time.Dart_Target_Enum));
 }
 
 /**
@@ -2185,7 +2417,6 @@ float Class_Referee::Get_Radar_Send_Coordinate_Y()
     return (Interaction_Client_Receive.Coordinate_Y);
 }
 
-
 /**
  * @brief 设置机器人ID
  *
@@ -2197,7 +2428,6 @@ void Class_Referee::Set_Robot_ID(Enum_Referee_Data_Robots_ID __Robot_ID)
     this->Robot_Status.Robot_ID = __Robot_ID;
 }
 #endif
-
 
 /**
  * @brief 设置机器人等级
@@ -2211,7 +2441,6 @@ void Class_Referee::Set_Game_Stage(Enum_Referee_Game_Status_Stage __Game_Stage)
 }
 #endif
 
-
 /**
  * @brief 设置17mm枪管冷却cd
  *
@@ -2223,7 +2452,6 @@ void Class_Referee::Set_Booster_17mm_1_Heat_CD(uint16_t __Booster_17mm_1_Heat_CD
     this->Robot_Status.Shooter_Barrel_Cooling_Value = __Booster_17mm_1_Heat_CD;
 }
 #endif
-
 
 /**
  * @brief 设置17mm枪管热量上限

@@ -13,6 +13,7 @@
 
 #include "dvc_referee.h"
 #include "drv_math.h"
+#include <string>
 
 /* Private macros ------------------------------------------------------------*/
 
@@ -60,14 +61,13 @@ void Class_Referee::Init(UART_HandleTypeDef *huart, uint8_t __Frame_Header)
     Frame_Header = __Frame_Header;
 }
 
-
 /**
  * @brief 数据处理过程, 为节约性能不作校验但提供了接口
  * 如遇到大规模丢包或错乱现象, 可重新启用校验过程
  *
- */    
+ */
 uint16_t buffer_index = 0;
-uint16_t cmd_id,data_length;
+uint16_t cmd_id, data_length;
 uint16_t buffer_index_max;
 void Class_Referee::Data_Process()
 {
@@ -84,7 +84,7 @@ void Class_Referee::Data_Process()
             cmd_id = (cmd_id << 8) | UART_Manage_Object->Rx_Buffer[Get_Circle_Index(buffer_index + 5)];
             data_length = UART_Manage_Object->Rx_Buffer[Get_Circle_Index(buffer_index + 2)] & 0xff;
             data_length = (data_length << 8) | UART_Manage_Object->Rx_Buffer[Get_Circle_Index(buffer_index + 1)];
-            Math_Constrain(&data_length,(uint16_t)0,(uint16_t)(128));  //限制数据段最大长度
+            Math_Constrain(&data_length, (uint16_t)0, (uint16_t)(128)); // 限制数据段最大长度
             Enum_Referee_Command_ID CMD_ID = (Enum_Referee_Command_ID)cmd_id;
 
             uint8_t *data_temp = new uint8_t[5];
@@ -93,13 +93,13 @@ void Class_Referee::Data_Process()
             {
                 data_temp[i] = UART_Manage_Object->Rx_Buffer[Get_Circle_Index(buffer_index + i)];
             }
-            if (Verify_CRC8_Check_Sum(data_temp, 5) == 1) //校验帧头
+            if (Verify_CRC8_Check_Sum(data_temp, 5) == 1) // 校验帧头
             {
                 for (int i = 0; i < data_length + 9; i++)
                 {
                     sum_data[i] = UART_Manage_Object->Rx_Buffer[Get_Circle_Index(buffer_index + i)];
                 }
-                if (Verify_CRC16_Check_Sum(sum_data, data_length + 9) == 1) //校验整个帧
+                if (Verify_CRC16_Check_Sum(sum_data, data_length + 9) == 1) // 校验整个帧
                 {
                     switch (CMD_ID)
                     {
@@ -258,6 +258,8 @@ void Class_Referee::Data_Process()
                         buffer_index += sizeof(Struct_Referee_Rx_Data_Robot_Dart_Command) + 7;
                     }
                     break;
+                    default:
+                        break;
                     }
                 }
             }
@@ -273,9 +275,9 @@ void Class_Referee::Data_Process()
  *
  * @param Rx_Data 接收的数据
  */
-void Class_Referee::UART_RxCpltCallback(uint8_t *Rx_Data,uint16_t Length)
+void Class_Referee::UART_RxCpltCallback(uint8_t *Rx_Data, uint16_t Length)
 {
-    //滑动窗口, 判断裁判系统是否在线
+    // 滑动窗口, 判断裁判系统是否在线
     Flag += 1;
     Data_Process();
 }
@@ -286,20 +288,19 @@ void Class_Referee::UART_RxCpltCallback(uint8_t *Rx_Data,uint16_t Length)
  */
 void Class_Referee::TIM1msMod50_Alive_PeriodElapsedCallback()
 {
-    //判断该时间段内是否接收过裁判系统数据
+    // 判断该时间段内是否接收过裁判系统数据
     if (Flag == Pre_Flag)
     {
-        //裁判系统断开连接
+        // 裁判系统断开连接
         Referee_Status = Referee_Status_DISABLE;
     }
     else
     {
-        //裁判系统保持连接
+        // 裁判系统保持连接
         Referee_Status = Referee_Status_ENABLE;
     }
     Pre_Flag = Flag;
 }
-
 
 /**
  * @brief 裁判系统发送UI绘图数据
@@ -307,25 +308,13 @@ void Class_Referee::TIM1msMod50_Alive_PeriodElapsedCallback()
  */
 void Class_Referee::UART_Tx_Referee_UI()
 {
-    Referee_UI_Draw_String(Get_ID(), Referee_UI_Zero , 0 , 0x00, 0, 20, 2, 500, 500, "Chassis", (sizeof("chassis")-1),Referee_UI_ADD);    //配置字符信息
-    //Referee_UI_Packed_String(); 
-    Referee_UI_Packed_Data(&Interaction_Graphic_String); //打包字符数据
-    //UART_Send_Data(UART_Manage_Object->UART_Handler, UART_Manage_Object->Tx_Buffer, UART_Manage_Object->Tx_Buffer_Length); //DMA发送
-    HAL_UART_Transmit(UART_Manage_Object->UART_Handler, UART_Manage_Object->Tx_Buffer, UART_Manage_Object->Tx_Length,10); //阻塞发送
-
-    Referee_UI_Draw_String(Get_ID(), Referee_UI_Zero , 0 , 0x00, 0, 20, 2, 500, 800, "Gimbal", (sizeof("Gimbal")-1),Referee_UI_ADD);    //配置字符信息
-    //Referee_UI_Packed_String(); 
-    Referee_UI_Packed_Data(&Interaction_Graphic_String); //打包字符数据
-    //UART_Send_Data(UART_Manage_Object->UART_Handler, UART_Manage_Object->Tx_Buffer, UART_Manage_Object->Tx_Buffer_Length); //DMA发送
-    HAL_UART_Transmit(UART_Manage_Object->UART_Handler, UART_Manage_Object->Tx_Buffer, UART_Manage_Object->Tx_Length,10); //阻塞发送
-
-    Referee_UI_Draw_String(Get_ID(), Referee_UI_Zero , 0 , 0x00, 0, 20, 2, 500, 1200, "Fric", (sizeof("Fric")-1),Referee_UI_ADD);    //配置字符信息
-    //Referee_UI_Packed_String(); 
-    Referee_UI_Packed_Data(&Interaction_Graphic_String); //打包字符数据
-    //UART_Send_Data(UART_Manage_Object->UART_Handler, UART_Manage_Object->Tx_Buffer, UART_Manage_Object->Tx_Buffer_Length); //DMA发送
-    HAL_UART_Transmit(UART_Manage_Object->UART_Handler, UART_Manage_Object->Tx_Buffer, UART_Manage_Object->Tx_Length,10); //阻塞发送
+    std::string str = "Chassis";
+    Referee_UI_Draw_String(Get_ID(), Referee_UI_Zero, 0, 0x00, 0, 20, 2, 500, 500, const_cast<char *>(str.c_str()), str.length(), Referee_UI_ADD); // 配置字符信息
+    // Referee_UI_Packed_String();
+    Referee_UI_Packed_Data(&Interaction_Graphic_String); // 打包字符数据
+    // UART_Send_Data(UART_Manage_Object->UART_Handler, UART_Manage_Object->Tx_Buffer, UART_Manage_Object->Tx_Buffer_Length); //DMA发送
+    HAL_UART_Transmit(UART_Manage_Object->UART_Handler, UART_Manage_Object->Tx_Buffer, UART_Manage_Object->Tx_Length, 10); // 阻塞发送
 }
-
 
 /**
  * @brief 裁判系统字符数据打包
@@ -333,40 +322,37 @@ void Class_Referee::UART_Tx_Referee_UI()
  */
 void Class_Referee::Referee_UI_Packed_String()
 {
-    uint16_t frame_length,data_len,cmd_id;
-    
-    cmd_id = 0x0301;    //子内容ID
-    data_len = sizeof(Interaction_Graphic_String);      //字符操作数据长度
-	frame_length = frameheader_len + cmd_len + data_len + crc_len;   //数据帧长度	
+    uint16_t frame_length, data_len, cmd_id;
 
-	memset(UART_Manage_Object->Tx_Buffer,0,frame_length);  //存储数据的数组清零
-	
-	/*****帧头打包*****/
-	UART_Manage_Object->Tx_Buffer[0] = Frame_Header;//数据帧起始字节
-	memcpy(&UART_Manage_Object->Tx_Buffer[1],(uint8_t*)&data_len, 2);//数据帧中data的长度
-	UART_Manage_Object->Tx_Buffer[3] = seq;//包序号
-	Append_CRC8_Check_Sum(UART_Manage_Object->Tx_Buffer,frameheader_len);  //帧头校验CRC8
+    cmd_id = 0x0301;                                               // 子内容ID
+    data_len = sizeof(Interaction_Graphic_String);                 // 字符操作数据长度
+    frame_length = frameheader_len + cmd_len + data_len + crc_len; // 数据帧长度
 
-	/*****命令码打包*****/
-	memcpy(&UART_Manage_Object->Tx_Buffer[frameheader_len],(uint8_t*)&cmd_id, cmd_len);
-	
-	/*****数据打包*****/
-	memcpy(&UART_Manage_Object->Tx_Buffer[frameheader_len+cmd_len], &Interaction_Graphic_String, sizeof(Interaction_Graphic_String));
-	Append_CRC16_Check_Sum(UART_Manage_Object->Tx_Buffer,frame_length);  //一帧数据校验CRC16
+    memset(UART_Manage_Object->Tx_Buffer, 0, frame_length); // 存储数据的数组清零
+
+    /*****帧头打包*****/
+    UART_Manage_Object->Tx_Buffer[0] = Frame_Header;                       // 数据帧起始字节
+    memcpy(&UART_Manage_Object->Tx_Buffer[1], (uint8_t *)&data_len, 2);    // 数据帧中data的长度
+    UART_Manage_Object->Tx_Buffer[3] = seq;                                // 包序号
+    Append_CRC8_Check_Sum(UART_Manage_Object->Tx_Buffer, frameheader_len); // 帧头校验CRC8
+
+    /*****命令码打包*****/
+    memcpy(&UART_Manage_Object->Tx_Buffer[frameheader_len], (uint8_t *)&cmd_id, cmd_len);
+
+    /*****数据打包*****/
+    memcpy(&UART_Manage_Object->Tx_Buffer[frameheader_len + cmd_len], &Interaction_Graphic_String, sizeof(Interaction_Graphic_String));
+    Append_CRC16_Check_Sum(UART_Manage_Object->Tx_Buffer, frame_length); // 一帧数据校验CRC16
 
     UART_Manage_Object->Tx_Length = frame_length;
 
     seq++;
 }
 
-
-
-
 /**
  * @brief 绘制字符串
  *
  */
-void Class_Referee::Referee_UI_Draw_String(uint8_t __Robot_ID,Enum_Referee_UI_Group_Index __Group_Index, uint32_t __Serial, uint8_t __Index, uint32_t __Color, uint32_t __Font_Size,uint32_t __Line_Width, uint32_t __Start_X, uint32_t __Start_Y, char *__String ,uint32_t __String_Length, Enum_Referee_UI_Operate_Type __Operate_Type)
+void Class_Referee::Referee_UI_Draw_String(uint8_t __Robot_ID, Enum_Referee_UI_Group_Index __Group_Index, uint32_t __Serial, uint8_t __Index, uint32_t __Color, uint32_t __Font_Size, uint32_t __Line_Width, uint32_t __Start_X, uint32_t __Start_Y, char *__String, uint32_t __String_Length, Enum_Referee_UI_Operate_Type __Operate_Type)
 {
     Interaction_Graphic_String.Sender = (Enum_Referee_Data_Robots_ID)__Robot_ID;
     Interaction_Graphic_String.Receiver = (Enum_Referee_Data_Robots_Client_ID)(__Robot_ID + 0x0100);
@@ -399,7 +385,7 @@ void Class_Referee::Referee_UI_Draw_String(uint8_t __Robot_ID,Enum_Referee_UI_Gr
  * @param __End_Y 结束点Y坐标
  * @param __Operate_Type 操作类型
  */
-void Class_Referee::Referee_UI_Draw_Line(uint8_t __Robot_ID,Enum_Referee_UI_Group_Index __Group_Index, uint8_t __Serial, uint8_t __Index, uint32_t __Color, uint32_t __Line_Width, uint32_t __Start_X, uint32_t __Start_Y, uint32_t __End_X, uint32_t __End_Y, Enum_Referee_UI_Operate_Type __Operate_Type)
+void Class_Referee::Referee_UI_Draw_Line(uint8_t __Robot_ID, Enum_Referee_UI_Group_Index __Group_Index, uint8_t __Serial, uint8_t __Index, uint32_t __Color, uint32_t __Line_Width, uint32_t __Start_X, uint32_t __Start_Y, uint32_t __End_X, uint32_t __End_Y, Enum_Referee_UI_Operate_Type __Operate_Type)
 {
     Interaction_Graphic_7.Sender = (Enum_Referee_Data_Robots_ID)__Robot_ID;
     Interaction_Graphic_7.Receiver = (Enum_Referee_Data_Robots_Client_ID)(__Robot_ID + 0x0100);
@@ -431,7 +417,7 @@ void Class_Referee::Referee_UI_Draw_Line(uint8_t __Robot_ID,Enum_Referee_UI_Grou
  * @param __End_Y 结束点Y坐标
  * @param __Operate_Type 操作类型
  */
-void Class_Referee::Referee_UI_Draw_Rectangle(uint8_t __Robot_ID,Enum_Referee_UI_Group_Index __Group_Index, uint8_t __Serial, uint8_t __Index, uint32_t __Color,uint32_t __Line_Width, uint32_t __Start_X, uint32_t __Start_Y,  uint32_t __End_X, uint32_t __End_Y,Enum_Referee_UI_Operate_Type __Operate_Type)
+void Class_Referee::Referee_UI_Draw_Rectangle(uint8_t __Robot_ID, Enum_Referee_UI_Group_Index __Group_Index, uint8_t __Serial, uint8_t __Index, uint32_t __Color, uint32_t __Line_Width, uint32_t __Start_X, uint32_t __Start_Y, uint32_t __End_X, uint32_t __End_Y, Enum_Referee_UI_Operate_Type __Operate_Type)
 {
     Interaction_Graphic_7.Sender = (Enum_Referee_Data_Robots_ID)__Robot_ID;
     Interaction_Graphic_7.Receiver = (Enum_Referee_Data_Robots_Client_ID)(__Robot_ID + 0x0100);
@@ -443,9 +429,9 @@ void Class_Referee::Referee_UI_Draw_Rectangle(uint8_t __Robot_ID,Enum_Referee_UI
     Interaction_Graphic_7.Graphic[__Group_Index].Rectangle.Color_Enum = __Color;
     Interaction_Graphic_7.Graphic[__Group_Index].Rectangle.Line_Width = __Line_Width;
     Interaction_Graphic_7.Graphic[__Group_Index].Rectangle.Start_X = __Start_X;
-    Interaction_Graphic_7.Graphic[__Group_Index].Rectangle.Start_Y = __Start_Y; 
+    Interaction_Graphic_7.Graphic[__Group_Index].Rectangle.Start_Y = __Start_Y;
     Interaction_Graphic_7.Graphic[__Group_Index].Rectangle.End_X = __End_X;
-    Interaction_Graphic_7.Graphic[__Group_Index].Rectangle.End_Y = __End_Y;     
+    Interaction_Graphic_7.Graphic[__Group_Index].Rectangle.End_Y = __End_Y;
 }
 
 /**
@@ -463,7 +449,7 @@ void Class_Referee::Referee_UI_Draw_Rectangle(uint8_t __Robot_ID,Enum_Referee_UI
  * @param __Y_Length Y轴半径
  * @param __Operate_Type 操作类型
  */
-void Class_Referee::Referee_UI_Draw_Oval(uint8_t __Robot_ID,Enum_Referee_UI_Group_Index __Group_Index,uint8_t __Serial, uint8_t __Index, uint32_t __Color, uint32_t __Line_Width, uint32_t __Center_X, uint32_t __Center_Y, uint32_t __X_Length, uint32_t __Y_Length, Enum_Referee_UI_Operate_Type __Operate_Type)
+void Class_Referee::Referee_UI_Draw_Oval(uint8_t __Robot_ID, Enum_Referee_UI_Group_Index __Group_Index, uint8_t __Serial, uint8_t __Index, uint32_t __Color, uint32_t __Line_Width, uint32_t __Center_X, uint32_t __Center_Y, uint32_t __X_Length, uint32_t __Y_Length, Enum_Referee_UI_Operate_Type __Operate_Type)
 {
     Interaction_Graphic_7.Sender = (Enum_Referee_Data_Robots_ID)__Robot_ID;
     Interaction_Graphic_7.Receiver = (Enum_Referee_Data_Robots_Client_ID)(__Robot_ID + 0x0100);
@@ -475,9 +461,9 @@ void Class_Referee::Referee_UI_Draw_Oval(uint8_t __Robot_ID,Enum_Referee_UI_Grou
     Interaction_Graphic_7.Graphic[__Group_Index].Oval.Color_Enum = __Color;
     Interaction_Graphic_7.Graphic[__Group_Index].Oval.Line_Width = __Line_Width;
     Interaction_Graphic_7.Graphic[__Group_Index].Oval.Center_X = __Center_X;
-    Interaction_Graphic_7.Graphic[__Group_Index].Oval.Center_Y= __Center_Y; 
+    Interaction_Graphic_7.Graphic[__Group_Index].Oval.Center_Y = __Center_Y;
     Interaction_Graphic_7.Graphic[__Group_Index].Oval.Half_Length_X = __X_Length;
-    Interaction_Graphic_7.Graphic[__Group_Index].Oval.Half_Length_Y = __Y_Length;  
+    Interaction_Graphic_7.Graphic[__Group_Index].Oval.Half_Length_Y = __Y_Length;
 }
 
 /**
@@ -494,7 +480,7 @@ void Class_Referee::Referee_UI_Draw_Oval(uint8_t __Robot_ID,Enum_Referee_UI_Grou
  * @param __Radius 半径
  * @param __Operate_Type 操作类型
  */
-void Class_Referee::Referee_UI_Draw_Circle(uint8_t __Robot_ID,Enum_Referee_UI_Group_Index __Group_Index, uint8_t __Serial, uint8_t __Index, uint32_t __Color, uint32_t __Line_Width, uint32_t __Center_X, uint32_t __Center_Y, uint32_t __Radius, Enum_Referee_UI_Operate_Type __Operate_Type)
+void Class_Referee::Referee_UI_Draw_Circle(uint8_t __Robot_ID, Enum_Referee_UI_Group_Index __Group_Index, uint8_t __Serial, uint8_t __Index, uint32_t __Color, uint32_t __Line_Width, uint32_t __Center_X, uint32_t __Center_Y, uint32_t __Radius, Enum_Referee_UI_Operate_Type __Operate_Type)
 {
     Interaction_Graphic_7.Sender = (Enum_Referee_Data_Robots_ID)__Robot_ID;
     Interaction_Graphic_7.Receiver = (Enum_Referee_Data_Robots_Client_ID)(__Robot_ID + 0x0100);
@@ -506,7 +492,7 @@ void Class_Referee::Referee_UI_Draw_Circle(uint8_t __Robot_ID,Enum_Referee_UI_Gr
     Interaction_Graphic_7.Graphic[__Group_Index].Circle.Color_Enum = __Color;
     Interaction_Graphic_7.Graphic[__Group_Index].Circle.Line_Width = __Line_Width;
     Interaction_Graphic_7.Graphic[__Group_Index].Circle.Center_X = __Center_X;
-    Interaction_Graphic_7.Graphic[__Group_Index].Circle.Center_Y= __Center_Y;   
+    Interaction_Graphic_7.Graphic[__Group_Index].Circle.Center_Y = __Center_Y;
 }
 
 /**
@@ -524,7 +510,7 @@ void Class_Referee::Referee_UI_Draw_Circle(uint8_t __Robot_ID,Enum_Referee_UI_Gr
  * @param __Number 浮点数
  * @param __Operate_Type 操作类型
  */
-void Class_Referee::Referee_UI_Draw_Float(uint8_t __Robot_ID,Enum_Referee_UI_Group_Index __Group_Index, uint8_t __Serial, uint8_t __Index, uint32_t __Color, uint32_t __Font_Size,uint32_t __Line_Width, uint32_t __Start_X, uint32_t __Start_Y, float __Number, Enum_Referee_UI_Operate_Type __Operate_Type)
+void Class_Referee::Referee_UI_Draw_Float(uint8_t __Robot_ID, Enum_Referee_UI_Group_Index __Group_Index, uint8_t __Serial, uint8_t __Index, uint32_t __Color, uint32_t __Font_Size, uint32_t __Line_Width, uint32_t __Start_X, uint32_t __Start_Y, float __Number, Enum_Referee_UI_Operate_Type __Operate_Type)
 {
     Interaction_Graphic_7.Sender = (Enum_Referee_Data_Robots_ID)__Robot_ID;
     Interaction_Graphic_7.Receiver = (Enum_Referee_Data_Robots_Client_ID)(__Robot_ID + 0x0100);
@@ -537,8 +523,8 @@ void Class_Referee::Referee_UI_Draw_Float(uint8_t __Robot_ID,Enum_Referee_UI_Gro
     Interaction_Graphic_7.Graphic[__Group_Index].Float.Font_Size = __Font_Size;
     Interaction_Graphic_7.Graphic[__Group_Index].Float.Line_Width = __Line_Width;
     Interaction_Graphic_7.Graphic[__Group_Index].Float.Start_X = __Start_X;
-    Interaction_Graphic_7.Graphic[__Group_Index].Float.Start_Y= __Start_Y;
-    Interaction_Graphic_7.Graphic[__Group_Index].Float.Float = (int32_t)__Number*1000;      
+    Interaction_Graphic_7.Graphic[__Group_Index].Float.Start_Y = __Start_Y;
+    Interaction_Graphic_7.Graphic[__Group_Index].Float.Float = (int32_t)__Number * 1000;
 }
 
 /**
@@ -556,7 +542,7 @@ void Class_Referee::Referee_UI_Draw_Float(uint8_t __Robot_ID,Enum_Referee_UI_Gro
  * @param __Number 整数
  * @param __Operate_Type 操作类型
  */
-void Class_Referee::Referee_UI_Draw_Integer(uint8_t __Robot_ID,Enum_Referee_UI_Group_Index __Group_Index, uint8_t __Serial, uint8_t __Index, uint32_t __Color, uint32_t __Font_Size,uint32_t __Line_Width, uint32_t __Start_X, uint32_t __Start_Y, int32_t __Number, Enum_Referee_UI_Operate_Type __Operate_Type)
+void Class_Referee::Referee_UI_Draw_Integer(uint8_t __Robot_ID, Enum_Referee_UI_Group_Index __Group_Index, uint8_t __Serial, uint8_t __Index, uint32_t __Color, uint32_t __Font_Size, uint32_t __Line_Width, uint32_t __Start_X, uint32_t __Start_Y, int32_t __Number, Enum_Referee_UI_Operate_Type __Operate_Type)
 {
     Interaction_Graphic_7.Sender = (Enum_Referee_Data_Robots_ID)__Robot_ID;
     Interaction_Graphic_7.Receiver = (Enum_Referee_Data_Robots_Client_ID)(__Robot_ID + 0x0100);
@@ -569,21 +555,19 @@ void Class_Referee::Referee_UI_Draw_Integer(uint8_t __Robot_ID,Enum_Referee_UI_G
     Interaction_Graphic_7.Graphic[__Group_Index].Integer.Font_Size = __Font_Size;
     Interaction_Graphic_7.Graphic[__Group_Index].Integer.Line_Width = __Line_Width;
     Interaction_Graphic_7.Graphic[__Group_Index].Integer.Start_X = __Start_X;
-    Interaction_Graphic_7.Graphic[__Group_Index].Integer.Start_Y= __Start_Y;
+    Interaction_Graphic_7.Graphic[__Group_Index].Integer.Start_Y = __Start_Y;
     Interaction_Graphic_7.Graphic[__Group_Index].Integer.Integer = __Number;
 }
 
-
-
-unsigned char Get_CRC8_Check_Sum(unsigned  char  *pchMessage,unsigned  int dwLength,unsigned char ucCRC8)
+unsigned char Get_CRC8_Check_Sum(unsigned char *pchMessage, unsigned int dwLength, unsigned char ucCRC8)
 {
-	unsigned char ucIndex;
-	while (dwLength--)
-	{
-	ucIndex = ucCRC8^(*pchMessage++);
-	ucCRC8 = CRC8_TAB[ucIndex];
-	}
-	return(ucCRC8);
+    unsigned char ucIndex;
+    while (dwLength--)
+    {
+        ucIndex = ucCRC8 ^ (*pchMessage++);
+        ucCRC8 = CRC8_TAB[ucIndex];
+    }
+    return (ucCRC8);
 }
 /*
 ** Descriptions: CRC8 Verify function
@@ -592,10 +576,11 @@ unsigned char Get_CRC8_Check_Sum(unsigned  char  *pchMessage,unsigned  int dwLen
 */
 unsigned int Verify_CRC8_Check_Sum(unsigned char *pchMessage, unsigned int dwLength)
 {
-	unsigned char ucExpected = 0;
-	if ((pchMessage == 0) || (dwLength <= 2)) return 0;
-	ucExpected = Get_CRC8_Check_Sum (pchMessage, dwLength-1, CRC8_INIT);
-	return ( ucExpected == pchMessage[dwLength-1] );
+    unsigned char ucExpected = 0;
+    if ((pchMessage == 0) || (dwLength <= 2))
+        return 0;
+    ucExpected = Get_CRC8_Check_Sum(pchMessage, dwLength - 1, CRC8_INIT);
+    return (ucExpected == pchMessage[dwLength - 1]);
 }
 /*
 ** Descriptions: append CRC8 to the end of data
@@ -604,10 +589,11 @@ unsigned int Verify_CRC8_Check_Sum(unsigned char *pchMessage, unsigned int dwLen
 */
 void Append_CRC8_Check_Sum(unsigned char *pchMessage, unsigned int dwLength)
 {
-	unsigned char ucCRC = 0;
-	if ((pchMessage == 0) || (dwLength <= 2)) return;
-	ucCRC = Get_CRC8_Check_Sum ( (unsigned char *)pchMessage, dwLength-1, CRC8_INIT);
-	pchMessage[dwLength-1] = ucCRC;
+    unsigned char ucCRC = 0;
+    if ((pchMessage == 0) || (dwLength <= 2))
+        return;
+    ucCRC = Get_CRC8_Check_Sum((unsigned char *)pchMessage, dwLength - 1, CRC8_INIT);
+    pchMessage[dwLength - 1] = ucCRC;
 }
 
 /*
@@ -615,19 +601,19 @@ void Append_CRC8_Check_Sum(unsigned char *pchMessage, unsigned int dwLength)
 ** Input: Data to check,Stream length, initialized checksum
 ** Output: CRC checksum
 */
-uint16_t Get_CRC16_Check_Sum(uint8_t *pchMessage,uint32_t dwLength,uint16_t wCRC)
+uint16_t Get_CRC16_Check_Sum(uint8_t *pchMessage, uint32_t dwLength, uint16_t wCRC)
 {
-uint8_t chData;
-	if (pchMessage == NULL)
-	{
-		return 0xFFFF;
-	}
-	while(dwLength--)
-	{
-		chData = *pchMessage++;
-		(wCRC) = ((uint16_t)(wCRC) >> 8) ^ CRC16_Table[((uint16_t)(wCRC)^(uint16_t)(chData)) & 0x00ff];
-	}
-	return wCRC;
+    uint8_t chData;
+    if (pchMessage == NULL)
+    {
+        return 0xFFFF;
+    }
+    while (dwLength--)
+    {
+        chData = *pchMessage++;
+        (wCRC) = ((uint16_t)(wCRC) >> 8) ^ CRC16_Table[((uint16_t)(wCRC) ^ (uint16_t)(chData)) & 0x00ff];
+    }
+    return wCRC;
 }
 
 /*
@@ -637,29 +623,29 @@ uint8_t chData;
 */
 uint32_t Verify_CRC16_Check_Sum(uint8_t *pchMessage, uint32_t dwLength)
 {
-	uint16_t wExpected = 0;
-	if ((pchMessage == NULL) || (dwLength <= 2))
-	{
-	return 0;
-	}
-	wExpected = Get_CRC16_Check_Sum ( pchMessage, dwLength - 2, CRC16_INIT);
-	return ((wExpected & 0xff) == pchMessage[dwLength - 2] && ((wExpected >> 8) & 0xff) ==
-	pchMessage[dwLength - 1]);
+    uint16_t wExpected = 0;
+    if ((pchMessage == NULL) || (dwLength <= 2))
+    {
+        return 0;
+    }
+    wExpected = Get_CRC16_Check_Sum(pchMessage, dwLength - 2, CRC16_INIT);
+    return ((wExpected & 0xff) == pchMessage[dwLength - 2] && ((wExpected >> 8) & 0xff) ==
+                                                                  pchMessage[dwLength - 1]);
 }
 /*
 ** Descriptions: append CRC16 to the end of data
 ** Input: Data to CRC and append,Stream length = Data + checksum
 ** Output: True or False (CRC Verify Result)
 */
-void Append_CRC16_Check_Sum(uint8_t * pchMessage,uint32_t dwLength)
+void Append_CRC16_Check_Sum(uint8_t *pchMessage, uint32_t dwLength)
 {
-	uint16_t wCRC = 0;
-	if ((pchMessage == NULL) || (dwLength <= 2))
-	{
-	return;
-	}
-	wCRC = Get_CRC16_Check_Sum ( (uint8_t *)pchMessage, dwLength-2, CRC16_INIT );
-	pchMessage[dwLength-2] = (uint8_t)(wCRC & 0x00ff);
-	pchMessage[dwLength-1] = (uint8_t)((wCRC >> 8)& 0x00ff);
+    uint16_t wCRC = 0;
+    if ((pchMessage == NULL) || (dwLength <= 2))
+    {
+        return;
+    }
+    wCRC = Get_CRC16_Check_Sum((uint8_t *)pchMessage, dwLength - 2, CRC16_INIT);
+    pchMessage[dwLength - 2] = (uint8_t)(wCRC & 0x00ff);
+    pchMessage[dwLength - 1] = (uint8_t)((wCRC >> 8) & 0x00ff);
 }
 /************************ COPYRIGHT(C) USTC-ROBOWALKER **************************/
