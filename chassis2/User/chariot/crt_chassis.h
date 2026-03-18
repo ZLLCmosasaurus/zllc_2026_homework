@@ -28,7 +28,7 @@
 //#include "dvc_supercap.h"
 //#include "config.h"
 /* Exported macros -----------------------------------------------------------*/
-
+#define SQRT2_INV 0.70710678f                  // 1/sqrt(2)
 /* Exported types ------------------------------------------------------------*/
 
 /**

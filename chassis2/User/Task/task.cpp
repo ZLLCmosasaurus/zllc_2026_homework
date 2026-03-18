@@ -7,9 +7,10 @@
 #define GIMBAL
 #define USE_DR16
 #include "ita_chariot.h"
+#include "dvc_referee.h"
 Class_Chariot chariot;
 Class_Tricycle_Chassis chassis;
- 
+Class_Referee referee;
 
 void Chassis_Device_CAN1_Callback(Struct_CAN_Rx_Buffer *CAN_RxMessage)//接收电调数据
 {
@@ -40,7 +41,10 @@ void Chassis_Device_CAN1_Callback(Struct_CAN_Rx_Buffer *CAN_RxMessage)//接收�
     }
 }
 
- 
+void Referee_UART6_Callback(uint8_t *Buffer, uint16_t Length)
+{
+    referee.UART_RxCpltCallback(Buffer,Length);
+}
 
 void DR16_UART3_Callback(uint8_t *Buffer, uint16_t Length)
 {
@@ -94,6 +98,8 @@ chassis.Init();
 chassis.Set_Chassis_Control_Type(Chassis_Control_Type_FLLOW);
 //dr16
 //chariot.DR16.Init(&huart3,nullptr);
+UART_Init(&huart6, Referee_UART6_Callback, 128); 
+referee.Init(&huart6);
 UART_Init(&huart3, DR16_UART3_Callback, 18);
 }
 void Task_Loop(){

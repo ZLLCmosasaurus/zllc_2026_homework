@@ -82,7 +82,7 @@ void Class_Tricycle_Chassis::Speed_Resolution(){
             //底盘失能 四轮子自锁
             for (int i = 0; i < 4; i++)
             {
-                Motor_Wheel[i].Set_DJI_Motor_Control_Method(DJI_Motor_Control_Method_OMEGA);
+                Motor_Wheel[i].Set_DJI_Motor_Control_Method(DJI_Motor_Control_Method_OMEGA); 
                 Motor_Wheel[i].PID_Angle.Set_Integral_Error(0.0f);
                 Motor_Wheel[i].Set_Target_Omega_Radian(0.0f);
                 Motor_Wheel[i].Set_Out(0.0f);
@@ -121,10 +121,10 @@ void Class_Tricycle_Chassis::Speed_Resolution(){
             float motor4_temp_linear_vel = Slope_Velocity_Y.Get_Out() - Slope_Velocity_X.Get_Out() - Slope_Omega.Get_Out()*(HALF_WIDTH+HALF_LENGTH);
             #else
             //速度换算，正运动学分解
-            float motor1_temp_linear_vel = Target_Velocity_Y - Target_Velocity_X + Target_Omega*(HALF_WIDTH+HALF_LENGTH);
-            float motor2_temp_linear_vel = Target_Velocity_Y + Target_Velocity_X - Target_Omega*(HALF_WIDTH+HALF_LENGTH);
-            float motor3_temp_linear_vel = Target_Velocity_Y + Target_Velocity_X + Target_Omega*(HALF_WIDTH+HALF_LENGTH);
-            float motor4_temp_linear_vel = Target_Velocity_Y - Target_Velocity_X - Target_Omega*(HALF_WIDTH+HALF_LENGTH);
+            float motor1_temp_linear_vel = SQRT2_INV*Get_Target_Velocity_Y() - SQRT2_INV*Get_Target_Velocity_X() + Get_Target_Omega() * (HALF_WIDTH + HALF_LENGTH);
+            float motor2_temp_linear_vel = -SQRT2_INV*Get_Target_Velocity_Y() -SQRT2_INV* Get_Target_Velocity_X() + Get_Target_Omega() * (HALF_WIDTH + HALF_LENGTH);
+            float motor3_temp_linear_vel = -SQRT2_INV*Get_Target_Velocity_Y() + SQRT2_INV*Get_Target_Velocity_X() + Get_Target_Omega() * (HALF_WIDTH + HALF_LENGTH);
+            float motor4_temp_linear_vel = SQRT2_INV*Get_Target_Velocity_Y() + SQRT2_INV*Get_Target_Velocity_X() + Get_Target_Omega() * (HALF_WIDTH + HALF_LENGTH);
             #endif            
             //线速度 cm/s  转角速度  RAD 
             float motor1_temp_rad = motor1_temp_linear_vel * VEL2RAD;

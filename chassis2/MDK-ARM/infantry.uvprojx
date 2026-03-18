@@ -190,7 +190,7 @@
             <hadIRAM2>1</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
-            <useUlib>0</useUlib>
+            <useUlib>1</useUlib>
             <EndSel>0</EndSel>
             <uLtcg>0</uLtcg>
             <nSecure>0</nSecure>
@@ -653,6 +653,11 @@
               <FileName>dvc_dr16.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\User\Device\dvc_dr16.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>dvc_referee.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\User\Device\dvc_referee.cpp</FilePath>
             </File>
           </Files>
         </Group>

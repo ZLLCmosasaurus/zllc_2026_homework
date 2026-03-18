@@ -45,6 +45,7 @@
 "..\Middlewares\ST\ARM\DSP\Lib\arm_cortexM4lf_math.lib"
 "infantry\dvc_djimotor.o"
 "infantry\dvc_dr16.o"
+"infantry\dvc_referee.o"
 "infantry\alg_pid.o"
 "infantry\alg_slope.o"
 "infantry\alg_fsm.o"
@@ -55,7 +56,7 @@
 "infantry\ita_chariot.o"
 "infantry\task.o"
 "infantry\crt_chassis.o"
---strict --scatter "infantry\infantry.sct"
+--library_type=microlib --strict --scatter "infantry\infantry.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers
 --list "infantry.map" -o infantry\infantry.axf

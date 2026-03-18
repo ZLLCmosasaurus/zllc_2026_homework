@@ -114,7 +114,7 @@ CAN_measures_init();
       要切换到位置控制把 use_direct_speed 设为 0 并调整 position_set（弧度）
     */
     motor0.use_direct_speed = 0; /* 1=速度模式(直接测试)，0=位置串级模式 */
-    motor0.speed_set = 0.0f; /* 初始速度  0 rpm；手动修改为 1000 或 3000 来测试 */
+    motor0.speed_set = 1000.0f; /* 初始速度  0 rpm；手动修改为 1000 或 3000 来测试 */
     motor0.position_set =target_angle; /* 初始位置  0 度 */
   /* 启动 TIM2 中断以周期运行 motor_task（在 MX_TIM2_Init() 已配置定时器） */
   HAL_TIM_Base_Start_IT(&htim2);

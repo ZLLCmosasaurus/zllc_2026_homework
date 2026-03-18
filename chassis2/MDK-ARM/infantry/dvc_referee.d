@@ -1,4 +1,5 @@
-infantry/task.o: ..\User\Task\task.cpp ..\User\Task\task.h \
+infantry/dvc_referee.o: ..\User\Device\dvc_referee.cpp \
+  ..\User\Device\dvc_referee.h ..\User\Middleware\Driver\drv_uart.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal.h \
   ..\Core\Inc\stm32f4xx_hal_conf.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_rcc.h \
@@ -30,14 +31,7 @@ infantry/task.o: ..\User\Task\task.cpp ..\User\Task\task.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pcd.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_ll_usb.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pcd_ex.h \
-  ..\User\Middleware\Driver\drv_can.h \
-  ..\User\Middleware\Driver\drv_tim.h ..\User\Device\dvc_djimotor.h \
-  ..\User\Middleware\Algorithm\alg_pid.h \
+  ..\Core\Inc\usart.h ..\Core\Inc\main.h \
   ..\User\Middleware\Driver\drv_math.h \
   ..\Middlewares\ST\ARM\DSP\Inc\arm_math.h \
-  ..\Drivers\CMSIS\Include\cmsis_compiler.h \
-  ..\User\Middleware\Algorithm\alg_power_limit.h ..\Core\Inc\main.h \
-  ..\User\chariot\crt_chassis.h ..\User\Middleware\Algorithm\alg_slope.h \
-  ..\User\Device\dvc_dr16.h ..\User\Middleware\Driver\drv_uart.h \
-  ..\Core\Inc\usart.h ..\User\Interaction\ita_chariot.h \
-  ..\User\Middleware\Algorithm\alg_fsm.h ..\User\Device\dvc_referee.h
+  ..\Drivers\CMSIS\Include\cmsis_compiler.h
