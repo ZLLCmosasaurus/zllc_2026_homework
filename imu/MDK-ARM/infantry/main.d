@@ -43,4 +43,5 @@ infantry/main.o: ../Core/Src/main.c ../Core/Inc\main.h \
   ../USB_DEVICE/Target\usbd_conf.h \
   C:\Keil5_MDK\ARM\ARMCLANG\Bin\..\include\stdio.h \
   C:\Keil5_MDK\ARM\ARMCLANG\Bin\..\include\stdlib.h \
-  C:\Keil5_MDK\ARM\ARMCLANG\Bin\..\include\string.h ../Core/Inc\gpio.h
+  C:\Keil5_MDK\ARM\ARMCLANG\Bin\..\include\string.h ../Core/Inc\gpio.h \
+  ../User/Task\tsk_config_and_callback.h

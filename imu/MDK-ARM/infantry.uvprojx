@@ -1,7 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" noNamespaceSchemaLocation="project_projx.xsd">
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="project_projx.xsd">
+
   <SchemaVersion>2.1</SchemaVersion>
+
   <Header>### uVision Project, (C) Keil Software</Header>
+
   <Targets>
     <Target>
       <TargetName>infantry</TargetName>
@@ -13,29 +16,31 @@
         <TargetCommonOption>
           <Device>STM32F407IGHx</Device>
           <Vendor>STMicroelectronics</Vendor>
+          <PackID>Keil.STM32F4xx_DFP.3.1.1</PackID>
+          <PackURL>https://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000-0x2001BFFF) IRAM2(0x2001C000-0x2001FFFF) IROM(0x8000000-0x80FFFFF) CLOCK(25000000) FPU2 CPUTYPE("Cortex-M4") TZ</Cpu>
-          <FlashUtilSpec />
-          <StartupFile />
-          <FlashDriverDll />
+          <FlashUtilSpec></FlashUtilSpec>
+          <StartupFile></StartupFile>
+          <FlashDriverDll></FlashDriverDll>
           <DeviceId>0</DeviceId>
-          <RegisterFile />
-          <MemoryEnv />
-          <Cmp />
-          <Asm />
-          <Linker />
-          <OHString />
-          <InfinionOptionDll />
-          <SLE66CMisc />
-          <SLE66AMisc />
-          <SLE66LinkerMisc />
-          <SFDFile />
+          <RegisterFile></RegisterFile>
+          <MemoryEnv></MemoryEnv>
+          <Cmp></Cmp>
+          <Asm></Asm>
+          <Linker></Linker>
+          <OHString></OHString>
+          <InfinionOptionDll></InfinionOptionDll>
+          <SLE66CMisc></SLE66CMisc>
+          <SLE66AMisc></SLE66AMisc>
+          <SLE66LinkerMisc></SLE66LinkerMisc>
+          <SFDFile>$$Device:STM32F407IGHx$CMSIS\SVD\STM32F407.svd</SFDFile>
           <bCustSvd>0</bCustSvd>
           <UseEnv>0</UseEnv>
-          <BinPath />
-          <IncludePath />
-          <LibPath />
-          <RegisterFilePath />
-          <DBRegisterFilePath />
+          <BinPath></BinPath>
+          <IncludePath></IncludePath>
+          <LibPath></LibPath>
+          <RegisterFilePath></RegisterFilePath>
+          <DBRegisterFilePath></DBRegisterFilePath>
           <TargetStatus>
             <Error>0</Error>
             <ExitCodeStop>0</ExitCodeStop>
@@ -50,15 +55,15 @@
           <CreateHexFile>1</CreateHexFile>
           <DebugInformation>1</DebugInformation>
           <BrowseInformation>1</BrowseInformation>
-          <ListingPath />
+          <ListingPath></ListingPath>
           <HexFormatSelection>1</HexFormatSelection>
           <Merge32K>0</Merge32K>
           <CreateBatchFile>0</CreateBatchFile>
           <BeforeCompile>
             <RunUserProg1>0</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name />
-            <UserProg2Name />
+            <UserProg1Name></UserProg1Name>
+            <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
             <nStopU1X>0</nStopU1X>
@@ -67,8 +72,8 @@
           <BeforeMake>
             <RunUserProg1>0</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name />
-            <UserProg2Name />
+            <UserProg1Name></UserProg1Name>
+            <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
             <nStopB1X>0</nStopB1X>
@@ -76,16 +81,16 @@
           </BeforeMake>
           <AfterMake>
             <RunUserProg1>0</RunUserProg1>
-            <RunUserProg2>1</RunUserProg2>
-            <UserProg1Name />
-            <UserProg2Name />
+            <RunUserProg2>0</RunUserProg2>
+            <UserProg1Name></UserProg1Name>
+            <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
             <nStopA1X>0</nStopA1X>
             <nStopA2X>0</nStopA2X>
           </AfterMake>
           <SelectedForBatchBuild>1</SelectedForBatchBuild>
-          <SVCSIdString />
+          <SVCSIdString></SVCSIdString>
         </TargetCommonOption>
         <CommonProperty>
           <UseCPPCompiler>0</UseCPPCompiler>
@@ -99,8 +104,8 @@
           <AssembleAssemblyFile>0</AssembleAssemblyFile>
           <PublicsOnly>0</PublicsOnly>
           <StopOnExitCode>3</StopOnExitCode>
-          <CustomArgument />
-          <IncludeLibraryModules />
+          <CustomArgument></CustomArgument>
+          <IncludeLibraryModules></IncludeLibraryModules>
           <ComprImg>0</ComprImg>
         </CommonProperty>
         <DllOption>
@@ -133,11 +138,11 @@
           </Flash1>
           <bUseTDR>1</bUseTDR>
           <Flash2>BIN\UL2V8M.DLL</Flash2>
-          <Flash3 />
-          <Flash4 />
-          <pFcarmOut />
-          <pFcarmGrp />
-          <pFcArmRoot />
+          <Flash3>"" ()</Flash3>
+          <Flash4></Flash4>
+          <pFcarmOut></pFcarmOut>
+          <pFcarmGrp></pFcarmGrp>
+          <pFcArmRoot></pFcArmRoot>
           <FcArmLst>0</FcArmLst>
         </Utilities>
         <TargetArmAds>
@@ -170,7 +175,7 @@
             <RvctClst>0</RvctClst>
             <GenPPlst>0</GenPPlst>
             <AdsCpuType>"Cortex-M4"</AdsCpuType>
-            <RvctDeviceName />
+            <RvctDeviceName></RvctDeviceName>
             <mOS>0</mOS>
             <uocRom>0</uocRom>
             <uocRam>0</uocRam>
@@ -182,7 +187,7 @@
             <hadIRAM2>1</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
-            <useUlib>0</useUlib>
+            <useUlib>1</useUlib>
             <EndSel>0</EndSel>
             <uLtcg>0</uLtcg>
             <nSecure>0</nSecure>
@@ -302,11 +307,11 @@
                 <Size>0x4000</Size>
               </OCR_RVCT10>
             </OnChipMemories>
-            <RvctStartVector />
+            <RvctStartVector></RvctStartVector>
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>7</Optim>
+            <Optim>1</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -328,10 +333,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls />
+              <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F407xx</Define>
-              <Undefine />
-              <IncludePath>../Core/Inc;../USB_DEVICE/App;../USB_DEVICE/Target;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Middlewares/ST/STM32_USB_Device_Library/Core/Inc;../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;../Middlewares/ST/ARM/DSP/Inc</IncludePath>
+              <Undefine></Undefine>
+              <IncludePath>../Core/Inc;../USB_DEVICE/App;../USB_DEVICE/Target;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Middlewares/ST/STM32_USB_Device_Library/Core/Inc;../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;../Middlewares/ST/ARM/DSP/Inc;..\User\Chariot;..\User\Congfig;..\User\Device;..\User\Interaction;..\User\Middleware\Algorithm;..\User\Middleware\Driver;..\User\Task</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -346,10 +351,10 @@
             <useXO>0</useXO>
             <uClangAs>0</uClangAs>
             <VariousControls>
-              <MiscControls />
-              <Define />
-              <Undefine />
-              <IncludePath />
+              <MiscControls></MiscControls>
+              <Define></Define>
+              <Undefine></Undefine>
+              <IncludePath></IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -359,19 +364,549 @@
             <noStLib>0</noStLib>
             <RepFail>1</RepFail>
             <useFile>0</useFile>
-            <TextAddressRange />
-            <DataAddressRange />
-            <pXoBase />
-            <ScatterFile />
-            <IncludeLibs />
-            <IncludeLibsPath />
-            <Misc />
-            <LinkerInputFile />
-            <DisabledWarnings />
+            <TextAddressRange></TextAddressRange>
+            <DataAddressRange></DataAddressRange>
+            <pXoBase></pXoBase>
+            <ScatterFile></ScatterFile>
+            <IncludeLibs></IncludeLibs>
+            <IncludeLibsPath></IncludeLibsPath>
+            <Misc></Misc>
+            <LinkerInputFile></LinkerInputFile>
+            <DisabledWarnings></DisabledWarnings>
           </LDads>
         </TargetArmAds>
       </TargetOption>
       <Groups>
+        <Group>
+          <GroupName>Task</GroupName>
+          <Files>
+            <File>
+              <FileName>tsk_config_and_callback.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\User\Task\tsk_config_and_callback.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>tsk_config_and_callback.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Task\tsk_config_and_callback.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Congfig</GroupName>
+          <Files>
+            <File>
+              <FileName>config.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\User\Congfig\config.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Congfig\config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Chariot</GroupName>
+          <Files>
+            <File>
+              <FileName>crt_booster.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\User\Chariot\crt_booster.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>crt_booster.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Chariot\crt_booster.h</FilePath>
+            </File>
+            <File>
+              <FileName>crt_chassis.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\User\Chariot\crt_chassis.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>crt_chassis.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Chariot\crt_chassis.h</FilePath>
+            </File>
+            <File>
+              <FileName>crt_gimbal.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\User\Chariot\crt_gimbal.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>crt_gimbal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Chariot\crt_gimbal.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Driver</GroupName>
+          <Files>
+            <File>
+              <FileName>drv_adc.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\User\Middleware\Driver\drv_adc.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>drv_adc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Middleware\Driver\drv_adc.h</FilePath>
+            </File>
+            <File>
+              <FileName>drv_bsp-boarda.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\User\Middleware\Driver\drv_bsp-boarda.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>drv_bsp-boarda.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Middleware\Driver\drv_bsp-boarda.h</FilePath>
+            </File>
+            <File>
+              <FileName>drv_can.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\User\Middleware\Driver\drv_can.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>drv_can.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Middleware\Driver\drv_can.h</FilePath>
+            </File>
+            <File>
+              <FileName>drv_dwt.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\User\Middleware\Driver\drv_dwt.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>drv_dwt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Middleware\Driver\drv_dwt.h</FilePath>
+            </File>
+            <File>
+              <FileName>drv_i2c.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\User\Middleware\Driver\drv_i2c.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>drv_i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Middleware\Driver\drv_i2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>drv_math.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\User\Middleware\Driver\drv_math.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>drv_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Middleware\Driver\drv_math.h</FilePath>
+            </File>
+            <File>
+              <FileName>drv_spi.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\User\Middleware\Driver\drv_spi.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>drv_spi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Middleware\Driver\drv_spi.h</FilePath>
+            </File>
+            <File>
+              <FileName>drv_tim.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\User\Middleware\Driver\drv_tim.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>drv_tim.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Middleware\Driver\drv_tim.h</FilePath>
+            </File>
+            <File>
+              <FileName>drv_uart.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\User\Middleware\Driver\drv_uart.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>drv_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Middleware\Driver\drv_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>drv_usb.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\User\Middleware\Driver\drv_usb.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>drv_usb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Middleware\Driver\drv_usb.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Interaction</GroupName>
+          <Files>
+            <File>
+              <FileName>ita_chariot.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\User\Interaction\ita_chariot.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>ita_chariot.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Interaction\ita_chariot.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Algorithm</GroupName>
+          <Files>
+            <File>
+              <FileName>alg_filter.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\User\Middleware\Algorithm\alg_filter.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>alg_filter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Middleware\Algorithm\alg_filter.h</FilePath>
+            </File>
+            <File>
+              <FileName>alg_fsm.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\User\Middleware\Algorithm\alg_fsm.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>alg_fsm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Middleware\Algorithm\alg_fsm.h</FilePath>
+            </File>
+            <File>
+              <FileName>alg_MahonyAHRS.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\User\Middleware\Algorithm\alg_MahonyAHRS.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>alg_MahonyAHRS.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Middleware\Algorithm\alg_MahonyAHRS.h</FilePath>
+            </File>
+            <File>
+              <FileName>alg_pid.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\User\Middleware\Algorithm\alg_pid.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>alg_pid.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Middleware\Algorithm\alg_pid.h</FilePath>
+            </File>
+            <File>
+              <FileName>alg_power_limit.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\User\Middleware\Algorithm\alg_power_limit.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>alg_power_limit.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Middleware\Algorithm\alg_power_limit.h</FilePath>
+            </File>
+            <File>
+              <FileName>alg_slope.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\User\Middleware\Algorithm\alg_slope.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>alg_slope.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Middleware\Algorithm\alg_slope.h</FilePath>
+            </File>
+            <File>
+              <FileName>kalman_filter.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\User\Middleware\Algorithm\kalman_filter.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>kalman_filter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Middleware\Algorithm\kalman_filter.h</FilePath>
+            </File>
+            <File>
+              <FileName>PID.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\User\Middleware\Algorithm\PID.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>PID.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Middleware\Algorithm\PID.h</FilePath>
+            </File>
+            <File>
+              <FileName>QuaternionEKF.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\User\Middleware\Algorithm\QuaternionEKF.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>QuaternionEKF.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Middleware\Algorithm\QuaternionEKF.h</FilePath>
+            </File>
+            <File>
+              <FileName>user_lib.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\User\Middleware\Algorithm\user_lib.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>user_lib.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Middleware\Algorithm\user_lib.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Device</GroupName>
+          <Files>
+            <File>
+              <FileName>CharSendTask.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\User\Device\CharSendTask.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>CharSendTask.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Device\CharSendTask.h</FilePath>
+            </File>
+            <File>
+              <FileName>dvc_boardc_bmi088.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\User\Device\dvc_boardc_bmi088.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>dvc_boardc_bmi088.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Device\dvc_boardc_bmi088.h</FilePath>
+            </File>
+            <File>
+              <FileName>dvc_boardc_bmi088_reg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Device\dvc_boardc_bmi088_reg.h</FilePath>
+            </File>
+            <File>
+              <FileName>dvc_boardc_ist8310.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\User\Device\dvc_boardc_ist8310.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>dvc_boardc_ist8310.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Device\dvc_boardc_ist8310.h</FilePath>
+            </File>
+            <File>
+              <FileName>dvc_buzzer.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\User\Device\dvc_buzzer.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>dvc_buzzer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Device\dvc_buzzer.h</FilePath>
+            </File>
+            <File>
+              <FileName>dvc_djimotor.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\User\Device\dvc_djimotor.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>dvc_djimotor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Device\dvc_djimotor.h</FilePath>
+            </File>
+            <File>
+              <FileName>dvc_dmmotor.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\User\Device\dvc_dmmotor.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>dvc_dmmotor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Device\dvc_dmmotor.h</FilePath>
+            </File>
+            <File>
+              <FileName>dvc_dr16.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\User\Device\dvc_dr16.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>dvc_dr16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Device\dvc_dr16.h</FilePath>
+            </File>
+            <File>
+              <FileName>dvc_dwt.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\User\Device\dvc_dwt.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>dvc_dwt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Device\dvc_dwt.h</FilePath>
+            </File>
+            <File>
+              <FileName>dvc_GraphicsSendTask.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\User\Device\dvc_GraphicsSendTask.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>dvc_GraphicsSendTask.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Device\dvc_GraphicsSendTask.h</FilePath>
+            </File>
+            <File>
+              <FileName>dvc_imu.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\User\Device\dvc_imu.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>dvc_imu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Device\dvc_imu.h</FilePath>
+            </File>
+            <File>
+              <FileName>dvc_lkmotor.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\User\Device\dvc_lkmotor.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>dvc_lkmotor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Device\dvc_lkmotor.h</FilePath>
+            </File>
+            <File>
+              <FileName>dvc_manifold.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\User\Device\dvc_manifold.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>dvc_manifold.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Device\dvc_manifold.h</FilePath>
+            </File>
+            <File>
+              <FileName>dvc_minipc.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\User\Device\dvc_minipc.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>dvc_minipc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Device\dvc_minipc.h</FilePath>
+            </File>
+            <File>
+              <FileName>dvc_referee.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\User\Device\dvc_referee.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>dvc_referee.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Device\dvc_referee.h</FilePath>
+            </File>
+            <File>
+              <FileName>dvc_sampler.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\User\Device\dvc_sampler.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>dvc_sampler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Device\dvc_sampler.h</FilePath>
+            </File>
+            <File>
+              <FileName>dvc_serialplot.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\User\Device\dvc_serialplot.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>dvc_serialplot.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Device\dvc_serialplot.h</FilePath>
+            </File>
+            <File>
+              <FileName>dvc_servo.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\User\Device\dvc_servo.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>dvc_servo.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Device\dvc_servo.h</FilePath>
+            </File>
+            <File>
+              <FileName>dvc_supercap.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\User\Device\dvc_supercap.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>dvc_supercap.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Device\dvc_supercap.h</FilePath>
+            </File>
+            <File>
+              <FileName>dvc_TensionMeter.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\User\Device\dvc_TensionMeter.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>dvc_TensionMeter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Device\dvc_TensionMeter.h</FilePath>
+            </File>
+            <File>
+              <FileName>dvc_VT13.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\User\Device\dvc_VT13.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>dvc_VT13.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Device\dvc_VT13.h</FilePath>
+            </File>
+            <File>
+              <FileName>dvc_witahrs.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\User\Device\dvc_witahrs.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>dvc_witahrs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Device\dvc_witahrs.h</FilePath>
+            </File>
+            <File>
+              <FileName>GraphicsSendTask.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\User\Device\GraphicsSendTask.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>GraphicsSendTask.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Device\GraphicsSendTask.h</FilePath>
+            </File>
+            <File>
+              <FileName>ui.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\User\Device\ui.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>ui.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Device\ui.h</FilePath>
+            </File>
+          </Files>
+        </Group>
         <Group>
           <GroupName>Application/MDK-ARM</GroupName>
           <Files>
@@ -623,9 +1158,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>::CMSIS</GroupName>
-        </Group>
-        <Group>
           <GroupName>Middlewares/Library/DSP Library/DSP Library</GroupName>
           <GroupOption>
             <CommonProperty>
@@ -640,6 +1172,8 @@
               <AssembleAssemblyFile>2</AssembleAssemblyFile>
               <PublicsOnly>2</PublicsOnly>
               <StopOnExitCode>11</StopOnExitCode>
+              <CustomArgument></CustomArgument>
+              <IncludeLibraryModules></IncludeLibraryModules>
               <ComprImg>1</ComprImg>
             </CommonProperty>
             <GroupArmAds>
@@ -658,7 +1192,6 @@
                 <uThumb>2</uThumb>
                 <uSurpInc>2</uSurpInc>
                 <uC99>2</uC99>
-                <uGnu>2</uGnu>
                 <useXO>2</useXO>
                 <v6Lang>0</v6Lang>
                 <v6LangP>0</v6LangP>
@@ -667,6 +1200,12 @@
                 <v6Lto>2</v6Lto>
                 <v6WtE>2</v6WtE>
                 <v6Rtti>2</v6Rtti>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
               </Cads>
               <Aads>
                 <interw>2</interw>
@@ -678,68 +1217,17 @@
                 <NoWarn>2</NoWarn>
                 <uSurpInc>2</uSurpInc>
                 <useXO>2</useXO>
-                <ClangAsOpt>1</ClangAsOpt>
+                <uClangAs>2</uClangAs>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
               </Aads>
             </GroupArmAds>
           </GroupOption>
           <Files>
-            <File>
-              <FileOption>
-                <CommonProperty>
-                  <UseCPPCompiler>2</UseCPPCompiler>
-                  <RVCTCodeConst>0</RVCTCodeConst>
-                  <RVCTZI>0</RVCTZI>
-                  <RVCTOtherData>0</RVCTOtherData>
-                  <ModuleSelection>0</ModuleSelection>
-                  <IncludeInBuild>1</IncludeInBuild>
-                  <AlwaysBuild>2</AlwaysBuild>
-                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
-                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
-                  <PublicsOnly>2</PublicsOnly>
-                  <StopOnExitCode>11</StopOnExitCode>
-                  <ComprImg>1</ComprImg>
-                </CommonProperty>
-                <FileArmAds>
-                  <Cads>
-                    <interw>2</interw>
-                    <Optim>0</Optim>
-                    <oTime>2</oTime>
-                    <SplitLS>2</SplitLS>
-                    <OneElfS>2</OneElfS>
-                    <Strict>2</Strict>
-                    <EnumInt>2</EnumInt>
-                    <PlainCh>2</PlainCh>
-                    <Ropi>2</Ropi>
-                    <Rwpi>2</Rwpi>
-                    <wLevel>0</wLevel>
-                    <uThumb>2</uThumb>
-                    <uSurpInc>2</uSurpInc>
-                    <uC99>2</uC99>
-                    <uGnu>2</uGnu>
-                    <useXO>2</useXO>
-                    <v6Lang>0</v6Lang>
-                    <v6LangP>0</v6LangP>
-                    <vShortEn>2</vShortEn>
-                    <vShortWch>2</vShortWch>
-                    <v6Lto>2</v6Lto>
-                    <v6WtE>2</v6WtE>
-                    <v6Rtti>2</v6Rtti>
-                  </Cads>
-                  <Aads>
-                    <interw>2</interw>
-                    <Ropi>2</Ropi>
-                    <Rwpi>2</Rwpi>
-                    <thumb>2</thumb>
-                    <SplitLS>2</SplitLS>
-                    <SwStkChk>2</SwStkChk>
-                    <NoWarn>2</NoWarn>
-                    <uSurpInc>2</uSurpInc>
-                    <useXO>2</useXO>
-                    <ClangAsOpt>1</ClangAsOpt>
-                  </Aads>
-                </FileArmAds>
-              </FileOption>
-            </File>
             <File>
               <FileName>arm_cortexM4lf_math.lib</FileName>
               <FileType>4</FileType>
@@ -757,65 +1245,33 @@
                   <AssembleAssemblyFile>2</AssembleAssemblyFile>
                   <PublicsOnly>2</PublicsOnly>
                   <StopOnExitCode>11</StopOnExitCode>
+                  <CustomArgument></CustomArgument>
+                  <IncludeLibraryModules></IncludeLibraryModules>
                   <ComprImg>1</ComprImg>
                 </CommonProperty>
-                <FileArmAds>
-                  <Cads>
-                    <interw>2</interw>
-                    <Optim>0</Optim>
-                    <oTime>2</oTime>
-                    <SplitLS>2</SplitLS>
-                    <OneElfS>2</OneElfS>
-                    <Strict>2</Strict>
-                    <EnumInt>2</EnumInt>
-                    <PlainCh>2</PlainCh>
-                    <Ropi>2</Ropi>
-                    <Rwpi>2</Rwpi>
-                    <wLevel>0</wLevel>
-                    <uThumb>2</uThumb>
-                    <uSurpInc>2</uSurpInc>
-                    <uC99>2</uC99>
-                    <uGnu>2</uGnu>
-                    <useXO>2</useXO>
-                    <v6Lang>0</v6Lang>
-                    <v6LangP>0</v6LangP>
-                    <vShortEn>2</vShortEn>
-                    <vShortWch>2</vShortWch>
-                    <v6Lto>2</v6Lto>
-                    <v6WtE>2</v6WtE>
-                    <v6Rtti>2</v6Rtti>
-                  </Cads>
-                  <Aads>
-                    <interw>2</interw>
-                    <Ropi>2</Ropi>
-                    <Rwpi>2</Rwpi>
-                    <thumb>2</thumb>
-                    <SplitLS>2</SplitLS>
-                    <SwStkChk>2</SwStkChk>
-                    <NoWarn>2</NoWarn>
-                    <uSurpInc>2</uSurpInc>
-                    <useXO>2</useXO>
-                    <ClangAsOpt>1</ClangAsOpt>
-                  </Aads>
-                </FileArmAds>
+                <FileArmAds/>
               </FileOption>
             </File>
           </Files>
         </Group>
+        <Group>
+          <GroupName>::CMSIS</GroupName>
+        </Group>
       </Groups>
     </Target>
   </Targets>
+
   <RTE>
-    <apis />
+    <apis/>
     <components>
       <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="5.0.1" condition="ARMv6_7_8-M Device">
-        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.0.1" />
+        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.0.1"/>
         <targetInfos>
-          <targetInfo name="infantry" />
+          <targetInfo name="infantry"/>
         </targetInfos>
       </component>
     </components>
-    <files />
+    <files/>
   </RTE>
-</Project>
 
+</Project>

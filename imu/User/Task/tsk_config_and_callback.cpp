@@ -29,7 +29,6 @@ void Task1ms_TIM5_Callback()
 
     if(start_flag==1)
     {
-
         imu.TIM_Calculate_PeriodElapsedCallback();
 
         test_imu_roll = imu.Get_Angle_Roll();
