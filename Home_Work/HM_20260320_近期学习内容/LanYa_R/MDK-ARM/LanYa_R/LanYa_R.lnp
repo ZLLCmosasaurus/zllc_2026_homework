@@ -1,0 +1,25 @@
+--cpu Cortex-M3
+"lanya_r\startup_stm32f103xb.o"
+"lanya_r\main.o"
+"lanya_r\gpio.o"
+"lanya_r\dma.o"
+"lanya_r\usart.o"
+"lanya_r\stm32f1xx_it.o"
+"lanya_r\stm32f1xx_hal_msp.o"
+"lanya_r\stm32f1xx_hal_gpio_ex.o"
+"lanya_r\stm32f1xx_hal_uart.o"
+"lanya_r\stm32f1xx_hal.o"
+"lanya_r\stm32f1xx_hal_rcc.o"
+"lanya_r\stm32f1xx_hal_rcc_ex.o"
+"lanya_r\stm32f1xx_hal_gpio.o"
+"lanya_r\stm32f1xx_hal_dma.o"
+"lanya_r\stm32f1xx_hal_cortex.o"
+"lanya_r\stm32f1xx_hal_pwr.o"
+"lanya_r\stm32f1xx_hal_flash.o"
+"lanya_r\stm32f1xx_hal_flash_ex.o"
+"lanya_r\stm32f1xx_hal_exti.o"
+"lanya_r\system_stm32f1xx.o"
+--strict --scatter "LanYa_R\LanYa_R.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "LanYa_R.map" -o LanYa_R\LanYa_R.axf
