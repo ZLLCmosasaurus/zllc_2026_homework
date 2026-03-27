@@ -64,10 +64,6 @@ typedef struct {
 
 static UART_SendData_t uart_send_data = {0};
 
-/* * 修改说明：
- * 原 MotorFeedbackCallback 函数声明被移除/重命名。
- * 改为 Motor_Update_Status 以匹配 can.c 中的调用。
- */
 void Motor_Update_Status(uint8_t motor_id, uint16_t rotor_angle, 
                            int16_t rotor_speed, int16_t torque_current, 
                            int8_t temperature);
@@ -126,7 +122,6 @@ int main(void)
   MotorControl_Init(&motor1, 1);
   CAN_InitFilter(1);
 
-  /* 修改说明：删除了 CAN_SetRxCallback 调用，改为直接硬链接 */
   // CAN_SetRxCallback(MotorFeedbackCallback); 
   
   CAN_StartReceive();
@@ -217,10 +212,6 @@ void SystemClock_Config(void)
 
 /* USER CODE BEGIN 4 */
 
-/* * 修改说明：
- * 函数名从 MotorFeedbackCallback 改为 Motor_Update_Status。
- * 这个函数现在会被 can.c 中的 HAL_CAN_RxFifo0MsgPendingCallback -> CAN_RxCallback 直接调用。
- */
 void Motor_Update_Status(uint8_t motor_id, uint16_t rotor_angle, int16_t rotor_speed, int16_t torque_current, int8_t temperature)
 {
   if (motor_id == motor1.motor_id)
